@@ -48,12 +48,12 @@ export function Footer() {
             <ul className="space-y-4">
               <li>
                 <Link href="/products/agento-otonom-ajani" className="text-gray-400 hover:text-[#8EF0B5] transition-colors text-sm">
-                  {lang === 'tr' ? 'Otonom Ajan (Ads/GA4)' : 'Autonomous Agent (Ads/GA4)'}
+                  Autonomous Agent
                 </Link>
               </li>
               <li>
                 <Link href="/products/agento-wp-satis-asitasi" className="text-gray-400 hover:text-[#8EF0B5] transition-colors text-sm">
-                  {lang === 'tr' ? 'WhatsApp Satış Asistanı' : 'WhatsApp Sales Assistant'}
+                  WhatsApp Sales Automation
                 </Link>
               </li>
               <li>

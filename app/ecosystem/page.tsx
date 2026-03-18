@@ -60,7 +60,7 @@ export default function EcosystemPage() {
             </h3>
             <p className="text-lg text-gray-400 leading-relaxed mb-8">
               {lang === 'tr'
-                ? 'Sadece ihtiyacınız olan ürünü alın. WhatsApp Satış Otomasyonu, Otonom Ajan veya Structa AI. Ekosistemin geri kalanına ihtiyaç duymadan da en yüksek verimde çalışır ve mevcut sistemlerinize (ERP, CRM) saniyeler içinde entegre olur.'
+                ? 'Sadece ihtiyacınız olan ürünü alın. WhatsApp Sales Automation, Autonomous Agent veya Structa AI. Ekosistemin geri kalanına ihtiyaç duymadan da en yüksek verimde çalışır ve mevcut sistemlerinize (ERP, CRM) saniyeler içinde entegre olur.'
                 : 'Get only the product you need. WhatsApp Sales Automation, Autonomous Agent, or Structa AI. They operate at peak efficiency without needing the rest of the ecosystem and integrate into your existing systems (ERP, CRM) in seconds.'
               }
             </p>
@@ -133,7 +133,7 @@ export default function EcosystemPage() {
                 </div>
                 <h4 className="text-white font-bold text-xl mb-3">{lang === 'tr' ? 'Veri ve Bütçe' : 'Data & Budget'}</h4>
                 <p className="text-sm text-gray-400">
-                  <span className="text-orange-400 font-semibold">{lang === 'tr' ? 'Otonom Ajan' : 'Autonomous Agent'}</span> {lang === 'tr' ? 'gerçekleşen satış verisini Ads paneliyle birleştirip karlılık getiren reklamlara bütçe basar.' : 'combines realized sales data with the Ads panel and allocates budget to profitable ads.'}
+                  <span className="text-orange-400 font-semibold">Autonomous Agent</span> {lang === 'tr' ? 'gerçekleşen satış verisini Ads paneliyle birleştirip karlılık getiren reklamlara bütçe basar.' : 'combines realized sales data with the Ads panel and allocates budget to profitable ads.'}
                 </p>
               </div>
 

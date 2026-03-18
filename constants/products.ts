@@ -66,8 +66,8 @@ export const topCards: Product[] = [
 export const bottomCards: Product[] = [
   {
     id: 'otonom-agent',
-    name: 'Otonom Ajan',
-    nameTr: 'Otonom Ajan',
+    name: 'Autonomous Agent',
+    nameTr: 'Autonomous Agent',
     slug: 'agento-otonom-agent',
     description: 'E-Ticaretiniz İçin 7/24 Çalışan Otonom Yapay Zeka Dijital Pazarlama Uzmanınız.',
     descriptionTr: 'E-Ticaretiniz İçin 7/24 Çalışan Otonom Yapay Zeka Dijital Pazarlama Uzmanınız.',
@@ -92,8 +92,8 @@ export const bottomCards: Product[] = [
   },
   {
     id: 'whatsapp-satis',
-    name: 'WhatsApp Satış Otomasyonu',
-    nameTr: 'WhatsApp Satış Otomasyonu',
+    name: 'WhatsApp Sales Automation',
+    nameTr: 'WhatsApp Sales Automation',
     slug: 'agento-wh-sales',
     description: 'Müşteri mesajlarını anlayan, ürün öneren ve sipariş toplayan akıllı satış altyapısı.',
     descriptionTr: 'Müşteri mesajlarını anlayan, ürün öneren ve sipariş toplayan akıllı satış altyapısı.',
