@@ -4,7 +4,7 @@ import { motion } from 'motion/react';
 
 export function AiHubOrb() {
   return (
-    <div className="relative w-[400px] h-[400px] flex items-center justify-center">
+    <div className="relative w-full max-w-[400px] aspect-square flex items-center justify-center">
       {/* Background Glow (Optimized with radial gradient instead of blur) */}
       <div className="absolute inset-0 rounded-full" style={{ background: 'radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.15) 0%, transparent 60%)' }}></div>
       
