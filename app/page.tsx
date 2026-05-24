@@ -42,7 +42,7 @@ const PRODUCT_IMAGES: Record<string, string> = {
   eczatrend:
     'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&q=80&auto=format&fit=crop',
   'whatsapp-satis':
-    'https://images.unsplash.com/photo-1611605698335-8b1569810432?w=1200&q=80&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1636751364472-12bfad09b451?w=1200&q=80&auto=format&fit=crop',
 };
 
 const allProducts = [...topCards, ...bottomCards];
