@@ -367,7 +367,7 @@ function ProcessSlide({
 }
 
 /* ============================================================
- * WORK CARD — Lume-style sticky stacking card
+ * WORK CARD — Lume-style full-bleed slide (one card per ~viewport)
  * ============================================================ */
 
 type WorkCardProps = {
@@ -392,7 +392,6 @@ function WorkCard({
   href,
 }: WorkCardProps) {
   const isMint = accent === 'mint';
-  const topOffset = 96 + index * 14;
   const accentColor = isMint ? '#8EF0B5' : '#c084fc';
   const accentBorder = isMint
     ? 'rgba(142,240,181,0.32)'
@@ -407,7 +406,7 @@ function WorkCard({
       style={{
         borderColor: accentBorder,
         background: '#0E1014',
-        height: 'min(78vh, 720px)',
+        height: 'min(86vh, 780px)',
         boxShadow: `0 30px 80px -30px rgba(0,0,0,0.7), 0 0 60px -20px ${accentGlow}`,
       }}
     >
@@ -483,20 +482,16 @@ function WorkCard({
     </div>
   );
 
-  return (
-    <div className="sticky" style={{ top: `${topOffset}px` }}>
-      {href ? (
-        <Link
-          href={href}
-          aria-label={`Open ${title} case study`}
-          className="group block"
-        >
-          {inner}
-        </Link>
-      ) : (
-        <div className="group">{inner}</div>
-      )}
-    </div>
+  return href ? (
+    <Link
+      href={href}
+      aria-label={`Open ${title} case study`}
+      className="group block"
+    >
+      {inner}
+    </Link>
+  ) : (
+    <div className="group">{inner}</div>
   );
 }
 
@@ -547,8 +542,8 @@ export function EcommerceScrollStory() {
       </div>
 
       {/* Stacking work cards */}
-      <div className="relative max-w-[1380px] mx-auto px-8 pb-[24vh]">
-        <div className="space-y-[24vh]">
+      <div className="relative max-w-[1380px] mx-auto px-8 pb-24">
+        <div className="space-y-[7vh]">
           {cards.map((card, i) => (
             <WorkCard key={i} {...card} />
           ))}
