@@ -7,18 +7,50 @@ import * as Icons from 'lucide-react';
 import { useLanguage } from '@/components/LanguageContext';
 import { useState } from 'react';
 
+type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
+
 export default function ContactPage() {
   const { lang } = useLanguage();
-  const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+  const [formStatus, setFormStatus] = useState<FormStatus>('idle');
+  const [formError, setFormError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (formStatus === 'submitting') return;
+
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const payload = {
+      name: String(data.get('name') ?? ''),
+      email: String(data.get('email') ?? ''),
+      company: String(data.get('company') ?? ''),
+      solution: String(data.get('solution') ?? ''),
+      message: String(data.get('message') ?? ''),
+    };
+
     setFormStatus('submitting');
-    // Simulate API call
-    setTimeout(() => {
+    setFormError(null);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const body = (await res.json().catch(() => ({}))) as {
+        ok?: boolean;
+        error?: string;
+      };
+      if (!res.ok || !body.ok) {
+        throw new Error(body.error ?? `HTTP ${res.status}`);
+      }
       setFormStatus('success');
-      setTimeout(() => setFormStatus('idle'), 3000);
-    }, 1500);
+      form.reset();
+      setTimeout(() => setFormStatus('idle'), 5000);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Unknown error';
+      setFormError(msg);
+      setFormStatus('error');
+    }
   };
 
   return (
@@ -148,18 +180,20 @@ export default function ContactPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-300 ml-1">{lang === 'tr' ? 'Ad Soyad' : 'Full Name'}</label>
-                  <input 
-                    type="text" 
-                    required 
+                  <input
+                    type="text"
+                    name="name"
+                    required
                     placeholder={lang === 'tr' ? "Adınız Soyadınız" : "Your Full Name"}
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#8EF0B5]/50 focus:ring-1 focus:ring-[#8EF0B5]/50 transition-all font-light"
                   />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-300 ml-1">{lang === 'tr' ? 'E-Posta' : 'Email'}</label>
-                  <input 
-                    type="email" 
-                    required 
+                  <input
+                    type="email"
+                    name="email"
+                    required
                     placeholder="corporate@company.com"
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#8EF0B5]/50 focus:ring-1 focus:ring-[#8EF0B5]/50 transition-all font-light"
                   />
@@ -169,19 +203,22 @@ export default function ContactPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-300 ml-1">{lang === 'tr' ? 'Şirket Adı' : 'Company Name'}</label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
+                    name="company"
                     placeholder={lang === 'tr' ? "Şirketiniz" : "Your Company"}
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#8EF0B5]/50 focus:ring-1 focus:ring-[#8EF0B5]/50 transition-all font-light"
                   />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-300 ml-1">{lang === 'tr' ? 'İlgilendiğiniz Çözüm' : 'Solution of Interest'}</label>
-                  <select 
+                  <select
+                    name="solution"
+                    defaultValue=""
                     className="w-full bg-[#13151A] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#8EF0B5]/50 focus:ring-1 focus:ring-[#8EF0B5]/50 transition-all font-light appearance-none"
                     style={{ backgroundImage: "url(\"data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(255, 255, 255, 0.5)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e\")", backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem center', backgroundSize: '1em' }}
                   >
-                    <option value="none">{lang === 'tr' ? 'Bir seçim yapınız...' : 'Select an option...'}</option>
+                    <option value="">{lang === 'tr' ? 'Bir seçim yapınız...' : 'Select an option...'}</option>
                     <option value="otonom_ajan">{lang === 'tr' ? 'Otonom Ajan' : 'Autonomous Agent'}</option>
                     <option value="whatsapp_satis">{lang === 'tr' ? 'WhatsApp Satış Otomasyonu' : 'WhatsApp Sales Automation'}</option>
                     <option value="structa_ai">{lang === 'tr' ? 'Structa AI (İçerik Stüdyosu)' : 'Structa AI (Content Studio)'}</option>
@@ -193,20 +230,35 @@ export default function ContactPage() {
 
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-300 ml-1">{lang === 'tr' ? 'Mesajınız' : 'Your Message'}</label>
-                <textarea 
+                <textarea
                   required
+                  name="message"
                   rows={4}
                   placeholder={lang === 'tr' ? "İşletmenizin ihtiyaçlarını ve hedeflerinizi kısaca bizlerle paylaşın." : "Briefly share your business needs and goals with us."}
                   className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#8EF0B5]/50 focus:ring-1 focus:ring-[#8EF0B5]/50 transition-all font-light resize-none"
                 ></textarea>
               </div>
 
-              <button 
-                type="submit" 
-                disabled={formStatus !== 'idle'}
+              {formStatus === 'error' && (
+                <div className="rounded-xl border border-red-500/30 bg-red-500/[0.08] px-4 py-3 text-sm text-red-300 flex items-start gap-2">
+                  <Icons.AlertTriangle size={16} className="mt-0.5 shrink-0" />
+                  <div>
+                    {lang === 'tr'
+                      ? 'Mesaj gönderilemedi. Lütfen tekrar deneyin veya info@agetolabs.com adresine yazın.'
+                      : 'We could not send your message. Please try again or email info@agetolabs.com directly.'}
+                    {formError && (
+                      <div className="mt-1 font-mono text-[10px] text-red-300/70">{formError}</div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={formStatus === 'submitting' || formStatus === 'success'}
                 className="w-full h-14 bg-[#8EF0B5] hover:bg-[#8EF0B5]/90 text-black font-bold text-lg rounded-xl flex items-center justify-center transition-all shadow-[0_4px_20px_rgba(142,240,181,0.2)] hover:shadow-[0_4px_25px_rgba(142,240,181,0.4)] disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                {formStatus === 'idle' && (
+                {(formStatus === 'idle' || formStatus === 'error') && (
                   <>
                     {lang === 'tr' ? 'Gönder' : 'Submit'} <Icons.Send size={18} className="ml-2" />
                   </>

@@ -24,15 +24,13 @@ export function Footer() {
             <p className="text-gray-400 text-sm leading-relaxed max-w-sm">
               {t('footerBrandLine')}
             </p>
-            <div className="flex items-center gap-4 pt-2">
-              <a href="#" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-[#8EF0B5] hover:border-[#8EF0B5]/50 transition-all bg-white/5">
-                <Icons.Twitter size={18} />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-[#8EF0B5] hover:border-[#8EF0B5]/50 transition-all bg-white/5">
-                <Icons.Linkedin size={18} />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-[#8EF0B5] hover:border-[#8EF0B5]/50 transition-all bg-white/5">
-                <Icons.Instagram size={18} />
+            <div className="flex items-center gap-3 pt-2">
+              <a
+                href="mailto:info@agetolabs.com"
+                className="inline-flex h-10 items-center gap-2 px-4 rounded-full border border-white/10 text-gray-300 hover:text-[#8EF0B5] hover:border-[#8EF0B5]/50 transition-all bg-white/5"
+              >
+                <Icons.Mail size={16} />
+                <span className="text-sm font-medium">info@agetolabs.com</span>
               </a>
             </div>
           </div>
@@ -80,7 +78,6 @@ export function Footer() {
               <li><Link href="/about" className="text-gray-400 hover:text-white transition-colors text-sm">{t('aboutUs')}</Link></li>
               <li><Link href="/ecosystem" className="text-gray-400 hover:text-white transition-colors text-sm">{t('ecosystemArchitecture')}</Link></li>
               <li><Link href="/contact" className="text-gray-400 hover:text-white transition-colors text-sm">{t('contactUs')}</Link></li>
-              <li><Link href="#" className="text-gray-400 hover:text-white transition-colors text-sm">{t('careers')}</Link></li>
             </ul>
           </div>
 
@@ -90,10 +87,10 @@ export function Footer() {
               {t('legal')}
             </h4>
             <ul className="space-y-4">
-              <li><Link href="#" className="text-gray-400 hover:text-white transition-colors text-sm">{t('privacyPolicy')}</Link></li>
-              <li><Link href="#" className="text-gray-400 hover:text-white transition-colors text-sm">{t('termsOfService')}</Link></li>
-              <li><Link href="#" className="text-gray-400 hover:text-white transition-colors text-sm">{t('cookiePolicy')}</Link></li>
-              <li><Link href="#" className="text-gray-400 hover:text-white transition-colors text-sm">{t('dataProtection')}</Link></li>
+              <li><Link href="/legal/privacy" className="text-gray-400 hover:text-white transition-colors text-sm">{t('privacyPolicy')}</Link></li>
+              <li><Link href="/legal/terms" className="text-gray-400 hover:text-white transition-colors text-sm">{t('termsOfService')}</Link></li>
+              <li><Link href="/legal/cookies" className="text-gray-400 hover:text-white transition-colors text-sm">{t('cookiePolicy')}</Link></li>
+              <li><Link href="/legal/kvkk" className="text-gray-400 hover:text-white transition-colors text-sm">{t('dataProtection')}</Link></li>
             </ul>
           </div>
 

@@ -1,23 +1,82 @@
-import type {Metadata} from 'next';
+import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import './globals.css'; // Global styles
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import './globals.css';
 
 import { LanguageProvider } from '@/components/LanguageContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://agetolabs.vercel.app';
+
 export const metadata: Metadata = {
-  title: 'agetolabs | Orchestrating Autonomous Intelligence',
-  description: 'Next.js + Tailwind CSS website skeleton for agetolabs.',
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: 'agetolabs — Orchestrating Autonomous Intelligence',
+    template: '%s · agetolabs',
+  },
+  description:
+    'agetolabs builds autonomous AI ecosystems that orchestrate enterprise operations end to end — from e-commerce integrations to sales agents and content studios.',
+  applicationName: 'agetolabs',
+  keywords: [
+    'agetolabs',
+    'autonomous AI',
+    'AI agents',
+    'e-commerce',
+    'enterprise AI',
+    'AI orchestration',
+    'Structa AI',
+    'Pharma AI',
+    'WhatsApp sales automation',
+  ],
+  authors: [{ name: 'agetolabs' }],
+  creator: 'agetolabs',
+  publisher: 'agetolabs',
+  formatDetection: { email: false, address: false, telephone: false },
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    alternateLocale: ['tr_TR'],
+    url: siteUrl,
+    siteName: 'agetolabs',
+    title: 'agetolabs — Orchestrating Autonomous Intelligence',
+    description:
+      'Autonomous AI ecosystems for enterprise operations — sales agents, content studios, e-commerce orchestration.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'agetolabs — Orchestrating Autonomous Intelligence',
+    description:
+      'Autonomous AI ecosystems for enterprise operations — sales agents, content studios, e-commerce orchestration.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  },
 };
 
-export default function RootLayout({children}: {children: React.ReactNode}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.className} bg-[#0A0A0B] text-white antialiased`} suppressHydrationWarning>
-        <LanguageProvider>
-          {children}
-        </LanguageProvider>
+      <body
+        className={`${inter.className} bg-[#0A0A0B] text-white antialiased`}
+        suppressHydrationWarning
+      >
+        <LanguageProvider>{children}</LanguageProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
