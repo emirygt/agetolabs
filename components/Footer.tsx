@@ -18,7 +18,11 @@ export function Footer() {
 
           {/* Brand Column */}
           <div className="lg:col-span-2 space-y-6">
-            <Link href="/" className="inline-block transition-transform hover:scale-105 h-12 w-auto">
+            <Link
+              href="/"
+              aria-label="agetolabs · footer home link"
+              className="inline-block transition-transform hover:scale-105 h-12 w-auto"
+            >
               <Logo />
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed max-w-sm">
@@ -37,9 +41,9 @@ export function Footer() {
 
           {/* Solutions Column */}
           <div className="space-y-6">
-            <h4 className="text-white font-bold tracking-wide">
+            <h3 className="text-white font-bold tracking-wide">
               {t('solutions')}
-            </h4>
+            </h3>
             <ul className="space-y-4">
               <li>
                 <Link href="/products/agento-otonom-agent" className="text-gray-400 hover:text-[#8EF0B5] transition-colors text-sm">
@@ -71,9 +75,9 @@ export function Footer() {
 
           {/* Company Column */}
           <div className="space-y-6">
-            <h4 className="text-white font-bold tracking-wide">
+            <h3 className="text-white font-bold tracking-wide">
               {t('company')}
-            </h4>
+            </h3>
             <ul className="space-y-4">
               <li><Link href="/about" className="text-gray-400 hover:text-white transition-colors text-sm">{t('aboutUs')}</Link></li>
               <li><Link href="/ecosystem" className="text-gray-400 hover:text-white transition-colors text-sm">{t('ecosystemArchitecture')}</Link></li>
@@ -86,9 +90,9 @@ export function Footer() {
 
           {/* Legal Column */}
           <div className="space-y-6">
-            <h4 className="text-white font-bold tracking-wide">
+            <h3 className="text-white font-bold tracking-wide">
               {t('legal')}
-            </h4>
+            </h3>
             <ul className="space-y-4">
               <li><Link href="/legal/privacy" className="text-gray-400 hover:text-white transition-colors text-sm">{t('privacyPolicy')}</Link></li>
               <li><Link href="/legal/terms" className="text-gray-400 hover:text-white transition-colors text-sm">{t('termsOfService')}</Link></li>
@@ -101,10 +105,10 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-gray-300">
             &copy; {new Date().getFullYear()} Agetolabs. {t('allRightsReserved')}
           </p>
-          <div className="flex items-center gap-2 text-xs text-gray-500">
+          <div className="flex items-center gap-2 text-xs text-gray-300">
             <span>{t('poweredByLine')}</span>
             <span className="w-1.5 h-1.5 rounded-full bg-[#8EF0B5] animate-pulse"></span>
           </div>

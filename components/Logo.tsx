@@ -1,13 +1,15 @@
 export function Logo({ className = '' }: { className?: string }) {
   return (
-    <svg 
-      className={className} 
-      width="100%" 
-      height="100%" 
-      viewBox="0 0 480 96" 
+    <svg
+      className={className}
+      width="100%"
+      height="100%"
+      viewBox="0 0 480 96"
       preserveAspectRatio="xMinYMid meet"
-      fill="none" 
+      fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      focusable="false"
     >
       <defs>
         <linearGradient id="hOrbit1" x1="0%" y1="0%" x2="100%" y2="100%">

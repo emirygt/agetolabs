@@ -656,7 +656,6 @@ export const Component: React.FC = () => {
 
   /* ----- BRAND INTRO — AGETOLABS TEKNOLOJİ splash before everything else ----- */
   useEffect(() => {
-    if (!isReady) return;
     const wrap = brandIntroRef.current;
     if (!wrap) {
       setBrandIntroDone(true);
@@ -675,25 +674,25 @@ export const Component: React.FC = () => {
         y: 40,
         opacity: 0,
         filter: 'blur(14px)',
-        duration: 0.95,
+        duration: 0.7,
         ease: 'power3.out',
       })
       .from(
         tag,
-        { y: 18, opacity: 0, duration: 0.7, ease: 'power3.out' },
-        '-=0.45'
+        { y: 18, opacity: 0, duration: 0.5, ease: 'power3.out' },
+        '-=0.35'
       )
-      .to({}, { duration: 1.1 })
+      .to({}, { duration: 0.4 })
       .to(wrap, {
         autoAlpha: 0,
-        duration: 0.7,
+        duration: 0.5,
         ease: 'power2.in',
       });
 
     return () => {
       tl.kill();
     };
-  }, [isReady]);
+  }, []);
 
   /* ----- GSAP intro ----- */
   useEffect(() => {

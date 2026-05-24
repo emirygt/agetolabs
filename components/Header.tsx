@@ -39,7 +39,11 @@ export function Header() {
     <header className="fixed top-0 left-0 right-0 z-50 bg-[#0B0C10]/80 backdrop-blur-md border-b border-white/5">
       <div className="max-w-[1600px] mx-auto px-4 md:px-8 h-20 md:h-24 flex items-center justify-between gap-6">
 
-        <Link href="/" className="flex items-center h-10 md:h-12 w-44 md:w-56 shrink-0">
+        <Link
+          href="/"
+          aria-label="agetolabs · go to homepage"
+          className="flex items-center h-10 md:h-12 w-44 md:w-56 shrink-0"
+        >
           <Logo />
         </Link>
 
