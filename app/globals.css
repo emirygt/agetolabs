@@ -14,3 +14,216 @@
     stroke-dashoffset: 0;
   }
 }
+
+/* ============================================================
+ * HORIZON HERO SECTION
+ * ============================================================ */
+
+.hero-container {
+  position: relative;
+  width: 100%;
+  background: #06060c;
+  color: #ffffff;
+  /* allow scattered letters to fly outside section bounds;
+     outer page wrapper handles horizontal clipping */
+  overflow: visible;
+}
+
+.hero-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Side menu */
+.side-menu {
+  position: fixed;
+  top: 50%;
+  left: 24px;
+  transform: translateY(-50%);
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  pointer-events: auto;
+}
+
+@media (max-width: 768px) {
+  .side-menu {
+    left: 14px;
+    gap: 16px;
+  }
+}
+
+.menu-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.menu-icon span {
+  display: block;
+  width: 26px;
+  height: 1.5px;
+  background: rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease;
+}
+
+.menu-icon:hover span {
+  background: #8EF0B5;
+}
+
+.vertical-text {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  color: rgba(142, 240, 181, 0.65);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  text-transform: uppercase;
+}
+
+/* Hero content (initial section + repeated scroll-sections) */
+.hero-content,
+.content-section {
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* anchor toward the top so the Earth in the lower half stays uncovered */
+  justify-content: flex-start;
+  padding: 14vh 24px 0;
+  text-align: center;
+}
+
+.hero-title {
+  font-size: clamp(34px, 6.5vw, 80px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 0.96;
+  margin: 0;
+  color: #ffffff;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* IMPORTANT: visible so GSAP scatter transforms can carry chars outside the box */
+  overflow: visible;
+}
+
+.title-char {
+  display: inline-block;
+  background-image: linear-gradient(135deg, #ffffff 0%, #8EF0B5 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 18px rgba(142, 240, 181, 0.28));
+}
+
+.hero-subtitle {
+  margin-top: 18px;
+  max-width: 540px;
+}
+
+.cosmos-subtitle .subtitle-line {
+  font-size: clamp(13px, 1.05vw, 15px);
+  color: #c8cdd6;
+  margin: 3px 0;
+  line-height: 1.55;
+  font-weight: 400;
+}
+
+/* Scroll progress indicator (fixed) */
+.scroll-progress {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  pointer-events: none;
+}
+
+.scroll-text {
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  color: rgba(255, 255, 255, 0.55);
+  text-transform: uppercase;
+}
+
+.progress-track {
+  width: 220px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  border-radius: 999px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #8EF0B5;
+  box-shadow: 0 0 10px rgba(142, 240, 181, 0.7);
+  transition: width 0.12s linear;
+}
+
+.section-counter {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.scroll-sections {
+  position: relative;
+  z-index: 10;
+}
+
+/* ----- Brand intro splash ----- */
+.brand-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.92) 0%, rgba(0,0,0,1) 70%);
+  pointer-events: none;
+}
+
+.brand-intro-logo {
+  font-size: clamp(48px, 9vw, 128px);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  background-image: linear-gradient(135deg, #ffffff 0%, #8EF0B5 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 32px rgba(142, 240, 181, 0.45));
+}
+
+.brand-intro-tag {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: clamp(11px, 1.1vw, 14px);
+  letter-spacing: 0.6em;
+  color: #8EF0B5;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+@media (max-width: 640px) {
+  .progress-track {
+    width: 160px;
+  }
+}

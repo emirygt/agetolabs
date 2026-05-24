@@ -1,40 +1,58 @@
 'use client';
 
 import Link from 'next/link';
-import { Bot, Menu, X } from 'lucide-react';
+import { usePathname } from 'next/navigation';
+import { Bot, Menu, X, Home, Orbit, Boxes, Cpu, Users, Briefcase } from 'lucide-react';
 import { useLanguage } from '@/components/LanguageContext';
 import { Logo } from '@/components/Logo';
-import { useState } from 'react';
+import { LimelightNav, type LimelightNavItem } from '@/components/LimelightNav';
+import { useState, useMemo } from 'react';
 
 export function Header() {
   const { t, lang, setLang } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  const navItems: LimelightNavItem[] = useMemo(
+    () => [
+      { key: 'home',      label: lang === 'tr' ? 'Anasayfa' : 'Home', icon: <Home size={14} strokeWidth={1.8} />,  href: '/' },
+      { key: 'ecosystem', label: t('ecosystem'), icon: <Orbit size={14} strokeWidth={1.8} />, href: '/ecosystem' },
+      { key: 'products',  label: t('solutions'), icon: <Boxes size={14} strokeWidth={1.8} />, href: '/products' },
+      { key: 'services',  label: t('services'),  icon: <Briefcase size={14} strokeWidth={1.8} />, href: '/hizmetler/e-ticaret' },
+      { key: 'technology',label: t('technology'),icon: <Cpu size={14} strokeWidth={1.8} />,   href: '/technology' },
+      { key: 'about',     label: t('aboutUs'),   icon: <Users size={14} strokeWidth={1.8} />, href: '/about' },
+    ],
+    [t, lang]
+  );
+
+  const activeKey =
+    pathname === '/' || pathname === '/v2'  ? 'home'      :
+    pathname?.startsWith('/ecosystem')      ? 'ecosystem' :
+    pathname?.startsWith('/products')       ? 'products'  :
+    pathname?.startsWith('/hizmetler')      ? 'services'  :
+    pathname?.startsWith('/technology')     ? 'technology':
+    pathname?.startsWith('/about')          ? 'about'     :
+    undefined;
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-[#0B0C10]/80 backdrop-blur-md border-b border-white/5">
-      <div className="max-w-[1600px] mx-auto px-4 md:px-8 h-20 md:h-24 flex items-center justify-between">
-        
-        {/* Logo */}
-        <Link href="/" className="flex items-center h-10 md:h-12 w-48 md:w-64">
+      <div className="max-w-[1600px] mx-auto px-4 md:px-8 h-20 md:h-24 flex items-center justify-between gap-6">
+
+        <Link href="/" className="flex items-center h-10 md:h-12 w-44 md:w-56 shrink-0">
           <Logo />
         </Link>
-        
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-10 text-gray-300 text-sm font-medium">
-          <Link href="/ecosystem" className="hover:text-white transition-colors py-4">{t('ecosystem')}</Link>
-          <Link href="/products" className="hover:text-white transition-colors py-4">{t('solutions')}</Link>
-          <Link href="/technology" className="hover:text-white transition-colors py-4">{t('technology')}</Link>
-          <Link href="/about" className="hover:text-white transition-colors py-4">{t('aboutUs')}</Link>
+
+        <nav className="hidden lg:flex flex-1 items-center justify-center">
+          <LimelightNav items={navItems} activeKey={activeKey} />
         </nav>
-        
-        {/* Desktop Actions */}
-        <div className="hidden lg:flex items-center gap-6">
+
+        <div className="hidden lg:flex items-center gap-4 shrink-0">
           <div className="flex items-center p-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
             <button
               onClick={() => setLang('tr')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-300 ${
-                lang === 'tr' 
-                  ? 'bg-red-500/20 text-red-400 shadow-[0_0_10px_rgba(239,68,68,0.2)]' 
+                lang === 'tr'
+                  ? 'bg-red-500/20 text-red-400 shadow-[0_0_10px_rgba(239,68,68,0.2)]'
                   : 'text-gray-500 hover:text-gray-300'
               }`}
               title="Türkçe"
@@ -45,8 +63,8 @@ export function Header() {
             <button
               onClick={() => setLang('en')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-300 ${
-                lang === 'en' 
-                  ? 'bg-blue-500/20 text-blue-400 shadow-[0_0_10px_rgba(59,130,246,0.2)]' 
+                lang === 'en'
+                  ? 'bg-blue-500/20 text-blue-400 shadow-[0_0_10px_rgba(59,130,246,0.2)]'
                   : 'text-gray-500 hover:text-gray-300'
               }`}
               title="English"
@@ -55,17 +73,15 @@ export function Header() {
               <span className="text-xs font-bold">EN</span>
             </button>
           </div>
-          <Link 
-            href="/contact" 
-            className="inline-flex h-10 items-center justify-center rounded-full bg-[#8EF0B5] px-6 text-sm font-semibold text-black hover:bg-[#8EF0B5]/90 transition-colors"
+          <Link
+            href="/contact"
+            className="inline-flex h-10 items-center justify-center rounded-full bg-[#8EF0B5] px-6 text-sm font-semibold text-black hover:bg-white transition-colors shadow-[0_0_24px_rgba(142,240,181,0.25)]"
           >
             {t('getStarted')}
           </Link>
         </div>
 
-        {/* Mobile Menu Toggle Button */}
-        <div className="lg:hidden flex items-center gap-4">
-          {/* Mobile Lang Switch */}
+        <div className="lg:hidden flex items-center gap-3">
           <div className="flex items-center p-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
             <button
               onClick={() => setLang(lang === 'tr' ? 'en' : 'tr')}
@@ -75,28 +91,56 @@ export function Header() {
               <span className="text-xs font-bold">{lang.toUpperCase()}</span>
             </button>
           </div>
-          <button 
+          <button
             className="text-white p-2"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
           >
             {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
         <div className="lg:hidden absolute top-[80px] left-0 w-full bg-[#0B0C10]/95 backdrop-blur-xl border-b border-white/5 shadow-2xl animate-in slide-in-from-top-2 duration-200">
-          <nav className="flex flex-col items-center gap-6 py-8 text-gray-300 text-lg font-medium">
-            <Link onClick={() => setMobileMenuOpen(false)} href="/ecosystem" className="hover:text-[#8EF0B5] transition-colors">{t('ecosystem')}</Link>
-            <Link onClick={() => setMobileMenuOpen(false)} href="/products" className="hover:text-[#8EF0B5] transition-colors">{t('solutions')}</Link>
-            <Link onClick={() => setMobileMenuOpen(false)} href="/technology" className="hover:text-[#8EF0B5] transition-colors">{t('technology')}</Link>
-            <Link onClick={() => setMobileMenuOpen(false)} href="/about" className="hover:text-[#8EF0B5] transition-colors">{t('aboutUs')}</Link>
-            <div className="w-1/2 h-px bg-white/10 my-2"></div>
-            <Link 
+          <nav className="flex flex-col py-4 px-6">
+            {navItems.map((item) => {
+              const isActive = item.key === activeKey;
+              const Icon = () => <>{item.icon}</>;
+              return (
+                <Link
+                  key={item.key}
+                  onClick={() => setMobileMenuOpen(false)}
+                  href={item.href || '#'}
+                  className="relative flex items-center gap-3 py-3 pl-4 pr-3 rounded-xl text-base font-medium text-gray-300 hover:text-white transition-colors"
+                >
+                  <span
+                    aria-hidden
+                    className="absolute left-0 top-1/2 -translate-y-1/2 w-[2px] rounded-full transition-all duration-300"
+                    style={{
+                      height: isActive ? '60%' : '0%',
+                      background: '#8EF0B5',
+                      boxShadow: isActive
+                        ? '0 0 10px rgba(142,240,181,0.85), 0 0 20px rgba(142,240,181,0.45)'
+                        : 'none',
+                    }}
+                  />
+                  <span
+                    className={`inline-flex h-5 w-5 items-center justify-center ${
+                      isActive ? 'text-[#8EF0B5]' : 'text-gray-500'
+                    }`}
+                  >
+                    <Icon />
+                  </span>
+                  <span className={isActive ? 'text-white' : ''}>{item.label}</span>
+                </Link>
+              );
+            })}
+            <div className="w-full h-px bg-white/10 my-3" />
+            <Link
               onClick={() => setMobileMenuOpen(false)}
-              href="/contact" 
-              className="inline-flex h-12 items-center justify-center rounded-full bg-[#8EF0B5] px-8 text-base font-bold text-black hover:bg-white transition-colors"
+              href="/contact"
+              className="inline-flex h-12 items-center justify-center rounded-full bg-[#8EF0B5] px-8 text-base font-bold text-black hover:bg-white transition-colors mt-1"
             >
               {t('getStarted')}
             </Link>

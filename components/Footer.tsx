@@ -6,26 +6,23 @@ import { useLanguage } from '@/components/LanguageContext';
 import { Logo } from '@/components/Logo';
 
 export function Footer() {
-  const { lang, t } = useLanguage();
+  const { t } = useLanguage();
 
   return (
     <footer className="bg-[#050508] border-t border-white/10 pt-20 pb-10 relative overflow-hidden">
       {/* Subtle Background Glows */}
       <div className="absolute top-0 left-1/4 w-[50%] h-[30%] bg-[#8EF0B5]/5 blur-[120px] pointer-events-none rounded-full"></div>
-      
+
       <div className="max-w-[1400px] mx-auto px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8 mb-16">
-          
+
           {/* Brand Column */}
           <div className="lg:col-span-2 space-y-6">
             <Link href="/" className="inline-block transition-transform hover:scale-105 h-12 w-auto">
               <Logo />
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed max-w-sm">
-              {lang === 'tr' 
-                ? 'Şirketlerin manuel iş yükünü sıfırlayan, verileri gerçek zamanlı kararlara dönüştüren otonom yapay zeka ekosistemleri inşa ediyoruz.' 
-                : 'We build autonomous AI ecosystems that eliminate manual workloads and turn data into real-time decisions for companies.'
-              }
+              {t('footerBrandLine')}
             </p>
             <div className="flex items-center gap-4 pt-2">
               <a href="#" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-[#8EF0B5] hover:border-[#8EF0B5]/50 transition-all bg-white/5">
@@ -43,7 +40,7 @@ export function Footer() {
           {/* Solutions Column */}
           <div className="space-y-6">
             <h4 className="text-white font-bold tracking-wide">
-              {lang === 'tr' ? 'Ürünler' : 'Products'}
+              {t('solutions')}
             </h4>
             <ul className="space-y-4">
               <li>
@@ -77,26 +74,26 @@ export function Footer() {
           {/* Company Column */}
           <div className="space-y-6">
             <h4 className="text-white font-bold tracking-wide">
-              {lang === 'tr' ? 'Şirket' : 'Company'}
+              {t('company')}
             </h4>
             <ul className="space-y-4">
-              <li><Link href="/about" className="text-gray-400 hover:text-white transition-colors text-sm">{lang === 'tr' ? 'Hakkımızda' : 'About Us'}</Link></li>
-              <li><Link href="/ecosystem" className="text-gray-400 hover:text-white transition-colors text-sm">{lang === 'tr' ? 'Ekosistem Mimari' : 'Ecosystem Architecture'}</Link></li>
-              <li><Link href="/contact" className="text-gray-400 hover:text-white transition-colors text-sm">{lang === 'tr' ? 'Bizimle İletişime Geçin' : 'Contact Us'}</Link></li>
-              <li><Link href="#" className="text-gray-400 hover:text-white transition-colors text-sm">{lang === 'tr' ? 'Kariyer' : 'Careers'}</Link></li>
+              <li><Link href="/about" className="text-gray-400 hover:text-white transition-colors text-sm">{t('aboutUs')}</Link></li>
+              <li><Link href="/ecosystem" className="text-gray-400 hover:text-white transition-colors text-sm">{t('ecosystemArchitecture')}</Link></li>
+              <li><Link href="/contact" className="text-gray-400 hover:text-white transition-colors text-sm">{t('contactUs')}</Link></li>
+              <li><Link href="#" className="text-gray-400 hover:text-white transition-colors text-sm">{t('careers')}</Link></li>
             </ul>
           </div>
 
           {/* Legal Column */}
           <div className="space-y-6">
             <h4 className="text-white font-bold tracking-wide">
-              {lang === 'tr' ? 'Yasal' : 'Legal'}
+              {t('legal')}
             </h4>
             <ul className="space-y-4">
-              <li><Link href="#" className="text-gray-400 hover:text-white transition-colors text-sm">{lang === 'tr' ? 'Gizlilik Politikası' : 'Privacy Policy'}</Link></li>
-              <li><Link href="#" className="text-gray-400 hover:text-white transition-colors text-sm">{lang === 'tr' ? 'Kullanım Koşulları' : 'Terms of Service'}</Link></li>
-              <li><Link href="#" className="text-gray-400 hover:text-white transition-colors text-sm">{lang === 'tr' ? 'Çerez Politikası' : 'Cookie Policy'}</Link></li>
-              <li><Link href="#" className="text-gray-400 hover:text-white transition-colors text-sm">{lang === 'tr' ? 'KVKK Metni' : 'Data Protection Laws'}</Link></li>
+              <li><Link href="#" className="text-gray-400 hover:text-white transition-colors text-sm">{t('privacyPolicy')}</Link></li>
+              <li><Link href="#" className="text-gray-400 hover:text-white transition-colors text-sm">{t('termsOfService')}</Link></li>
+              <li><Link href="#" className="text-gray-400 hover:text-white transition-colors text-sm">{t('cookiePolicy')}</Link></li>
+              <li><Link href="#" className="text-gray-400 hover:text-white transition-colors text-sm">{t('dataProtection')}</Link></li>
             </ul>
           </div>
 
@@ -105,10 +102,10 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-gray-500">
-            &copy; {new Date().getFullYear()} AgentoLabs. {lang === 'tr' ? 'Tüm hakları saklıdır.' : 'All rights reserved.'}
+            &copy; {new Date().getFullYear()} AgentoLabs. {t('allRightsReserved')}
           </p>
           <div className="flex items-center gap-2 text-xs text-gray-500">
-            <span>{lang === 'tr' ? 'Ortak Otonom Zeka Altyapısı İle Güçlendirilmiştir' : 'Powered By Unified Autonomous Intelligence'}</span>
+            <span>{t('poweredByLine')}</span>
             <span className="w-1.5 h-1.5 rounded-full bg-[#8EF0B5] animate-pulse"></span>
           </div>
         </div>

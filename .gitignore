@@ -5,3 +5,18 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Local IDE/session artefacts
+.claude/
+tsconfig.tsbuildinfo
+
+# Experimental scenes with pending R3F type errors — break production build
+app/v2/
+components/r3f/
+components/scenes/
+
+# Source assets / scratch — do not ship
+nanobanana/
+stitch/
+agetolabs-ecommerce-page.html
+_scratch/

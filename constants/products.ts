@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-
 export type GlowType = 'purple' | 'green' | 'none';
 
 export interface Product {
@@ -22,8 +20,8 @@ export const topCards: Product[] = [
     name: 'Structa AI',
     nameTr: 'Structa AI',
     slug: 'agento-struct-editor',
-    description: 'Etkinlik ve içerik ekipleri için yapay zeka destekli content studio',
-    descriptionTr: 'Etkinlik ve içerik ekipleri için yapay zeka destekli content studio',
+    description: 'AI-powered content studio for event and content teams.',
+    descriptionTr: 'Etkinlik ve içerik ekipleri için yapay zeka destekli content studio.',
     icon: 'PenTool',
     iconColor: 'text-purple-400',
     glow: 'none',
@@ -33,7 +31,7 @@ export const topCards: Product[] = [
     name: 'Pharma AI',
     nameTr: 'Pharma AI',
     slug: 'agento-pharm-ia',
-    description: 'İlaç ve takviye gıda odaklı yapay zeka platformu. Metin üretir, görsel oluşturur, ürünleri analiz eder.',
+    description: 'AI platform focused on pharmaceuticals and supplements. Generates copy, creates visuals, analyzes products.',
     descriptionTr: 'İlaç ve takviye gıda odaklı yapay zeka platformu. Metin üretir, görsel oluşturur, ürünleri analiz eder.',
     icon: 'FlaskConical',
     iconColor: 'text-[#8EF0B5]',
@@ -69,8 +67,8 @@ export const bottomCards: Product[] = [
     name: 'Autonomous Agent',
     nameTr: 'Autonomous Agent',
     slug: 'agento-otonom-agent',
-    description: 'E-Ticaretiniz İçin 7/24 Çalışan Otonom Yapay Zeka Dijital Pazarlama Uzmanınız.',
-    descriptionTr: 'E-Ticaretiniz İçin 7/24 Çalışan Otonom Yapay Zeka Dijital Pazarlama Uzmanınız.',
+    description: 'Your 24/7 autonomous AI digital marketing expert for e-commerce.',
+    descriptionTr: 'E-ticaretiniz için 7/24 çalışan otonom yapay zeka dijital pazarlama uzmanınız.',
     icon: 'Bot',
     iconColor: 'text-orange-400',
     glow: 'none',
@@ -82,7 +80,7 @@ export const bottomCards: Product[] = [
     name: 'Eczaport',
     nameTr: 'Eczaport',
     slug: 'agento-eczaport',
-    description: 'Eczaneler için ortak alım, takas, sevkiyat ve güven odaklı B2B operasyon platformu.',
+    description: 'B2B operations platform for pharmacies: joint purchasing, swaps, shipping and trust.',
     descriptionTr: 'Eczaneler için ortak alım, takas, sevkiyat ve güven odaklı B2B operasyon platformu.',
     icon: 'Store',
     iconColor: 'text-purple-400',
@@ -95,11 +93,10 @@ export const bottomCards: Product[] = [
     name: 'WhatsApp Sales Automation',
     nameTr: 'WhatsApp Sales Automation',
     slug: 'agento-wh-sales',
-    description: 'Müşteri mesajlarını anlayan, ürün öneren ve sipariş toplayan akıllı satış altyapısı.',
+    description: 'Smart sales infrastructure that understands customer messages, recommends products, and captures orders.',
     descriptionTr: 'Müşteri mesajlarını anlayan, ürün öneren ve sipariş toplayan akıllı satış altyapısı.',
     icon: 'MessageCircle',
     iconColor: 'text-[#8EF0B5]',
     glow: 'green',
   },
 ];
-

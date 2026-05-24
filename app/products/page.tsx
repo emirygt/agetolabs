@@ -1,90 +1,374 @@
 'use client';
 
+import Link from 'next/link';
+import * as Icons from 'lucide-react';
+import { motion } from 'motion/react';
+
 import { topCards, bottomCards } from '@/constants/products';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
-import * as Icons from 'lucide-react';
-import Link from 'next/link';
 import { useLanguage } from '@/components/LanguageContext';
+import {
+  MountainShowcase,
+  type ScatterItem,
+} from '@/components/ui/mountain-showcase';
+import {
+  CardStack,
+  type CardStackItem,
+} from '@/components/ui/card-stack';
+
+/* ============================================================
+ * Per-product Unsplash imagery (reuses homepage map)
+ * ============================================================ */
+const PRODUCT_IMAGES: Record<string, string> = {
+  'struct-ia-top':
+    'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200&q=80&auto=format&fit=crop',
+  'pharm-ia-top':
+    'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=1200&q=80&auto=format&fit=crop',
+  'nexus-flow':
+    'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80&auto=format&fit=crop',
+  'price-compare':
+    'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&q=80&auto=format&fit=crop',
+  'otonom-agent':
+    'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&q=80&auto=format&fit=crop',
+  eczatrend:
+    'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&q=80&auto=format&fit=crop',
+  'whatsapp-satis':
+    'https://images.unsplash.com/photo-1611605698335-8b1569810432?w=1200&q=80&auto=format&fit=crop',
+};
 
 export default function ProductsPage() {
   const { t, lang } = useLanguage();
   const allProducts = [...topCards, ...bottomCards];
 
+  /* Scattered chips across the mountain landscape — mix of products + service tags.
+     Positions are hand-tuned %s so chips spread evenly and don't clip the centre.  */
+  const scatterItems: ScatterItem[] = [
+    // ----- Products (mint accent) -----
+    {
+      id: 'p-structa',
+      label: lang === 'tr' ? 'Structa AI' : 'Structa AI',
+      icon: 'PenTool',
+      href: '/products/agento-struct-editor',
+      x: 14,
+      y: 32,
+      size: 1.05,
+      variant: 'card',
+      accent: 'mint',
+    },
+    {
+      id: 'p-pharma',
+      label: lang === 'tr' ? 'Pharma AI' : 'Pharma AI',
+      icon: 'FlaskConical',
+      href: '/products/agento-pharm-ia',
+      x: 30,
+      y: 22,
+      size: 1.05,
+      variant: 'card',
+      accent: 'mint',
+    },
+    {
+      id: 'p-otonom',
+      label: lang === 'tr' ? 'Autonomous Agent' : 'Autonomous Agent',
+      icon: 'Bot',
+      href: '/products/agento-otonom-agent',
+      x: 48,
+      y: 30,
+      size: 1.05,
+      variant: 'card',
+      accent: 'mint',
+    },
+    {
+      id: 'p-nexus',
+      label: lang === 'tr' ? 'Agento Flow' : 'Agento Flow',
+      icon: 'Waypoints',
+      href: '/products/agento-company-flow',
+      x: 66,
+      y: 24,
+      size: 1.05,
+      variant: 'card',
+      accent: 'purple',
+    },
+    {
+      id: 'p-price',
+      label: lang === 'tr' ? 'priceCompare' : 'priceCompare',
+      icon: 'Search',
+      href: '/products/agento-price-compare',
+      x: 84,
+      y: 32,
+      size: 1.05,
+      variant: 'card',
+      accent: 'mint',
+    },
+    {
+      id: 'p-ecza',
+      label: lang === 'tr' ? 'Eczaport' : 'Eczaport',
+      icon: 'Store',
+      href: '/products/agento-eczaport',
+      x: 22,
+      y: 50,
+      size: 1,
+      variant: 'card',
+      accent: 'purple',
+    },
+    {
+      id: 'p-wa',
+      label: lang === 'tr' ? 'WhatsApp Sales' : 'WhatsApp Sales',
+      icon: 'MessageCircle',
+      href: '/products/agento-wh-sales',
+      x: 56,
+      y: 56,
+      size: 1,
+      variant: 'card',
+      accent: 'mint',
+    },
+
+    // ----- Service / capability tags (smaller chips) -----
+    {
+      id: 't-web',
+      label: lang === 'tr' ? 'Web Siteleri' : 'Websites',
+      icon: 'Globe',
+      href: '/hizmetler/e-ticaret',
+      x: 40,
+      y: 70,
+      size: 0.92,
+      variant: 'chip',
+      accent: 'white',
+    },
+    {
+      id: 't-eticaret',
+      label: lang === 'tr' ? 'E-ticaret' : 'E-commerce',
+      icon: 'ShoppingBag',
+      href: '/hizmetler/e-ticaret',
+      x: 74,
+      y: 50,
+      size: 0.95,
+      variant: 'chip',
+      accent: 'mint',
+    },
+    {
+      id: 't-erp',
+      label: 'ERP Integration',
+      icon: 'Database',
+      href: '/hizmetler/e-ticaret',
+      x: 12,
+      y: 68,
+      size: 0.9,
+      variant: 'chip',
+      accent: 'white',
+    },
+    {
+      id: 't-crm',
+      label: 'CRM Sync',
+      icon: 'Users',
+      href: '/hizmetler/e-ticaret',
+      x: 88,
+      y: 64,
+      size: 0.9,
+      variant: 'chip',
+      accent: 'white',
+    },
+    {
+      id: 't-market',
+      label: lang === 'tr' ? 'Pazaryerleri' : 'Marketplaces',
+      icon: 'Store',
+      href: '/hizmetler/e-ticaret',
+      x: 28,
+      y: 82,
+      size: 0.9,
+      variant: 'chip',
+      accent: 'purple',
+    },
+    {
+      id: 't-dash',
+      label: lang === 'tr' ? 'Dashboardlar' : 'Dashboards',
+      icon: 'LayoutDashboard',
+      href: '/hizmetler/e-ticaret',
+      x: 62,
+      y: 82,
+      size: 0.9,
+      variant: 'chip',
+      accent: 'white',
+    },
+    {
+      id: 't-agents',
+      label: 'AI Agents',
+      icon: 'Sparkles',
+      href: '/products',
+      x: 84,
+      y: 78,
+      size: 0.95,
+      variant: 'chip',
+      accent: 'mint',
+    },
+    {
+      id: 't-auto',
+      label: lang === 'tr' ? 'Otomasyon' : 'Automation',
+      icon: 'Workflow',
+      href: '/products',
+      x: 6,
+      y: 50,
+      size: 0.9,
+      variant: 'chip',
+      accent: 'purple',
+    },
+  ];
+
+  const stackItems: CardStackItem[] = allProducts.map((p) => ({
+    id: p.id,
+    title: lang === 'tr' ? (p.nameTr ?? p.name) : p.name,
+    description:
+      lang === 'tr' ? (p.descriptionTr ?? p.description) : p.description,
+    imageSrc: PRODUCT_IMAGES[p.id],
+    href: `/products/${p.slug}`,
+    ctaLabel: t('products_view_details'),
+  }));
+
   return (
-    <div className="min-h-screen bg-[#0B0C10] text-white selection:bg-[#8EF0B5]/30 flex flex-col pt-32 relative overflow-hidden">
-      {/* Background Gradients */}
+    <div className="min-h-screen bg-[#0B0C10] text-white selection:bg-[#8EF0B5]/30 flex flex-col relative overflow-x-clip">
+      {/* Subtle ambient gradients */}
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-[#8EF0B5]/10 blur-[150px] rounded-full"></div>
-        <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-purple-500/10 blur-[150px] rounded-full"></div>
+        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-[#8EF0B5]/10 blur-[150px] rounded-full" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-purple-500/10 blur-[150px] rounded-full" />
       </div>
 
       <Header />
-      
-      <main className="flex-1 relative z-10 max-w-[1400px] mx-auto w-full px-8 pb-32">
-        {/* Header Section */}
-        <div className="text-center max-w-3xl mx-auto mb-20 animate-in fade-in slide-in-from-bottom-6 duration-700">
-          <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 mt-10">
-            <span className="text-[#8EF0B5]">Agento</span> {lang === 'tr' ? 'Ürün Ekosistemi' : 'Product Ecosystem'}
-          </h1>
-          <p className="text-xl text-gray-400 leading-relaxed">
-            {lang === 'tr' 
-              ? 'Yeni nesil yapay zeka ajanlarımızla iş akışlarınızı otomatikleştirin, operasyonel hızınızı artırın ve rakiplerinizin ötesine geçin.' 
-              : 'Automate your workflows, increase operational speed, and outperform your competitors with our next-generation AI agents.'}
-          </p>
+
+      <main className="flex-1 relative z-10 w-full pt-32 pb-32">
+        {/* =====================================================
+            Page header
+        ===================================================== */}
+        <div className="max-w-3xl mx-auto px-6 text-center mb-20">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="text-5xl md:text-6xl font-bold tracking-tight mb-6"
+          >
+            <span className="text-[#8EF0B5]">{t('products_page_title_a')}</span>{' '}
+            {t('products_page_title_b')}
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="text-xl text-gray-400 leading-relaxed"
+          >
+            {t('products_page_subtitle')}
+          </motion.p>
         </div>
 
-        {/* Products Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {allProducts.map((product, idx) => {
-            const IconComponent = (Icons as any)[product.icon] || Icons.Box;
-            const name = lang === 'tr' && product.nameTr ? product.nameTr : product.name;
-            const description = lang === 'tr' && product.descriptionTr ? product.descriptionTr : product.description;
+        {/* =====================================================
+            SHOWCASE — Mountain spotlight with scattered chips
+        ===================================================== */}
+        <section className="relative w-full mb-32">
+          <div className="max-w-[1400px] mx-auto px-6 mb-10">
+            <div className="flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-[0.3em] text-[#8EF0B5]/80">
+              <span className="block w-8 h-px bg-[#8EF0B5]/60" />
+              {t('products_flagship_eyebrow')}
+            </div>
+            <h2 className="mt-4 text-3xl md:text-4xl font-bold tracking-tight max-w-[22ch]">
+              {t('products_flagship_heading')}
+            </h2>
+            <p className="mt-3 text-gray-400 max-w-[58ch]">
+              {t('products_flagship_desc')}
+            </p>
+          </div>
 
-            return (
-              <Link 
-                key={product.id} 
-                href={`/products/${product.slug}`}
-                className="group relative bg-[#13151A]/80 backdrop-blur-sm border border-white/5 rounded-[32px] p-10 hover:border-[#8EF0B5]/50 hover:bg-[#13151A] transition-all duration-500 overflow-hidden flex flex-col h-full animate-in fade-in slide-in-from-bottom-8"
-                style={{ animationDelay: `${idx * 100}ms` }}
-              >
-                {/* Glow Background inside card */}
-                {product.glow === 'purple' && (
-                  <div className="absolute -top-1/2 -right-1/2 w-full h-full bg-purple-500/10 blur-[100px] rounded-full group-hover:bg-purple-500/20 transition-all duration-500"></div>
-                )}
-                {product.glow === 'green' && (
-                  <div className="absolute -top-1/2 -right-1/2 w-full h-full bg-[#8EF0B5]/10 blur-[100px] rounded-full group-hover:bg-[#8EF0B5]/20 transition-all duration-500"></div>
-                )}
+          <MountainShowcase items={scatterItems} />
+        </section>
 
-                <div className="relative z-10 flex flex-col h-full">
-                  <div className="flex items-center justify-between mb-8">
-                    <div className={`w-16 h-16 rounded-2xl bg-white/[0.05] border border-white/10 flex items-center justify-center ${product.iconColor} group-hover:scale-110 transition-transform duration-500`}>
-                      <IconComponent size={32} strokeWidth={1.5} />
-                    </div>
-                    <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-500 group-hover:text-white group-hover:bg-[#8EF0B5] group-hover:border-[#8EF0B5] transition-all duration-300">
-                      <Icons.ArrowRight size={20} className="group-hover:-rotate-45 transition-transform duration-300 group-hover:text-black" />
-                    </div>
-                  </div>
+        {/* =====================================================
+            EXPLORE ALL — Card Stack
+        ===================================================== */}
+        <section className="relative w-full">
+          <div className="max-w-[1400px] mx-auto px-6 mb-12">
+            <div className="flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-[0.3em] text-[#8EF0B5]/80">
+              <span className="block w-8 h-px bg-[#8EF0B5]/60" />
+              {t('products_explore_eyebrow')}
+            </div>
+            <h2 className="mt-4 text-3xl md:text-4xl font-bold tracking-tight max-w-[22ch]">
+              {t('products_explore_heading')}
+            </h2>
+            <p className="mt-3 text-gray-400 max-w-[58ch]">
+              {t('products_explore_desc')}
+            </p>
+          </div>
 
-                  <h3 className="text-3xl font-bold text-white mb-4 group-hover:text-[#8EF0B5] transition-colors">{name}</h3>
-                  <p className="text-gray-400 text-lg leading-relaxed mb-8 flex-1">
-                    {description}
-                  </p>
-
-                  <div className="flex items-center gap-3 mt-auto">
-                    <span className="text-sm font-semibold text-white/60 group-hover:text-white transition-colors">
-                      {lang === 'tr' ? 'Detayları İncele' : 'View Details'}
-                    </span>
-                    <div className="h-[1px] flex-1 bg-gradient-to-r from-white/10 to-transparent group-hover:from-[#8EF0B5]/50 transition-colors"></div>
-                  </div>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
+          <ProductCardStack items={stackItems} />
+        </section>
       </main>
 
       <Footer />
+    </div>
+  );
+}
+
+/* ============================================================
+ * Card-Stack with brand-styled cards + CTA
+ * ============================================================ */
+function ProductCardStack({ items }: { items: CardStackItem[] }) {
+  const { t } = useLanguage();
+
+  return (
+    <div className="relative w-full max-w-[1400px] mx-auto px-4">
+      <CardStack
+        items={items}
+        cardWidth={520}
+        cardHeight={340}
+        loop
+        showDots
+        renderCard={(item, { active }) => (
+          <div className="relative h-full w-full bg-[#0d0e12]">
+            {/* image */}
+            {item.imageSrc && (
+              <img
+                src={item.imageSrc}
+                alt={item.title}
+                className="absolute inset-0 h-full w-full object-cover"
+                draggable={false}
+              />
+            )}
+            <div
+              aria-hidden
+              className="absolute inset-0"
+              style={{
+                background:
+                  'linear-gradient(180deg, rgba(13,14,18,0.15) 0%, rgba(13,14,18,0.75) 65%, rgba(13,14,18,0.95) 100%)',
+              }}
+            />
+
+            {/* corner accent */}
+            <span
+              aria-hidden
+              className="absolute top-0 left-0 h-[3px] w-1/3 bg-[#8EF0B5]"
+              style={{ boxShadow: '0 0 16px rgba(142,240,181,0.7)' }}
+            />
+
+            <div className="relative z-10 flex h-full flex-col justify-end p-7">
+              <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-white">
+                {item.title}
+              </h3>
+              {item.description && (
+                <p className="mt-2 text-sm md:text-[15px] text-white/80 leading-relaxed line-clamp-3 max-w-[44ch]">
+                  {item.description}
+                </p>
+              )}
+
+              {active && item.href && (
+                <Link
+                  href={item.href}
+                  className="mt-5 inline-flex w-fit items-center gap-2 rounded-full bg-[#8EF0B5] px-5 py-2 text-sm font-semibold text-black hover:bg-white transition-colors shadow-[0_0_24px_rgba(142,240,181,0.4)]"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {item.ctaLabel ?? t('products_view_details')}
+                  <Icons.ArrowRight size={14} strokeWidth={2.4} />
+                </Link>
+              )}
+            </div>
+          </div>
+        )}
+      />
     </div>
   );
 }
