@@ -3,6 +3,7 @@
 import { topCards, bottomCards } from '@/constants/products';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
+import { RobotCompanion } from '@/components/RobotCompanion';
 import * as Icons from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -26,7 +27,8 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
   return (
     <div className="min-h-screen bg-[#0B0C10] text-white selection:bg-purple-500/30 flex flex-col">
       <Header />
-      
+      <RobotCompanion />
+
       <main className="flex-1 pt-32 pb-16 relative z-10 max-w-[1200px] mx-auto px-8 w-full">
         <Link href="/" className="inline-flex items-center text-gray-400 hover:text-white mb-12 transition-colors">
           <Icons.ArrowLeft size={16} className="mr-2" />

@@ -7,6 +7,7 @@ import { motion } from 'motion/react';
 import { topCards, bottomCards } from '@/constants/products';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
+import { RobotCompanion } from '@/components/RobotCompanion';
 import { useLanguage } from '@/components/LanguageContext';
 import {
   MountainShowcase,
@@ -33,8 +34,7 @@ const PRODUCT_IMAGES: Record<string, string> = {
     'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&q=80&auto=format&fit=crop',
   eczatrend:
     'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&q=80&auto=format&fit=crop',
-  'whatsapp-satis':
-    'https://images.unsplash.com/photo-1636751364472-12bfad09b451?w=1200&q=80&auto=format&fit=crop',
+  'whatsapp-satis': '/products/whatsapp-sales.jpg',
 };
 
 export default function ProductsPage() {
@@ -233,6 +233,7 @@ export default function ProductsPage() {
       </div>
 
       <Header />
+      <RobotCompanion />
 
       <main className="flex-1 relative z-10 w-full pt-32 pb-32">
         {/* =====================================================

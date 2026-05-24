@@ -166,7 +166,7 @@ export function Logo({ className = '' }: { className?: string }) {
         fontWeight="700"
         letterSpacing="8"
         fill="url(#hTextGrad)"
-      >AGENTOLABS</text>
+      >AGETOLABS</text>
 
       <text
         x="130" y="70"

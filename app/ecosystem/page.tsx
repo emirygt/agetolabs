@@ -2,6 +2,7 @@
 
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
+import { RobotCompanion } from '@/components/RobotCompanion';
 import * as Icons from 'lucide-react';
 import Link from 'next/link';
 import { useLanguage } from '@/components/LanguageContext';
@@ -19,7 +20,8 @@ export default function EcosystemPage() {
       </div>
 
       <Header />
-      
+      <RobotCompanion />
+
       <main className="flex-1 relative z-10 max-w-[1400px] mx-auto w-full px-8 pb-32 space-y-32">
         
         {/* Hero Section */}
@@ -39,8 +41,8 @@ export default function EcosystemPage() {
           </h1>
           <p className="text-xl md:text-2xl text-gray-400 leading-relaxed max-w-3xl mx-auto">
             {lang === 'tr' 
-              ? 'AgentoLabs ürünleri tek başlarına sektörde devrim yaratacak güce sahiptir. Ancak bir araya geldiklerinde, şirketiniz için 7/24 çalışan kesintisiz bir Otonom İşletim Sistemi yaratırlar.'
-              : 'AgentoLabs products possess the standalone power to revolutionize the industry. However, when combined, they create a seamless Autonomous Operating System working 24/7 for your company.'
+              ? 'Agetolabs ürünleri tek başlarına sektörde devrim yaratacak güce sahiptir. Ancak bir araya geldiklerinde, şirketiniz için 7/24 çalışan kesintisiz bir Otonom İşletim Sistemi yaratırlar.'
+              : 'Agetolabs products possess the standalone power to revolutionize the industry. However, when combined, they create a seamless Autonomous Operating System working 24/7 for your company.'
             }
           </p>
         </div>
@@ -100,7 +102,7 @@ export default function EcosystemPage() {
         <div className="pt-20">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-white mb-6">
-              {lang === 'tr' ? 'AgentoLabs Sinerjisi Nasıl Çalışır?' : 'How Does AgentoLabs Synergy Work?'}
+              {lang === 'tr' ? 'Agetolabs Sinerjisi Nasıl Çalışır?' : 'How Does Agetolabs Synergy Work?'}
             </h2>
             <p className="text-xl text-gray-400 max-w-3xl mx-auto">
               {lang === 'tr'

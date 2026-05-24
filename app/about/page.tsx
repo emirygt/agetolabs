@@ -2,6 +2,7 @@
 
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
+import { RobotCompanion } from '@/components/RobotCompanion';
 import * as Icons from 'lucide-react';
 import Link from 'next/link';
 import { useLanguage } from '@/components/LanguageContext';
@@ -20,6 +21,7 @@ export default function AboutPage() {
       </div>
 
       <Header />
+      <RobotCompanion />
       
       <main className="flex-1 relative z-10 max-w-[1200px] mx-auto w-full px-8 pb-32">
         {/* Hero Section */}
@@ -39,8 +41,8 @@ export default function AboutPage() {
           </h1>
           <p className="text-xl md:text-2xl text-gray-400 leading-relaxed">
             {lang === 'tr'
-              ? 'AgentoLabs olarak şirketlerin manuel iş yükünü sıfırlayan, verileri gerçek zamanlı kararlara dönüştüren ve durmaksızın çalışan "Otonom Yapay Zeka Ekosistemleri" tasarlıyoruz.'
-              : 'At AgentoLabs, we design "Autonomous AI Ecosystems" that eliminate manual workloads, turn data into real-time decisions, and operate relentlessly.'
+              ? 'Agetolabs olarak şirketlerin manuel iş yükünü sıfırlayan, verileri gerçek zamanlı kararlara dönüştüren ve durmaksızın çalışan "Otonom Yapay Zeka Ekosistemleri" tasarlıyoruz.'
+              : 'At Agetolabs, we design "Autonomous AI Ecosystems" that eliminate manual workloads, turn data into real-time decisions, and operate relentlessly.'
             }
           </p>
         </div>
@@ -64,7 +66,7 @@ export default function AboutPage() {
           </div>
           <div className="space-y-8 pl-0 md:pl-8">
             <h2 className="text-4xl font-bold text-white">
-              {lang === 'tr' ? 'Neden AgentoLabs?' : 'Why AgentoLabs?'}
+              {lang === 'tr' ? 'Neden Agetolabs?' : 'Why Agetolabs?'}
             </h2>
             <p className="text-gray-400 text-lg leading-relaxed mb-6">
               {lang === 'tr'

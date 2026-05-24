@@ -28,7 +28,7 @@ export const translations = {
     heroTitle2: "Autonomous",
     heroTitle3: "Intelligence.",
     heroDesc:
-      "AgentoLabs builds the foundational infrastructure for the next generation of AI agents, enabling them to reason, act, and collaborate at scale.",
+      "Agetolabs builds the foundational infrastructure for the next generation of AI agents, enabling them to reason, act, and collaborate at scale.",
     exploreEcosystem: "Explore Ecosystem",
     viewDocs: "View Documentation",
     comingSoon: "Coming Soon",
@@ -214,7 +214,7 @@ export const translations = {
     heroTitle2: "Zekayı",
     heroTitle3: "Yönetiyoruz.",
     heroDesc:
-      "AgentoLabs, yeni nesil yapay zeka ajanlarının ölçeklenebilir bir şekilde akıl yürütmesini, hareket etmesini ve işbirliği yapmasını sağlayan temel altyapıyı inşa eder.",
+      "Agetolabs, yeni nesil yapay zeka ajanlarının ölçeklenebilir bir şekilde akıl yürütmesini, hareket etmesini ve işbirliği yapmasını sağlayan temel altyapıyı inşa eder.",
     exploreEcosystem: "Ekosistemi Keşfet",
     viewDocs: "Dokümantasyonu İncele",
     comingSoon: "Çok Yakında",

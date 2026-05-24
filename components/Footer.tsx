@@ -102,7 +102,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-gray-500">
-            &copy; {new Date().getFullYear()} AgentoLabs. {t('allRightsReserved')}
+            &copy; {new Date().getFullYear()} Agetolabs. {t('allRightsReserved')}
           </p>
           <div className="flex items-center gap-2 text-xs text-gray-500">
             <span>{t('poweredByLine')}</span>

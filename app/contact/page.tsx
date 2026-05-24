@@ -2,6 +2,7 @@
 
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
+import { RobotCompanion } from '@/components/RobotCompanion';
 import * as Icons from 'lucide-react';
 import { useLanguage } from '@/components/LanguageContext';
 import { useState } from 'react';
@@ -29,7 +30,8 @@ export default function ContactPage() {
       </div>
 
       <Header />
-      
+      <RobotCompanion />
+
       <main className="flex-1 relative z-10 max-w-[1400px] mx-auto w-full px-8 pb-32">
         {/* Header Section */}
         <div className="text-center max-w-3xl mx-auto pt-10 pb-20 animate-in fade-in slide-in-from-bottom-8 duration-700">
@@ -82,8 +84,8 @@ export default function ContactPage() {
                   <p className="text-gray-400 mb-2 font-light">
                     {lang === 'tr' ? 'Tüm sorularınız, demo talepleriniz ve ortaklıklar için.' : 'For all your questions, demo requests, and partnerships.'}
                   </p>
-                  <a href="mailto:hello@agentolabs.com" className="text-[#8EF0B5] hover:text-[#8EF0B5]/80 font-medium inline-flex items-center gap-2 transition-colors">
-                    hello@agentolabs.com
+                  <a href="mailto:info@agetolabs.com" className="text-[#8EF0B5] hover:text-[#8EF0B5]/80 font-medium inline-flex items-center gap-2 transition-colors">
+                    info@agetolabs.com
                     <Icons.ArrowUpRight size={16} />
                   </a>
                 </div>
@@ -130,7 +132,7 @@ export default function ContactPage() {
                   <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
                   <span className="text-green-400">{lang === 'tr' ? 'Sistemler Aktif' : 'Systems Active'}</span>
                 </div>
-                <span>{lang === 'tr' ? 'Tüm AgentoLabs altyapısı kesintisiz hizmet veriyor.' : 'All AgentoLabs infrastructure is running seamlessly.'}</span>
+                <span>{lang === 'tr' ? 'Tüm Agetolabs altyapısı kesintisiz hizmet veriyor.' : 'All Agetolabs infrastructure is running seamlessly.'}</span>
               </div>
             </div>
           </div>
