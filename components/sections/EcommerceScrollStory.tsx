@@ -1,12 +1,7 @@
 'use client';
 
-import { useRef, type ReactNode } from 'react';
-import {
-  motion,
-  useScroll,
-  useTransform,
-  type MotionValue,
-} from 'motion/react';
+import Link from 'next/link';
+import { ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '@/components/LanguageContext';
 import { translations } from '@/lib/translations';
 
@@ -75,10 +70,9 @@ const STEPS: Step[] = [
 
 type Project = {
   brand: string;
+  slug: string;
   typeKey: TKey;
   metricKey: TKey;
-  pos: { top: string; left: string };
-  size: { w: string; h: string };
   accent: 'mint' | 'purple';
   bgImage: string;
 };
@@ -86,243 +80,64 @@ type Project = {
 const PROJECTS: Project[] = [
   {
     brand: 'Turkcell Pasaj',
+    slug: 'turkcell-pasaj',
     typeKey: 'eco_project_turkcell_type',
     metricKey: 'eco_project_turkcell_metric',
-    pos: { top: '50%', left: '50%' },
-    size: { w: '24vw', h: '32vh' },
     accent: 'mint',
     bgImage: '/ecommerce/projects/turkcell-pasaj.png',
   },
   {
     brand: 'Samsung',
+    slug: 'samsung',
     typeKey: 'eco_project_samsung_type',
     metricKey: 'eco_project_samsung_metric',
-    pos: { top: '30%', left: '22%' },
-    size: { w: '20vw', h: '22vh' },
     accent: 'purple',
     bgImage: '/ecommerce/projects/samsung.png',
   },
   {
     brand: 'Lacoste',
+    slug: 'lacoste',
     typeKey: 'eco_project_lacoste_type',
     metricKey: 'eco_project_lacoste_metric',
-    pos: { top: '28%', left: '78%' },
-    size: { w: '20vw', h: '22vh' },
     accent: 'mint',
     bgImage: '/ecommerce/projects/lacoste.png',
   },
   {
     brand: 'Converse',
+    slug: 'converse',
     typeKey: 'eco_project_converse_type',
     metricKey: 'eco_project_converse_metric',
-    pos: { top: '72%', left: '24%' },
-    size: { w: '20vw', h: '20vh' },
     accent: 'purple',
     bgImage: '/ecommerce/projects/converse.png',
   },
   {
     brand: 'Vatan Bilgisayar',
+    slug: 'vatan-bilgisayar',
     typeKey: 'eco_project_vatan_type',
     metricKey: 'eco_project_vatan_metric',
-    pos: { top: '74%', left: '76%' },
-    size: { w: '22vw', h: '22vh' },
     accent: 'mint',
     bgImage: '/ecommerce/projects/vatan.png',
   },
   {
     brand: 'English Home',
+    slug: 'english-home',
     typeKey: 'eco_project_english_home_type',
     metricKey: 'eco_project_english_home_metric',
-    pos: { top: '50%', left: '8%' },
-    size: { w: '16vw', h: '28vh' },
     accent: 'purple',
     bgImage: '/ecommerce/projects/english-home.png',
   },
   {
     brand: 'GS Store',
+    slug: 'gs-store',
     typeKey: 'eco_project_gs_store_type',
     metricKey: 'eco_project_gs_store_metric',
-    pos: { top: '50%', left: '92%' },
-    size: { w: '18vw', h: '24vh' },
     accent: 'mint',
     bgImage: '/ecommerce/projects/gs-store.png',
   },
 ];
 
 /* ============================================================
- * SCENE PRIMITIVE — opacity + scale per scroll range
- * ============================================================ */
-
-const TOTAL_SCENES = 17;
-const VH_PER_SCENE = 90;
-
-type SceneChildren =
-  | ReactNode
-  | ((sceneProgress: MotionValue<number>) => ReactNode);
-
-type SceneProps = {
-  scrollY: MotionValue<number>;
-  index: number;
-  children: SceneChildren;
-};
-
-function Scene({ scrollY, index, children }: SceneProps) {
-  const sliceSize = 1 / TOTAL_SCENES;
-  const start = index * sliceSize;
-  const end = (index + 1) * sliceSize;
-  const fadeIn = Math.max(0, start - sliceSize * 0.15);
-  const fadeOut = Math.min(1, end + sliceSize * 0.15);
-
-  const opacity = useTransform(
-    scrollY,
-    [fadeIn, start + sliceSize * 0.05, end - sliceSize * 0.05, fadeOut],
-    [0, 1, 1, 0]
-  );
-  const scale = useTransform(
-    scrollY,
-    [fadeIn, start + sliceSize * 0.05, end - sliceSize * 0.05, fadeOut],
-    [0.94, 1, 1, 1.04]
-  );
-
-  const sceneProgress = useTransform(
-    scrollY,
-    [start + sliceSize * 0.05, end - sliceSize * 0.05],
-    [0, 1],
-    { clamp: true }
-  );
-
-  return (
-    <motion.div
-      style={{ opacity, scale }}
-      className="absolute inset-0 flex items-center justify-center px-6"
-    >
-      {typeof children === 'function' ? children(sceneProgress) : children}
-    </motion.div>
-  );
-}
-
-/* ============================================================
- * STAGED HERO REVEAL — title big → disperse → card
- * ============================================================ */
-
-type StagedHeroProps = {
-  sceneProgress: MotionValue<number>;
-  eyebrow: string;
-  title: string;
-  accent: 'mint' | 'purple';
-  bgImage: string;
-  children: ReactNode;
-};
-
-function StagedHero({
-  sceneProgress,
-  eyebrow,
-  title,
-  accent,
-  bgImage,
-  children,
-}: StagedHeroProps) {
-  const isMint = accent === 'mint';
-  const parts = title.split(' ');
-  const firstWord = parts[0] ?? '';
-  const restTitle = parts.slice(1).join(' ');
-
-  const heroTitleOpacity = useTransform(
-    sceneProgress,
-    [0, 0.4, 0.55],
-    [1, 1, 0]
-  );
-  const heroEyebrowOpacity = useTransform(
-    sceneProgress,
-    [0, 0.35, 0.5],
-    [1, 1, 0]
-  );
-  const firstWordX = useTransform(
-    sceneProgress,
-    [0.3, 0.6],
-    ['0vw', '-35vw']
-  );
-  const restWordX = useTransform(sceneProgress, [0.3, 0.6], ['0vw', '35vw']);
-  const cardOpacity = useTransform(sceneProgress, [0.45, 0.7], [0, 1]);
-  const cardScale = useTransform(sceneProgress, [0.45, 0.7], [0.85, 1]);
-  const bgScale = useTransform(sceneProgress, [0, 1], [1.08, 1]);
-
-  return (
-    <div className="relative w-full h-full">
-      <motion.div
-        aria-hidden
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: `url(${bgImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          opacity: 0.35,
-          scale: bgScale,
-        }}
-      />
-      <div
-        aria-hidden
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(11,12,16,0.45) 0%, rgba(11,12,16,0.85) 70%, rgba(11,12,16,0.95) 100%)',
-        }}
-      />
-
-      <motion.div
-        style={{ opacity: heroTitleOpacity }}
-        className="absolute inset-0 flex flex-col items-center justify-center text-center px-6"
-      >
-        <motion.div
-          style={{ opacity: heroEyebrowOpacity }}
-          className={`flex items-center justify-center gap-2.5 font-mono text-[12px] uppercase tracking-[0.18em] mb-8 ${
-            isMint ? 'text-[#8EF0B5]' : 'text-[#c084fc]'
-          }`}
-        >
-          <span
-            className={`block w-8 h-px ${
-              isMint ? 'bg-[#8EF0B5]' : 'bg-[#c084fc]'
-            }`}
-          />
-          {eyebrow}
-          <span
-            className={`block w-8 h-px ${
-              isMint ? 'bg-[#8EF0B5]' : 'bg-[#c084fc]'
-            }`}
-          />
-        </motion.div>
-        <div className="flex flex-col items-center gap-3 md:gap-5 max-w-[20ch]">
-          <motion.h2
-            className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.02] text-white"
-            style={{ x: firstWordX }}
-          >
-            {firstWord}
-          </motion.h2>
-          {restTitle && (
-            <motion.h2
-              className={`text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.02] ${
-                isMint ? 'text-[#8EF0B5]' : 'text-[#c084fc]'
-              }`}
-              style={{ x: restWordX }}
-            >
-              {restTitle}
-            </motion.h2>
-          )}
-        </div>
-      </motion.div>
-
-      <motion.div
-        style={{ opacity: cardOpacity, scale: cardScale }}
-        className="absolute inset-0 flex items-center justify-center px-6"
-      >
-        {children}
-      </motion.div>
-    </div>
-  );
-}
-
-/* ============================================================
- * SLIDES
+ * INTRO — Explore the Story eyebrow + headline + stats
  * ============================================================ */
 
 function HeroSlide() {
@@ -374,6 +189,10 @@ function HeroSlide() {
   );
 }
 
+/* ============================================================
+ * SERVICE SLIDE — used by mobile vertical stack
+ * ============================================================ */
+
 function ServiceSlide({ service }: { service: Service }) {
   const { t } = useLanguage();
   const isMint = service.accent === 'mint';
@@ -403,38 +222,11 @@ function ServiceSlide({ service }: { service: Service }) {
             'linear-gradient(180deg, rgba(11,12,16,0.55) 0%, rgba(11,12,16,0.82) 60%, rgba(11,12,16,0.92) 100%)',
         }}
       />
-      <div
-        aria-hidden
-        className="absolute inset-0 opacity-70 pointer-events-none mix-blend-screen"
-        style={{
-          background: isMint
-            ? 'radial-gradient(120% 90% at 0% 0%, rgba(142,240,181,0.15) 0%, transparent 55%), radial-gradient(120% 90% at 100% 100%, rgba(168,85,247,0.06) 0%, transparent 55%)'
-            : 'radial-gradient(120% 90% at 100% 0%, rgba(168,85,247,0.18) 0%, transparent 55%), radial-gradient(120% 90% at 0% 100%, rgba(142,240,181,0.05) 0%, transparent 55%)',
-        }}
-      />
-      <div
-        aria-hidden
-        className="absolute inset-0 opacity-20 pointer-events-none"
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)',
-          backgroundSize: '40px 40px',
-          maskImage:
-            'radial-gradient(ellipse 70% 60% at 50% 50%, black 30%, transparent 80%)',
-        }}
-      />
-
       <span
         className={`absolute top-0 left-0 h-[2px] w-1/2 ${
           isMint ? 'bg-[#8EF0B5]' : 'bg-[#c084fc]'
         }`}
-        style={{
-          boxShadow: `0 0 16px ${
-            isMint ? 'rgba(142,240,181,0.6)' : 'rgba(192,132,252,0.6)'
-          }`,
-        }}
       />
-
       <div className="relative">
         <div className="font-mono text-sm text-gray-500 tracking-[0.2em]">
           {service.idx}
@@ -462,6 +254,10 @@ function ServiceSlide({ service }: { service: Service }) {
   );
 }
 
+/* ============================================================
+ * MINI PROJECT CARD — used by mobile vertical stack
+ * ============================================================ */
+
 function MiniProjectCard({ project }: { project: Project }) {
   const { t } = useLanguage();
   const isMint = project.accent === 'mint';
@@ -483,15 +279,6 @@ function MiniProjectCard({ project }: { project: Project }) {
         style={{
           background:
             'linear-gradient(180deg, rgba(11,12,16,0.45) 0%, rgba(11,12,16,0.85) 100%)',
-        }}
-      />
-      <div
-        aria-hidden
-        className="absolute inset-0 opacity-70 mix-blend-screen"
-        style={{
-          background: isMint
-            ? 'radial-gradient(120% 100% at 0% 0%, rgba(142,240,181,0.18) 0%, transparent 55%)'
-            : 'radial-gradient(120% 100% at 100% 0%, rgba(168,85,247,0.18) 0%, transparent 55%)',
         }}
       />
       <span
@@ -523,133 +310,17 @@ function MiniProjectCard({ project }: { project: Project }) {
   );
 }
 
-function ProjectsIntroSlide() {
-  const { t } = useLanguage();
-  return (
-    <div className="absolute inset-0">
-      <div className="absolute inset-0 pt-32 px-8 pointer-events-none">
-        <div className="max-w-[1180px] mx-auto">
-          <div className="flex items-center gap-2.5 font-mono text-[12px] uppercase tracking-[0.14em] text-gray-500">
-            <span className="block w-1.5 h-1.5 rounded-full bg-[#8EF0B5] shadow-[0_0_10px_#8EF0B5]" />
-            {t('eco_projects_label')}
-          </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mt-4 max-w-[22ch] leading-[1.1]">
-            <span className="text-[#8EF0B5]">{t('eco_projects_h2_a')}</span>{' '}
-            {t('eco_projects_h2_b')}
-          </h2>
-        </div>
-      </div>
+/* ============================================================
+ * PROCESS SLIDE — used by both desktop and mobile process list
+ * ============================================================ */
 
-      {PROJECTS.map((p) => (
-        <div
-          key={p.brand}
-          style={{
-            position: 'absolute',
-            top: p.pos.top,
-            left: p.pos.left,
-            width: p.size.w,
-            height: p.size.h,
-            transform: 'translate(-50%, -50%)',
-          }}
-        >
-          <MiniProjectCard project={p} />
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function ProjectHeroSlide({ project }: { project: Project }) {
-  const { t } = useLanguage();
-  const isMint = project.accent === 'mint';
-  return (
-    <div
-      className="relative w-full max-w-[1100px] aspect-[16/9] rounded-3xl border border-white/[0.08] bg-[#13151A] overflow-hidden"
-      style={{
-        boxShadow: `0 50px 120px -30px rgba(0,0,0,0.8), 0 0 80px -30px ${
-          isMint ? 'rgba(142,240,181,0.35)' : 'rgba(168,85,247,0.35)'
-        }`,
-      }}
-    >
-      <div
-        aria-hidden
-        className="absolute inset-0"
-        style={{
-          backgroundImage: `url(${project.bgImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          opacity: 0.65,
-        }}
-      />
-      <div
-        aria-hidden
-        className="absolute inset-0"
-        style={{
-          background:
-            'linear-gradient(180deg, rgba(11,12,16,0.35) 0%, rgba(11,12,16,0.75) 70%, rgba(11,12,16,0.9) 100%)',
-        }}
-      />
-      <div
-        aria-hidden
-        className="absolute inset-0 opacity-80 mix-blend-screen"
-        style={{
-          background: isMint
-            ? 'radial-gradient(120% 100% at 0% 0%, rgba(142,240,181,0.22) 0%, transparent 55%), radial-gradient(120% 100% at 100% 100%, rgba(168,85,247,0.10) 0%, transparent 55%)'
-            : 'radial-gradient(120% 100% at 100% 0%, rgba(168,85,247,0.28) 0%, transparent 55%), radial-gradient(120% 100% at 0% 100%, rgba(142,240,181,0.08) 0%, transparent 55%)',
-        }}
-      />
-      <div
-        aria-hidden
-        className="absolute inset-0 opacity-30"
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)',
-          backgroundSize: '48px 48px',
-          maskImage:
-            'radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 80%)',
-        }}
-      />
-      <span
-        className={`absolute top-0 left-0 h-[3px] w-1/2 ${
-          isMint ? 'bg-[#8EF0B5]' : 'bg-[#c084fc]'
-        }`}
-        style={{
-          boxShadow: `0 0 20px ${
-            isMint ? 'rgba(142,240,181,0.8)' : 'rgba(192,132,252,0.8)'
-          }`,
-        }}
-      />
-
-      <div className="relative h-full flex flex-col justify-center items-center text-center px-12 py-12">
-        <div
-          className={`flex items-center gap-2.5 font-mono text-xs md:text-sm uppercase tracking-[0.22em] ${
-            isMint ? 'text-[#8EF0B5]' : 'text-[#c084fc]'
-          }`}
-        >
-          <span
-            className={`inline-block w-1.5 h-1.5 rounded-full ${
-              isMint ? 'bg-[#8EF0B5]' : 'bg-[#c084fc]'
-            }`}
-            style={{
-              boxShadow: `0 0 12px ${
-                isMint ? 'rgba(142,240,181,0.9)' : 'rgba(192,132,252,0.9)'
-              }`,
-            }}
-          />
-          {t(project.typeKey)}
-        </div>
-        <h2 className="font-bold tracking-tight text-white leading-[1] mt-8 text-5xl md:text-7xl lg:text-8xl">
-          {project.brand}
-        </h2>
-        <p className="text-[#9CA3AF] text-lg md:text-xl mt-8 max-w-[60ch] leading-relaxed">
-          {t(project.metricKey)}
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function ProcessSlide({ step, totalSteps }: { step: Step; totalSteps: number }) {
+function ProcessSlide({
+  step,
+  totalSteps,
+}: {
+  step: Step;
+  totalSteps: number;
+}) {
   const { t } = useLanguage();
   const stepNum = parseInt(step.idx, 10);
   return (
@@ -696,116 +367,219 @@ function ProcessSlide({ step, totalSteps }: { step: Step; totalSteps: number }) 
 }
 
 /* ============================================================
- * MAIN COMPONENT
+ * WORK CARD — Lume-style sticky stacking card
+ * ============================================================ */
+
+type WorkCardProps = {
+  index: number;
+  total: number;
+  eyebrow: string;
+  title: string;
+  description: string;
+  bgImage: string;
+  accent: 'mint' | 'purple';
+  href?: string;
+};
+
+function WorkCard({
+  index,
+  total,
+  eyebrow,
+  title,
+  description,
+  bgImage,
+  accent,
+  href,
+}: WorkCardProps) {
+  const isMint = accent === 'mint';
+  const topOffset = 96 + index * 14;
+  const accentColor = isMint ? '#8EF0B5' : '#c084fc';
+  const accentBorder = isMint
+    ? 'rgba(142,240,181,0.32)'
+    : 'rgba(168,85,247,0.32)';
+  const accentGlow = isMint
+    ? 'rgba(142,240,181,0.18)'
+    : 'rgba(168,85,247,0.18)';
+
+  const inner = (
+    <div
+      className="relative w-full overflow-hidden rounded-[28px] border"
+      style={{
+        borderColor: accentBorder,
+        background: '#0E1014',
+        height: 'min(78vh, 720px)',
+        boxShadow: `0 30px 80px -30px rgba(0,0,0,0.7), 0 0 60px -20px ${accentGlow}`,
+      }}
+    >
+      <div
+        aria-hidden
+        className="absolute inset-0"
+        style={{
+          backgroundImage: `url(${bgImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          opacity: 0.55,
+        }}
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0"
+        style={{
+          background:
+            'linear-gradient(180deg, rgba(11,12,16,0.18) 0%, rgba(11,12,16,0.55) 50%, rgba(11,12,16,0.92) 100%)',
+        }}
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0 opacity-70 mix-blend-screen pointer-events-none"
+        style={{
+          background: isMint
+            ? 'radial-gradient(120% 100% at 0% 0%, rgba(142,240,181,0.22) 0%, transparent 55%)'
+            : 'radial-gradient(120% 100% at 100% 0%, rgba(168,85,247,0.28) 0%, transparent 55%)',
+        }}
+      />
+      <span
+        className="absolute top-0 left-0 h-[3px] w-1/3"
+        style={{
+          background: accentColor,
+          boxShadow: `0 0 16px ${accentColor}`,
+        }}
+      />
+
+      <div className="absolute top-6 left-6 z-10 font-mono text-[11px] uppercase tracking-[0.2em] text-white/45">
+        {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
+      </div>
+
+      {href && (
+        <span
+          aria-hidden
+          className="absolute top-5 right-5 z-20 w-12 h-12 rounded-full bg-white/[0.08] backdrop-blur-md border border-white/[0.14] flex items-center justify-center text-white group-hover:bg-[#8EF0B5] group-hover:text-black group-hover:border-transparent transition-colors"
+        >
+          <ArrowUpRight size={20} strokeWidth={1.8} />
+        </span>
+      )}
+
+      <div className="relative h-full flex flex-col justify-end p-8 md:p-12 lg:p-14">
+        <div
+          className="flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.22em] mb-4"
+          style={{ color: accentColor }}
+        >
+          <span
+            className="inline-block w-1.5 h-1.5 rounded-full"
+            style={{
+              background: accentColor,
+              boxShadow: `0 0 10px ${accentColor}`,
+            }}
+          />
+          {eyebrow}
+        </div>
+        <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.04] max-w-[18ch]">
+          {title}
+        </h3>
+        <p className="text-[#9CA3AF] text-base md:text-lg mt-5 max-w-[60ch] leading-relaxed">
+          {description}
+        </p>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="sticky" style={{ top: `${topOffset}px` }}>
+      {href ? (
+        <Link
+          href={href}
+          aria-label={`Open ${title} case study`}
+          className="group block"
+        >
+          {inner}
+        </Link>
+      ) : (
+        <div className="group">{inner}</div>
+      )}
+    </div>
+  );
+}
+
+/* ============================================================
+ * MAIN — Desktop
  * ============================================================ */
 
 export function EcommerceScrollStory() {
   const { t } = useLanguage();
-  const container = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: container,
-    offset: ['start start', 'end end'],
-  });
 
-  const progressBarWidth = useTransform(
-    scrollYProgress,
-    [0, 1],
-    ['0%', '100%']
-  );
+  const cards: WorkCardProps[] = [
+    ...SERVICES.map((s, i) => ({
+      index: i,
+      total: SERVICES.length + PROJECTS.length,
+      eyebrow: `${t('eco_service_label')} · ${s.idx}`,
+      title: t(s.titleKey),
+      description: t(s.bodyKey),
+      bgImage: s.bgImage,
+      accent: s.accent,
+      href: undefined,
+    })),
+    ...PROJECTS.map((p, i) => ({
+      index: SERVICES.length + i,
+      total: SERVICES.length + PROJECTS.length,
+      eyebrow: t(p.typeKey),
+      title: p.brand,
+      description: t(p.metricKey),
+      bgImage: p.bgImage,
+      accent: p.accent,
+      href: `/case-studies/${p.slug}`,
+    })),
+  ];
 
   return (
-    <section
-      ref={container}
-      className="relative hidden md:block"
-      style={{ height: `${TOTAL_SCENES * VH_PER_SCENE}vh` }}
-    >
-      <div className="sticky top-0 h-screen overflow-hidden bg-[#0B0C10]">
-        <div
-          aria-hidden
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              'radial-gradient(circle at 0% 0%, rgba(88,28,135,0.18) 0%, transparent 40%), radial-gradient(circle at 100% 100%, rgba(142,240,181,0.06) 0%, transparent 40%)',
-          }}
-        />
+    <section className="hidden md:block bg-[#0B0C10] relative overflow-hidden">
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(circle at 0% 0%, rgba(88,28,135,0.10) 0%, transparent 40%), radial-gradient(circle at 100% 100%, rgba(142,240,181,0.04) 0%, transparent 40%)',
+        }}
+      />
 
-        <Scene scrollY={scrollYProgress} index={0}>
-          <HeroSlide />
-        </Scene>
+      {/* Intro */}
+      <div className="relative max-w-[1280px] mx-auto px-8 pt-32 pb-20">
+        <HeroSlide />
+      </div>
 
-        {SERVICES.map((service, i) => (
-          <Scene
-            key={`service-${service.idx}`}
-            scrollY={scrollYProgress}
-            index={1 + i}
-          >
-            {(sceneProgress) => (
-              <StagedHero
-                sceneProgress={sceneProgress}
-                eyebrow={`${t('eco_service_label')} · ${service.idx}`}
-                title={t(service.titleKey)}
-                accent={service.accent}
-                bgImage={service.bgImage}
-              >
-                <ServiceSlide service={service} />
-              </StagedHero>
-            )}
-          </Scene>
-        ))}
-
-        <Scene scrollY={scrollYProgress} index={5}>
-          <ProjectsIntroSlide />
-        </Scene>
-
-        {PROJECTS.map((project, i) => (
-          <Scene
-            key={`project-${project.brand}`}
-            scrollY={scrollYProgress}
-            index={6 + i}
-          >
-            {(sceneProgress) => (
-              <StagedHero
-                sceneProgress={sceneProgress}
-                eyebrow={t(project.typeKey)}
-                title={project.brand}
-                accent={project.accent}
-                bgImage={project.bgImage}
-              >
-                <ProjectHeroSlide project={project} />
-              </StagedHero>
-            )}
-          </Scene>
-        ))}
-
-        <Scene scrollY={scrollYProgress} index={13}>
-          <ProcessSlide step={STEPS[0]} totalSteps={STEPS.length} />
-        </Scene>
-        <Scene scrollY={scrollYProgress} index={14}>
-          <ProcessSlide step={STEPS[1]} totalSteps={STEPS.length} />
-        </Scene>
-        <Scene scrollY={scrollYProgress} index={15}>
-          <ProcessSlide step={STEPS[2]} totalSteps={STEPS.length} />
-        </Scene>
-        <Scene scrollY={scrollYProgress} index={16}>
-          <ProcessSlide step={STEPS[3]} totalSteps={STEPS.length} />
-        </Scene>
-
-        {/* Progress bar */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[300px] h-[2px] bg-white/[0.08] rounded-full overflow-hidden">
-          <motion.div
-            style={{ width: progressBarWidth }}
-            className="h-full bg-[#8EF0B5] shadow-[0_0_10px_rgba(142,240,181,0.8)]"
-          />
+      {/* Stacking work cards */}
+      <div className="relative max-w-[1380px] mx-auto px-8 pb-[24vh]">
+        <div className="space-y-[24vh]">
+          {cards.map((card, i) => (
+            <WorkCard key={i} {...card} />
+          ))}
         </div>
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 font-mono text-[10px] uppercase tracking-[0.3em] text-white/30">
-          Scroll
+      </div>
+
+      {/* Process steps */}
+      <div className="relative max-w-[1180px] mx-auto px-8 pb-32">
+        <div className="mb-16">
+          <div className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.2em] text-gray-500 mb-5">
+            <span className="block w-6 h-px bg-[#8EF0B5]" />
+            {t('eco_story_approach_label')}
+          </div>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.05] max-w-[16ch]">
+            {t('eco_steps_h2_mobile')}
+          </h2>
+        </div>
+        <div className="space-y-20">
+          {STEPS.map((step) => (
+            <ProcessSlide key={step.idx} step={step} totalSteps={STEPS.length} />
+          ))}
         </div>
       </div>
     </section>
   );
 }
 
-/* Mobile fallback — same content as static vertical stack */
+/* ============================================================
+ * MAIN — Mobile (unchanged static vertical stack)
+ * ============================================================ */
+
 export function EcommerceScrollStoryMobile() {
   const { t } = useLanguage();
   return (
