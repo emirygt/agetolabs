@@ -3,25 +3,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import { useLanguage } from '@/components/LanguageContext';
 
-gsap.registerPlugin(ScrollTrigger);
-
 /* ============================================================
  * REFS
  * ============================================================ */
-
-type MeteorState = {
-  vx: number;
-  vy: number;
-  vz: number;
-  life: number;
-  maxLife: number;
-};
 
 type ThreeRefs = {
   scene: THREE.Scene | null;
@@ -31,8 +20,6 @@ type ThreeRefs = {
   stars: THREE.Points[];
   nebula: THREE.Mesh | null;
   earth: THREE.Group | null;
-  meteorMesh: THREE.LineSegments | null;
-  meteorStates: MeteorState[];
   scrollProgressVal: number;
   animationId: number | null;
   targetCameraX?: number;
@@ -40,7 +27,6 @@ type ThreeRefs = {
   targetCameraZ?: number;
 };
 
-const METEOR_COUNT = 60;
 const EARTH_POS = new THREE.Vector3(0, 5, -1100);
 
 /* ============================================================
@@ -103,8 +89,6 @@ export const Component: React.FC = () => {
     stars: [],
     nebula: null,
     earth: null,
-    meteorMesh: null,
-    meteorStates: [],
     scrollProgressVal: 0,
     animationId: null,
   });
@@ -150,7 +134,6 @@ export const Component: React.FC = () => {
 
       createStarField();
       createNebula();
-      createMeteors();
       createEarth();
       animate();
     };
@@ -280,75 +263,6 @@ export const Component: React.FC = () => {
       refs.nebula = nebula;
     };
 
-    /* ----- METEORS — streaking line segments ----- */
-    const spawnMeteor = (i: number, positions: Float32Array, colors: Float32Array, states: MeteorState[]) => {
-      // spawn far away, mostly off-screen, moving diagonally through view
-      const sx = (Math.random() - 0.5) * 1600 - 200; // bias toward left side
-      const sy = (Math.random() - 0.2) * 700;
-      const sz = -400 + Math.random() * 350; // somewhere between camera and earth
-      // velocity: mostly rightward and slightly forward
-      const vx = 4 + Math.random() * 6;
-      const vy = -0.5 - Math.random() * 0.8;
-      const vz = 1.5 + Math.random() * 2.5;
-      const trail = 14 + Math.random() * 18;
-
-      positions[i * 6 + 0] = sx;
-      positions[i * 6 + 1] = sy;
-      positions[i * 6 + 2] = sz;
-      positions[i * 6 + 3] = sx - vx * trail;
-      positions[i * 6 + 4] = sy - vy * trail;
-      positions[i * 6 + 5] = sz - vz * trail;
-
-      // head: hot white-yellow, tail: fades to transparent
-      colors[i * 6 + 0] = 1.0;
-      colors[i * 6 + 1] = 0.95;
-      colors[i * 6 + 2] = 0.85;
-      colors[i * 6 + 3] = 1.0;
-      colors[i * 6 + 4] = 0.6;
-      colors[i * 6 + 5] = 0.3;
-
-      states[i] = {
-        vx,
-        vy,
-        vz,
-        life: 0,
-        maxLife: 1.0 + Math.random() * 1.5,
-      };
-    };
-
-    const createMeteors = () => {
-      const refs = threeRefs.current;
-      const positions = new Float32Array(METEOR_COUNT * 6);
-      const colors = new Float32Array(METEOR_COUNT * 6);
-      const states: MeteorState[] = [];
-
-      for (let i = 0; i < METEOR_COUNT; i++) {
-        spawnMeteor(i, positions, colors, states);
-        // randomize initial life so they're spread in time
-        states[i].life = Math.random() * states[i].maxLife;
-      }
-
-      const geometry = new THREE.BufferGeometry();
-      geometry.setAttribute(
-        'position',
-        new THREE.BufferAttribute(positions, 3).setUsage(THREE.DynamicDrawUsage)
-      );
-      geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-      const material = new THREE.LineBasicMaterial({
-        vertexColors: true,
-        transparent: true,
-        opacity: 1.0,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false,
-        linewidth: 1,
-      });
-
-      const mesh = new THREE.LineSegments(geometry, material);
-      refs.scene!.add(mesh);
-      refs.meteorMesh = mesh;
-      refs.meteorStates = states;
-    };
 
     /* ----- EARTH — procedural blue/green sphere with atmosphere ----- */
     const createEarth = () => {
@@ -541,56 +455,6 @@ export const Component: React.FC = () => {
         if (surfMat.uniforms) surfMat.uniforms.uTime.value = time;
       }
 
-      // Meteors — update positions, recycle expired ones
-      if (refs.meteorMesh) {
-        const posAttr = refs.meteorMesh.geometry.getAttribute(
-          'position'
-        ) as THREE.BufferAttribute;
-        const colAttr = refs.meteorMesh.geometry.getAttribute(
-          'color'
-        ) as THREE.BufferAttribute;
-        const posArr = posAttr.array as Float32Array;
-        const colArr = colAttr.array as Float32Array;
-
-        // meteor density curve across the 5-section journey:
-        // sparse in deep space → peak in meteor field → fades as Earth approaches
-        const p = refs.scrollProgressVal;
-        const density =
-          p < 0.5
-            ? Math.min(1, p / 0.3)
-            : Math.max(0.08, 1.0 - (p - 0.5) / 0.35);
-
-        for (let i = 0; i < METEOR_COUNT; i++) {
-          const st = refs.meteorStates[i];
-          st.life += dt;
-
-          // hide low-density meteors by making them transparent
-          const visible = i / METEOR_COUNT < density;
-
-          if (st.life > st.maxLife || !visible) {
-            if (visible) {
-              spawnMeteor(i, posArr, colArr, refs.meteorStates);
-              st.life = 0;
-            } else {
-              // park off-screen
-              for (let k = 0; k < 6; k++) posArr[i * 6 + k] = 100000;
-            }
-            continue;
-          }
-
-          // advance head
-          posArr[i * 6 + 0] += st.vx;
-          posArr[i * 6 + 1] += st.vy;
-          posArr[i * 6 + 2] += st.vz;
-          // trail = head - velocity * trailLen
-          const trail = 14;
-          posArr[i * 6 + 3] = posArr[i * 6 + 0] - st.vx * trail;
-          posArr[i * 6 + 4] = posArr[i * 6 + 1] - st.vy * trail;
-          posArr[i * 6 + 5] = posArr[i * 6 + 2] - st.vz * trail;
-        }
-        posAttr.needsUpdate = true;
-      }
-
       // Camera with smoothing + subtle float
       if (refs.camera && refs.targetCameraX !== undefined) {
         const k = 0.05;
@@ -713,10 +577,6 @@ export const Component: React.FC = () => {
         refs.nebula.geometry.dispose();
         (refs.nebula.material as THREE.Material).dispose();
       }
-      if (refs.meteorMesh) {
-        refs.meteorMesh.geometry.dispose();
-        (refs.meteorMesh.material as THREE.Material).dispose();
-      }
       if (refs.earth) {
         refs.earth.traverse((obj) => {
           if ((obj as THREE.Mesh).isMesh) {
@@ -804,67 +664,6 @@ export const Component: React.FC = () => {
     return () => {
       tl.kill();
     };
-  }, [brandIntroDone]);
-
-  /* ----- LETTER SCATTER ON SCROLL — each char drifts in a random direction ----- */
-  useEffect(() => {
-    if (!brandIntroDone) return;
-    const hero = containerRef.current;
-    if (!hero) return;
-
-    const ctx = gsap.context(() => {
-      const sectionEls = hero.querySelectorAll('.hero-content, .content-section');
-      sectionEls.forEach((sectionEl) => {
-        const chars = sectionEl.querySelectorAll('.title-char');
-        const lines = sectionEl.querySelectorAll('.subtitle-line');
-
-        chars.forEach((char) => {
-          // pre-computed random vector per char — wide spread in every direction
-          const angle = Math.random() * Math.PI * 2;
-          const dist = 500 + Math.random() * 800;
-          const tx = Math.cos(angle) * dist;
-          const ty = Math.sin(angle) * dist;
-          const rot = (Math.random() - 0.5) * 360;
-          const scale = 0.3 + Math.random() * 0.6;
-
-          gsap.set(char, { willChange: 'transform, opacity' });
-          gsap.to(char, {
-            x: tx,
-            y: ty,
-            rotation: rot,
-            scale,
-            opacity: 0,
-            ease: 'power2.in',
-            scrollTrigger: {
-              trigger: sectionEl,
-              start: 'top top',
-              end: 'bottom top',
-              scrub: true,
-            },
-          });
-        });
-
-        lines.forEach((line) => {
-          gsap.set(line, { willChange: 'transform, opacity' });
-          gsap.to(line, {
-            y: -160,
-            opacity: 0,
-            ease: 'power1.in',
-            scrollTrigger: {
-              trigger: sectionEl,
-              start: 'top top',
-              end: 'bottom top',
-              scrub: true,
-            },
-          });
-        });
-      });
-
-      // Refresh once layout is complete so triggers compute their pixel positions correctly
-      ScrollTrigger.refresh();
-    });
-
-    return () => ctx.revert();
   }, [brandIntroDone]);
 
   /* ----- SCROLL — rAF-throttled, no React re-render. Writes directly to DOM. ----- */
