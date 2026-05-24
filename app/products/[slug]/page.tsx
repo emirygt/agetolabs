@@ -889,7 +889,153 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                 Demo Talep Et
               </button>
             </div>
-            
+
+          </div>
+        )}
+
+        {/* --- AGENTO COMPANY FLOW EXTENDED SECTION --- */}
+        {slug === 'agento-company-flow' && (
+          <div className="mt-24 space-y-24 animate-in fade-in slide-in-from-bottom-8 duration-700">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+              <div>
+                <h2 className="text-3xl md:text-4xl font-bold text-white">
+                  {lang === 'tr' ? 'Kurumsal Ajan Orkestrasyonu' : 'Enterprise Agent Orchestration'}
+                </h2>
+                <p className="mt-5 text-lg text-gray-400 leading-relaxed">
+                  {lang === 'tr'
+                    ? 'Agento Company Flow, ERP/CRM/OMS/WMS gibi kurumsal sistemler arasında çoklu ajan akışlarını orkestrasyonla yönetmek için tasarlandı. Ajanları dağıtın, koşullarla zincirleyin, sonuçları gözlemleyin — kurumsal güvenlik ve denetim izlerinden ödün vermeden.'
+                    : 'Agento Company Flow orchestrates multi-agent workflows across enterprise systems (ERP, CRM, OMS, WMS). Deploy agents, chain them with conditions, observe outcomes — without compromising enterprise security or audit trails.'}
+                </p>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                {[
+                  { v: lang === 'tr' ? '7/24' : '24/7', l: lang === 'tr' ? 'Otonom çalışma' : 'Autonomous runtime', c: 'text-[#8EF0B5]' },
+                  { v: 'N×N', l: lang === 'tr' ? 'Ajan kompozisyonu' : 'Agent composition', c: 'text-purple-400' },
+                  { v: '1:1', l: lang === 'tr' ? 'Denetim izi' : 'Audit traceability', c: 'text-blue-400' },
+                  { v: '0', l: lang === 'tr' ? 'Vendor lock-in' : 'Vendor lock-in', c: 'text-orange-400' },
+                ].map((s) => (
+                  <div key={s.l} className="bg-gradient-to-b from-white/[0.05] to-transparent p-5 rounded-2xl border border-white/10 text-center">
+                    <div className={`text-3xl font-bold ${s.c} mb-1`}>{s.v}</div>
+                    <div className="text-xs text-gray-400 font-medium">{s.l}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h2 className="text-3xl font-bold text-white mb-10 text-center">
+                {lang === 'tr' ? 'Platform Yetenekleri' : 'Platform Capabilities'}
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {[
+                  { icon: 'Waypoints', color: 'purple-400', titleEn: 'Visual flow composer', titleTr: 'Görsel akış besteci', descEn: 'Drag-and-drop agent chaining with conditional branches, parallel forks, and rollback paths.', descTr: 'Koşullu dallanma, paralel ayrım ve geri alma yollarıyla sürükle-bırak ajan zincirleme.' },
+                  { icon: 'ShieldCheck', color: '[#8EF0B5]', titleEn: 'Enterprise-grade audit', titleTr: 'Kurumsal denetim', descEn: 'Every agent decision logged with full input/output trail. RBAC, SSO, and on-prem deployment options.', descTr: 'Her ajan kararı tam giriş/çıkış kaydıyla loglanır. RBAC, SSO ve on-prem deploy seçenekleri.' },
+                  { icon: 'Plug', color: 'blue-400', titleEn: 'System integrations', titleTr: 'Sistem entegrasyonları', descEn: 'Pre-built connectors for SAP, Microsoft Dynamics, Salesforce, NetSuite, and 50+ enterprise systems.', descTr: 'SAP, Microsoft Dynamics, Salesforce, NetSuite ve 50+ kurumsal sistem için hazır konektörler.' },
+                  { icon: 'Activity', color: 'orange-400', titleEn: 'Observability built-in', titleTr: 'Yerleşik gözlemlenebilirlik', descEn: 'Real-time dashboards for agent latency, success rates, cost-per-run, and SLA monitoring.', descTr: 'Ajan gecikme, başarı oranı, koşu başına maliyet ve SLA izleme için gerçek zamanlı paneller.' },
+                ].map((f) => {
+                  const Icon = (Icons as any)[f.icon];
+                  return (
+                    <div key={f.titleEn} className="bg-white/[0.03] p-8 rounded-3xl border border-white/10 hover:border-white/30 transition-all">
+                      <div className={`w-14 h-14 rounded-2xl bg-${f.color}/20 flex items-center justify-center mb-6`}>
+                        <Icon className={`text-${f.color}`} size={28} />
+                      </div>
+                      <h3 className="text-2xl font-bold text-white mb-3">{lang === 'tr' ? f.titleTr : f.titleEn}</h3>
+                      <p className="text-gray-400 leading-relaxed">{lang === 'tr' ? f.descTr : f.descEn}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="text-center max-w-3xl mx-auto pb-12 pt-12 border-t border-white/10">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-5">
+                {lang === 'tr' ? 'Pilot bir akış konuşalım' : "Let's scope a pilot workflow"}
+              </h2>
+              <p className="text-lg text-gray-400 mb-8">
+                {lang === 'tr'
+                  ? 'Bir kurumsal sürecinizi seçin — pilot orkestrasyon tasarımını birlikte çıkartalım.'
+                  : 'Pick one enterprise process and we will design the pilot orchestration with you.'}
+              </p>
+              <Link
+                href="/contact"
+                className="inline-flex h-14 items-center justify-center rounded-full bg-[#8EF0B5] px-10 text-lg font-bold text-black hover:bg-[#8EF0B5]/90 transition-all shadow-[0_0_30px_rgba(142,240,181,0.3)]"
+              >
+                {lang === 'tr' ? 'Demo Talep Et' : 'Request Demo'}
+              </Link>
+            </div>
+          </div>
+        )}
+
+        {/* --- AGENTO PRICE COMPARE EXTENDED SECTION --- */}
+        {slug === 'agento-price-compare' && (
+          <div className="mt-24 space-y-24 animate-in fade-in slide-in-from-bottom-8 duration-700">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+              <div>
+                <h2 className="text-3xl md:text-4xl font-bold text-white">
+                  {lang === 'tr' ? 'Gerçek Zamanlı Fiyat Zekası' : 'Real-time Price Intelligence'}
+                </h2>
+                <p className="mt-5 text-lg text-gray-400 leading-relaxed">
+                  {lang === 'tr'
+                    ? 'Agento priceCompare; rakip fiyat takibi, dinamik fiyatlandırma önerileri ve pazaryeri fiyat analitiğini tek platformda birleştirir. Bayilerle çekişen markalardan, yüksek SKU\'lu perakendecilere — fiyat kararlarını sezgi değil, veri yönetsin.'
+                    : 'Agento priceCompare unifies competitor price tracking, dynamic pricing recommendations and marketplace price analytics in one platform. From brands competing with their own resellers to high-SKU retailers — let data drive pricing decisions, not intuition.'}
+                </p>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                {[
+                  { v: lang === 'tr' ? '15dk' : '15min', l: lang === 'tr' ? 'Fiyat tazeleme' : 'Refresh cadence', c: 'text-[#8EF0B5]' },
+                  { v: '50+', l: lang === 'tr' ? 'Pazaryeri kaynağı' : 'Marketplace sources', c: 'text-purple-400' },
+                  { v: 'AI', l: lang === 'tr' ? 'Fiyat önerisi' : 'Pricing engine', c: 'text-blue-400' },
+                  { v: 'API', l: lang === 'tr' ? 'ERP/PIM entegrasyonu' : 'ERP/PIM integration', c: 'text-orange-400' },
+                ].map((s) => (
+                  <div key={s.l} className="bg-gradient-to-b from-white/[0.05] to-transparent p-5 rounded-2xl border border-white/10 text-center">
+                    <div className={`text-3xl font-bold ${s.c} mb-1`}>{s.v}</div>
+                    <div className="text-xs text-gray-400 font-medium">{s.l}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h2 className="text-3xl font-bold text-white mb-10 text-center">
+                {lang === 'tr' ? 'Modül ve Yetenekler' : 'Modules & Capabilities'}
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {[
+                  { icon: 'Search', color: '[#8EF0B5]', titleEn: 'Competitor monitoring', titleTr: 'Rakip takibi', descEn: 'Track competitor SKUs across Trendyol, Hepsiburada, Amazon, N11, and direct brand sites with high-cadence refresh.', descTr: 'Trendyol, Hepsiburada, Amazon, N11 ve marka sitelerinde rakip SKU\'larını yüksek frekansta takip edin.' },
+                  { icon: 'TrendingUp', color: 'purple-400', titleEn: 'Dynamic price suggestions', titleTr: 'Dinamik fiyat önerileri', descEn: 'AI-driven price recommendations balancing margin, conversion probability, and competitive position.', descTr: 'Marj, dönüşüm olasılığı ve rekabet pozisyonunu dengeleyen yapay zeka destekli fiyat önerileri.' },
+                  { icon: 'Bell', color: 'orange-400', titleEn: 'Alerts & violations', titleTr: 'Uyarılar ve ihlaller', descEn: 'MAP/MSRP violation alerts, stock-out signals, sudden competitor moves — pushed to email, Slack, or webhook.', descTr: 'MAP/MSRP ihlal uyarıları, stok-yok sinyalleri, ani rakip hamleleri — e-posta, Slack veya webhook\'a iletilir.' },
+                  { icon: 'LineChart', color: 'blue-400', titleEn: 'Historical analytics', titleTr: 'Tarihsel analitik', descEn: 'Price trend curves, elasticity by SKU, campaign impact analysis, and competitor pricing patterns over time.', descTr: 'Fiyat trend eğrileri, SKU bazlı esneklik, kampanya etki analizi ve zaman içinde rakip fiyat desenleri.' },
+                ].map((f) => {
+                  const Icon = (Icons as any)[f.icon];
+                  return (
+                    <div key={f.titleEn} className="bg-white/[0.03] p-8 rounded-3xl border border-white/10 hover:border-white/30 transition-all">
+                      <div className={`w-14 h-14 rounded-2xl bg-${f.color}/20 flex items-center justify-center mb-6`}>
+                        <Icon className={`text-${f.color}`} size={28} />
+                      </div>
+                      <h3 className="text-2xl font-bold text-white mb-3">{lang === 'tr' ? f.titleTr : f.titleEn}</h3>
+                      <p className="text-gray-400 leading-relaxed">{lang === 'tr' ? f.descTr : f.descEn}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="text-center max-w-3xl mx-auto pb-12 pt-12 border-t border-white/10">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-5">
+                {lang === 'tr' ? 'Fiyat zekanızı bugünden başlatın' : 'Get price intelligence today'}
+              </h2>
+              <p className="text-lg text-gray-400 mb-8">
+                {lang === 'tr'
+                  ? 'Bir SKU listesi ile deneme yapın — 7 gün içinde rakip fiyat eğrilerinizi görün.'
+                  : 'Bring us a SKU list — see your competitive price curves within 7 days.'}
+              </p>
+              <Link
+                href="/contact"
+                className="inline-flex h-14 items-center justify-center rounded-full bg-[#8EF0B5] px-10 text-lg font-bold text-black hover:bg-[#8EF0B5]/90 transition-all shadow-[0_0_30px_rgba(142,240,181,0.3)]"
+              >
+                {lang === 'tr' ? 'Demo Talep Et' : 'Request Demo'}
+              </Link>
+            </div>
           </div>
         )}
 

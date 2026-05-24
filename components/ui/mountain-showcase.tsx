@@ -63,38 +63,76 @@ export function MountainShowcase({
   }, [mouseX, mouseY]);
 
   return (
-    <div
-      ref={containerRef}
-      className={cn(
-        'relative w-full h-[680px] overflow-hidden border-y border-white/[0.06]',
-        className
-      )}
-    >
-      <MountainScene color={mountainColor} />
-
-      {/* Top/bottom sky-fade to blend cards into scene */}
-      <div
-        aria-hidden
-        className="absolute inset-0 pointer-events-none z-10"
-        style={{
-          background:
-            'linear-gradient(180deg, rgba(11,12,16,0.85) 0%, rgba(11,12,16,0.25) 18%, transparent 45%, transparent 70%, rgba(11,12,16,0.5) 92%, rgba(11,12,16,0.95) 100%)',
-        }}
-      />
-
-      {/* Scattered items */}
-      <div className="absolute inset-0 z-20">
-        {items.map((item) => (
-          <ScatterChip
-            key={item.id}
-            item={item}
-            mouseX={mouseX}
-            mouseY={mouseY}
-            glowRadius={glowRadius}
-          />
-        ))}
+    <>
+      {/* Mobile fallback — chips as a clean responsive grid, no Three.js mountains */}
+      <div className={cn('md:hidden w-full px-4 py-10', className)}>
+        <div className="grid grid-cols-2 gap-2.5">
+          {items.map((item) => {
+            const Icon = item.icon
+              ? (Icons[item.icon] as Icons.LucideIcon | undefined)
+              : undefined;
+            const accentClass =
+              item.accent === 'purple'
+                ? 'text-[#c084fc]'
+                : item.accent === 'white'
+                  ? 'text-white'
+                  : 'text-[#8EF0B5]';
+            const Wrapper = item.href ? Link : ('div' as any);
+            const wrapperProps = item.href ? { href: item.href } : {};
+            return (
+              <Wrapper
+                key={item.id}
+                {...wrapperProps}
+                className="inline-flex items-center gap-2 rounded-full bg-[#0d0e12]/65 backdrop-blur-md border border-white/10 px-3.5 py-2.5"
+              >
+                {Icon && (
+                  <span className={cn('shrink-0', accentClass)}>
+                    <Icon size={14} strokeWidth={1.8} />
+                  </span>
+                )}
+                <span className="text-[13px] font-medium tracking-tight text-white whitespace-nowrap truncate">
+                  {item.label}
+                </span>
+              </Wrapper>
+            );
+          })}
+        </div>
       </div>
-    </div>
+
+      {/* Desktop — full Three.js mountain scatter */}
+      <div
+        ref={containerRef}
+        className={cn(
+          'hidden md:block relative w-full h-[680px] overflow-hidden border-y border-white/[0.06]',
+          className
+        )}
+      >
+        <MountainScene color={mountainColor} />
+
+        {/* Top/bottom sky-fade to blend cards into scene */}
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none z-10"
+          style={{
+            background:
+              'linear-gradient(180deg, rgba(11,12,16,0.85) 0%, rgba(11,12,16,0.25) 18%, transparent 45%, transparent 70%, rgba(11,12,16,0.5) 92%, rgba(11,12,16,0.95) 100%)',
+          }}
+        />
+
+        {/* Scattered items */}
+        <div className="absolute inset-0 z-20">
+          {items.map((item) => (
+            <ScatterChip
+              key={item.id}
+              item={item}
+              mouseX={mouseX}
+              mouseY={mouseY}
+              glowRadius={glowRadius}
+            />
+          ))}
+        </div>
+      </div>
+    </>
   );
 }
 

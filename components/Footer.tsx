@@ -42,17 +42,17 @@ export function Footer() {
             </h4>
             <ul className="space-y-4">
               <li>
-                <Link href="/products/agento-otonom-ajani" className="text-gray-400 hover:text-[#8EF0B5] transition-colors text-sm">
+                <Link href="/products/agento-otonom-agent" className="text-gray-400 hover:text-[#8EF0B5] transition-colors text-sm">
                   Autonomous Agent
                 </Link>
               </li>
               <li>
-                <Link href="/products/agento-wp-satis-asitasi" className="text-gray-400 hover:text-[#8EF0B5] transition-colors text-sm">
+                <Link href="/products/agento-wh-sales" className="text-gray-400 hover:text-[#8EF0B5] transition-colors text-sm">
                   WhatsApp Sales Automation
                 </Link>
               </li>
               <li>
-                <Link href="/products/agento-struct-editör" className="text-gray-400 hover:text-[#8EF0B5] transition-colors text-sm">
+                <Link href="/products/agento-struct-editor" className="text-gray-400 hover:text-[#8EF0B5] transition-colors text-sm">
                   Structa AI
                 </Link>
               </li>
@@ -77,6 +77,7 @@ export function Footer() {
             <ul className="space-y-4">
               <li><Link href="/about" className="text-gray-400 hover:text-white transition-colors text-sm">{t('aboutUs')}</Link></li>
               <li><Link href="/ecosystem" className="text-gray-400 hover:text-white transition-colors text-sm">{t('ecosystemArchitecture')}</Link></li>
+              <li><Link href="/case-studies" className="text-gray-400 hover:text-white transition-colors text-sm">Case Studies</Link></li>
               <li><Link href="/contact" className="text-gray-400 hover:text-white transition-colors text-sm">{t('contactUs')}</Link></li>
             </ul>
           </div>

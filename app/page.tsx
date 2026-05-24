@@ -6,6 +6,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { RobotCompanion } from '@/components/RobotCompanion';
 import { Component as HorizonHero } from '@/components/ui/horizon-hero-section';
+import { TrustedBy } from '@/components/sections/TrustedBy';
 import LinearCard, { type LinearCardItem } from '@/components/ui/linear-card';
 import { topCards, bottomCards } from '@/constants/products';
 import { useLanguage } from '@/components/LanguageContext';
@@ -64,6 +65,8 @@ export default function Home() {
       <RobotCompanion />
 
       <HorizonHero />
+
+      <TrustedBy />
 
       <main className="relative z-10 bg-black">
         <section className="max-w-[1600px] mx-auto px-4 sm:px-8 py-16">

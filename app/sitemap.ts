@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { topCards, bottomCards } from '@/constants/products';
+import { caseStudies } from '@/constants/case-studies';
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ?? 'https://agetolabs.vercel.app';
@@ -14,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/ecosystem`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${siteUrl}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${siteUrl}/contact`, lastModified: now, changeFrequency: 'yearly', priority: 0.8 },
+    { url: `${siteUrl}/case-studies`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${siteUrl}/legal/privacy`, lastModified: now, changeFrequency: 'yearly', priority: 0.2 },
     { url: `${siteUrl}/legal/terms`, lastModified: now, changeFrequency: 'yearly', priority: 0.2 },
     { url: `${siteUrl}/legal/cookies`, lastModified: now, changeFrequency: 'yearly', priority: 0.2 },
@@ -29,5 +31,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
   );
 
-  return [...staticRoutes, ...productRoutes];
+  const caseStudyRoutes: MetadataRoute.Sitemap = caseStudies.map((c) => ({
+    url: `${siteUrl}/case-studies/${c.slug}`,
+    lastModified: now,
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }));
+
+  return [...staticRoutes, ...productRoutes, ...caseStudyRoutes];
 }

@@ -183,6 +183,21 @@ export const translations = {
       "Drag, swipe or use arrow keys. Click any card to dive into its details.",
     products_view_details: "View Details",
     products_open_product: "Open product page",
+
+    /* ---------- Social proof (TrustedBy section) ---------- */
+    trusted_eyebrow: "Trusted across enterprises",
+    trusted_heading: "Brands that ship with us",
+    trusted_desc:
+      "From flagship marketplaces to global retail. 100+ enterprise projects, end-to-end.",
+    trusted_stat_projects_value: "100+",
+    trusted_stat_projects_label: "Enterprise projects",
+    trusted_stat_years_value: "9+",
+    trusted_stat_years_label: "Years building e-commerce",
+    trusted_stat_products_value: "7",
+    trusted_stat_products_label: "Production AI products",
+    trusted_stat_uptime_value: "24/7",
+    trusted_stat_uptime_label: "Autonomous operations",
+    trusted_view_work: "View reference work",
   },
 
   tr: {
@@ -370,6 +385,21 @@ export const translations = {
       "Sürükleyin, kaydırın ya da ok tuşlarını kullanın. Detayları için herhangi bir karta tıklayın.",
     products_view_details: "Detayları İncele",
     products_open_product: "Ürün sayfasını aç",
+
+    /* ---------- Sosyal kanıt (TrustedBy section) ---------- */
+    trusted_eyebrow: "Kurumsal markaların tercihi",
+    trusted_heading: "Birlikte ürettiğimiz markalar",
+    trusted_desc:
+      "Lider pazaryerlerinden global perakendeye. Uçtan uca 100+ kurumsal proje.",
+    trusted_stat_projects_value: "100+",
+    trusted_stat_projects_label: "Kurumsal proje",
+    trusted_stat_years_value: "9+",
+    trusted_stat_years_label: "Yıllık e-ticaret deneyimi",
+    trusted_stat_products_value: "7",
+    trusted_stat_products_label: "Production AI ürün",
+    trusted_stat_uptime_value: "24/7",
+    trusted_stat_uptime_label: "Otonom operasyon",
+    trusted_view_work: "Referans işleri incele",
   },
 };
 
