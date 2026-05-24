@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { LegalPageShell } from '@/components/LegalPageShell';
+import { MailtoLink } from '@/components/MailtoLink';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy',
@@ -60,14 +61,14 @@ export default function PrivacyPage() {
         <h2 className="text-xl font-semibold text-white mb-3">6. Your rights</h2>
         <p>
           You may request access, correction or deletion of your personal data by
-          emailing <a href="mailto:info@agetolabs.com" className="text-[#8EF0B5] hover:underline">info@agetolabs.com</a>.
+          emailing <MailtoLink email="info@agetolabs.com" source="privacy_rights" className="text-[#8EF0B5] hover:underline">info@agetolabs.com</MailtoLink>.
         </p>
       </section>
 
       <section>
         <h2 className="text-xl font-semibold text-white mb-3">7. Contact</h2>
         <p>
-          For privacy-related questions: <a href="mailto:info@agetolabs.com" className="text-[#8EF0B5] hover:underline">info@agetolabs.com</a>.
+          For privacy-related questions: <MailtoLink email="info@agetolabs.com" source="privacy_contact" className="text-[#8EF0B5] hover:underline">info@agetolabs.com</MailtoLink>.
         </p>
       </section>
     </LegalPageShell>

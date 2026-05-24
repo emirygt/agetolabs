@@ -7,6 +7,7 @@ import { FlyingIconsButton } from '@/components/ui/flying-icons-button';
 import * as Icons from 'lucide-react';
 import { useLanguage } from '@/components/LanguageContext';
 import { useState } from 'react';
+import { track } from '@vercel/analytics';
 
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
 
@@ -45,6 +46,7 @@ export default function ContactPage() {
         throw new Error(body.error ?? `HTTP ${res.status}`);
       }
       setFormStatus('success');
+      track('contact_form_submit', { solution: payload.solution || 'unspecified' });
       form.reset();
       setTimeout(() => setFormStatus('idle'), 5000);
     } catch (err) {
@@ -117,7 +119,11 @@ export default function ContactPage() {
                   <p className="text-gray-400 mb-2 font-light">
                     {lang === 'tr' ? 'Tüm sorularınız, demo talepleriniz ve ortaklıklar için.' : 'For all your questions, demo requests, and partnerships.'}
                   </p>
-                  <a href="mailto:info@agetolabs.com" className="text-[#8EF0B5] hover:text-[#8EF0B5]/80 font-medium inline-flex items-center gap-2 transition-colors">
+                  <a
+                    href="mailto:info@agetolabs.com"
+                    onClick={() => track('mail_click', { source: 'contact_page' })}
+                    className="text-[#8EF0B5] hover:text-[#8EF0B5]/80 font-medium inline-flex items-center gap-2 transition-colors"
+                  >
                     info@agetolabs.com
                     <Icons.ArrowUpRight size={16} />
                   </a>
