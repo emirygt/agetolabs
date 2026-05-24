@@ -526,7 +526,7 @@ export function EcommerceScrollStory() {
   ];
 
   return (
-    <section className="hidden md:block bg-[#0B0C10] relative overflow-hidden">
+    <section className="hidden md:block bg-[#0B0C10] relative">
       <div
         aria-hidden
         className="absolute inset-0 pointer-events-none"
@@ -541,13 +541,19 @@ export function EcommerceScrollStory() {
         <HeroSlide />
       </div>
 
-      {/* Stacking work cards */}
+      {/* Stacking work cards — each card sticky at same top so the next covers the previous */}
       <div className="relative max-w-[1380px] mx-auto px-8 pb-24">
-        <div className="space-y-[7vh]">
-          {cards.map((card, i) => (
-            <WorkCard key={i} {...card} />
-          ))}
-        </div>
+        {cards.map((card, i) => (
+          <div
+            key={i}
+            className="sticky top-20"
+            style={{
+              marginBottom: i === cards.length - 1 ? 0 : '14vh',
+            }}
+          >
+            <WorkCard {...card} />
+          </div>
+        ))}
       </div>
 
       {/* Process steps */}
