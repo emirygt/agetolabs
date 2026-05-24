@@ -669,23 +669,20 @@ export const Component: React.FC = () => {
       onComplete: () => setBrandIntroDone(true),
     });
 
-    tl.set(wrap, { autoAlpha: 1 })
-      .from(logo, {
+    tl.from(logo, {
         y: 40,
-        opacity: 0,
-        filter: 'blur(14px)',
-        duration: 0.7,
+        duration: 0.55,
         ease: 'power3.out',
       })
       .from(
         tag,
-        { y: 18, opacity: 0, duration: 0.5, ease: 'power3.out' },
-        '-=0.35'
+        { y: 18, duration: 0.4, ease: 'power3.out' },
+        '-=0.3'
       )
-      .to({}, { duration: 0.4 })
+      .to({}, { duration: 0.5 })
       .to(wrap, {
         autoAlpha: 0,
-        duration: 0.5,
+        duration: 0.45,
         ease: 'power2.in',
       });
 
@@ -909,7 +906,6 @@ export const Component: React.FC = () => {
       <div
         ref={brandIntroRef}
         className="brand-intro"
-        style={{ opacity: 0, visibility: 'visible' }}
       >
         <div className="brand-intro-logo">AGETOLABS</div>
         <div className="brand-intro-tag">{t('brandIntroTag')}</div>
