@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Bot, Menu, X, Home, Orbit, Boxes, Users, Briefcase, Mail } from 'lucide-react';
 import { useLanguage } from '@/components/LanguageContext';
-import { Logo } from '@/components/Logo';
 import { LimelightNav, type LimelightNavItem } from '@/components/LimelightNav';
 import { FlyingIconsButton } from '@/components/ui/flying-icons-button';
 import { useState, useMemo } from 'react';
@@ -42,9 +41,11 @@ export function Header() {
         <Link
           href="/"
           aria-label="agetolabs · go to homepage"
-          className="flex items-center h-10 md:h-12 w-44 md:w-56 shrink-0"
+          className="flex items-center h-10 md:h-12 shrink-0"
         >
-          <Logo />
+          <span className="text-white font-semibold tracking-[0.18em] text-sm md:text-base uppercase">
+            agetolabs
+          </span>
         </Link>
 
         <nav className="hidden lg:flex flex-1 items-center justify-center">
