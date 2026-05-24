@@ -3,6 +3,7 @@
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { RobotCompanion } from '@/components/RobotCompanion';
+import { FlyingIconsButton } from '@/components/ui/flying-icons-button';
 import * as Icons from 'lucide-react';
 import { useLanguage } from '@/components/LanguageContext';
 import { useState } from 'react';
@@ -253,25 +254,32 @@ export default function ContactPage() {
                 </div>
               )}
 
-              <button
+              <FlyingIconsButton
                 type="submit"
                 disabled={formStatus === 'submitting' || formStatus === 'success'}
-                className="w-full h-14 bg-[#8EF0B5] hover:bg-[#8EF0B5]/90 text-black font-bold text-lg rounded-xl flex items-center justify-center transition-all shadow-[0_4px_20px_rgba(142,240,181,0.2)] hover:shadow-[0_4px_25px_rgba(142,240,181,0.4)] disabled:opacity-70 disabled:cursor-not-allowed"
+                fullWidth
+                paddingY={18}
+                paddingX={28}
+                borderRadius={12}
               >
-                {(formStatus === 'idle' || formStatus === 'error') && (
-                  <>
-                    {lang === 'tr' ? 'Gönder' : 'Submit'} <Icons.Send size={18} className="ml-2" />
-                  </>
-                )}
-                {formStatus === 'submitting' && (
-                  <Icons.Loader2 size={24} className="animate-spin" />
-                )}
-                {formStatus === 'success' && (
-                  <>
-                    <Icons.CheckCircle2 size={20} className="mr-2" /> {lang === 'tr' ? 'Başarıyla Gönderildi' : 'Sent Successfully'}
-                  </>
-                )}
-              </button>
+                <span className="inline-flex items-center justify-center gap-2 text-lg font-bold">
+                  {(formStatus === 'idle' || formStatus === 'error') && (
+                    <>
+                      {lang === 'tr' ? 'Gönder' : 'Submit'}
+                      <Icons.Send size={18} />
+                    </>
+                  )}
+                  {formStatus === 'submitting' && (
+                    <Icons.Loader2 size={24} className="animate-spin" />
+                  )}
+                  {formStatus === 'success' && (
+                    <>
+                      <Icons.CheckCircle2 size={20} />
+                      {lang === 'tr' ? 'Başarıyla Gönderildi' : 'Sent Successfully'}
+                    </>
+                  )}
+                </span>
+              </FlyingIconsButton>
               <p className="text-center text-xs text-gray-500 mt-4">
                 {lang === 'tr' 
                 ? 'Göndererek Gizlilik Politikasını ve KVKK metnini kabul etmiş olursunuz.'

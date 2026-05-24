@@ -76,10 +76,11 @@ export function Header() {
           </div>
           <FlyingIconsButton
             href="/contact"
-            label={t('getStarted')}
             paddingY={10}
             paddingX={22}
-          />
+          >
+            {t('getStarted')}
+          </FlyingIconsButton>
         </div>
 
         <div className="lg:hidden flex items-center gap-3">
@@ -140,15 +141,16 @@ export function Header() {
             <div className="w-full h-px bg-white/10 my-3" />
             <div
               onClick={() => setMobileMenuOpen(false)}
-              className="mt-1 self-stretch"
+              className="mt-1"
             >
               <FlyingIconsButton
                 href="/contact"
-                label={t('getStarted')}
                 paddingY={14}
                 paddingX={28}
-                className="w-full"
-              />
+                fullWidth
+              >
+                {t('getStarted')}
+              </FlyingIconsButton>
             </div>
           </nav>
         </div>
