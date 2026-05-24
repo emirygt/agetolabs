@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Bot, Menu, X, Home, Orbit, Boxes, Cpu, Users, Briefcase } from 'lucide-react';
+import { Bot, Menu, X, Home, Orbit, Boxes, Users, Briefcase, Mail } from 'lucide-react';
 import { useLanguage } from '@/components/LanguageContext';
 import { Logo } from '@/components/Logo';
 import { LimelightNav, type LimelightNavItem } from '@/components/LimelightNav';
@@ -19,7 +19,7 @@ export function Header() {
       { key: 'ecosystem', label: t('ecosystem'), icon: <Orbit size={14} strokeWidth={1.8} />, href: '/ecosystem' },
       { key: 'products',  label: t('solutions'), icon: <Boxes size={14} strokeWidth={1.8} />, href: '/products' },
       { key: 'services',  label: t('services'),  icon: <Briefcase size={14} strokeWidth={1.8} />, href: '/hizmetler/e-ticaret' },
-      { key: 'technology',label: t('technology'),icon: <Cpu size={14} strokeWidth={1.8} />,   href: '/technology' },
+      { key: 'contact',   label: t('contact'),   icon: <Mail size={14} strokeWidth={1.8} />,    href: '/contact' },
       { key: 'about',     label: t('aboutUs'),   icon: <Users size={14} strokeWidth={1.8} />, href: '/about' },
     ],
     [t, lang]
@@ -30,7 +30,7 @@ export function Header() {
     pathname?.startsWith('/ecosystem')      ? 'ecosystem' :
     pathname?.startsWith('/products')       ? 'products'  :
     pathname?.startsWith('/hizmetler')      ? 'services'  :
-    pathname?.startsWith('/technology')     ? 'technology':
+    pathname?.startsWith('/contact')        ? 'contact'   :
     pathname?.startsWith('/about')          ? 'about'     :
     undefined;
 
