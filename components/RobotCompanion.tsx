@@ -64,13 +64,37 @@ export function RobotCompanion({
   useEffect(() => {
     if (!revealed) return;
     const forward = (e: PointerEvent) => {
-      const canvas = wrapperRef.current?.querySelector('canvas');
-      if (!canvas) return;
+      const wrapper = wrapperRef.current;
+      const canvas = wrapper?.querySelector('canvas');
+      if (!wrapper || !canvas) return;
+
+      // Clamp the forwarded cursor to a small buffer around the robot so the
+      // Spline rig never translates the robot off-canvas when the real cursor
+      // is far away (e.g. hovering the Earth hero on the homepage).
+      const rect = wrapper.getBoundingClientRect();
+      const bufferX = rect.width * 0.4;
+      const bufferY = rect.height * 0.4;
+      const minX = rect.left - bufferX;
+      const maxX = rect.right + bufferX;
+      const minY = rect.top - bufferY;
+      const maxY = rect.bottom + bufferY;
+
+      const inFocusZone =
+        e.clientX >= minX &&
+        e.clientX <= maxX &&
+        e.clientY >= minY &&
+        e.clientY <= maxY;
+
+      // Outside the focus zone: snap to wrapper center → robot resets to neutral pose.
+      // Inside: pass the actual coords so the robot tracks naturally.
+      const cx = inFocusZone ? e.clientX : (rect.left + rect.right) / 2;
+      const cy = inFocusZone ? e.clientY : (rect.top + rect.bottom) / 2;
+
       try {
         canvas.dispatchEvent(
           new PointerEvent('pointermove', {
-            clientX: e.clientX,
-            clientY: e.clientY,
+            clientX: cx,
+            clientY: cy,
             bubbles: true,
             cancelable: true,
             pointerType: 'mouse',
@@ -81,8 +105,8 @@ export function RobotCompanion({
       } catch {
         canvas.dispatchEvent(
           new MouseEvent('mousemove', {
-            clientX: e.clientX,
-            clientY: e.clientY,
+            clientX: cx,
+            clientY: cy,
             bubbles: true,
           })
         );
