@@ -3,9 +3,9 @@ import { Resend } from 'resend';
 
 export const runtime = 'nodejs';
 
-const CONTACT_TO = process.env.CONTACT_TO ?? 'info@agetolabs.com';
+const CONTACT_TO = process.env.CONTACT_TO_EMAIL ?? 'info@agetolabs.com';
 const CONTACT_FROM =
-  process.env.CONTACT_FROM ?? 'agetolabs <onboarding@resend.dev>';
+  process.env.CONTACT_FROM ?? 'agetolabs <noreply@send.agetolabs.com>';
 
 function escapeHtml(str: string) {
   return str
@@ -23,6 +23,8 @@ function isValidEmail(s: string) {
 export async function POST(req: Request) {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
+    console.log('RESEND_API_KEY present:', !!process.env.RESEND_API_KEY);
+    console.log('CONTACT_TO_EMAIL:', process.env.CONTACT_TO_EMAIL ?? 'MISSING');
     return NextResponse.json(
       { ok: false, error: 'Email service is not configured.' },
       { status: 503 }
