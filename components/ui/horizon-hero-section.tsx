@@ -85,11 +85,11 @@ export const Component: React.FC = () => {
   const scrollProgressRef = useRef<HTMLDivElement | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
   const brandIntroRef = useRef<HTMLDivElement | null>(null);
+  const progressFillRef = useRef<HTMLDivElement | null>(null);
+  const sectionCounterRef = useRef<HTMLDivElement | null>(null);
 
   const smoothCameraPos = useRef({ x: 0, y: 30, z: 200 });
 
-  const [scrollProgress, setScrollProgress] = useState<number>(0);
-  const [currentSection, setCurrentSection] = useState<number>(0);
   const [isReady, setIsReady] = useState<boolean>(false);
   const [brandIntroDone, setBrandIntroDone] = useState<boolean>(false);
   // total transitions between sections = SECTIONS.length - 1
@@ -624,9 +624,46 @@ export const Component: React.FC = () => {
     };
     window.addEventListener('resize', handleResize);
 
+    // Pause Three.js render when tab is hidden OR hero scrolled out of viewport.
+    let tabVisible = !document.hidden;
+    let inView = true;
+    const startLoop = () => {
+      const refs = threeRefs.current;
+      if (refs.animationId !== null) return;
+      lastTime = performance.now();
+      animate();
+    };
+    const stopLoop = () => {
+      const refs = threeRefs.current;
+      if (refs.animationId !== null) {
+        cancelAnimationFrame(refs.animationId);
+        refs.animationId = null;
+      }
+    };
+    const syncLoop = () => {
+      if (tabVisible && inView) startLoop();
+      else stopLoop();
+    };
+    const onVisibility = () => {
+      tabVisible = !document.hidden;
+      syncLoop();
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        inView = entry.isIntersecting;
+        syncLoop();
+      },
+      { threshold: 0 }
+    );
+    if (containerRef.current) observer.observe(containerRef.current);
+
     return () => {
       const refs = threeRefs.current;
       if (refs.animationId) cancelAnimationFrame(refs.animationId);
+      refs.animationId = null;
+      observer.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
       window.removeEventListener('resize', handleResize);
 
       refs.stars.forEach((s) => {
@@ -791,9 +828,21 @@ export const Component: React.FC = () => {
     return () => ctx.revert();
   }, [brandIntroDone]);
 
-  /* ----- SCROLL — measured against hero's own height, NOT the full page ----- */
+  /* ----- SCROLL — rAF-throttled, no React re-render. Writes directly to DOM. ----- */
   useEffect(() => {
-    const handleScroll = () => {
+    let frameId: number | null = null;
+
+    const cameraPositions = [
+      { x: 0, y: 30, z: 200 },    // S0 — deep space, anchored
+      { x: 6, y: 28, z: 50 },     // S1 — entering meteor field
+      { x: 12, y: 24, z: -250 },  // S2 — through meteor field
+      { x: 6, y: 16, z: -650 },   // S3 — Earth visible, closing in
+      { x: 0, y: 8, z: -995 },    // S4 — pressed against Earth, fills view
+    ];
+    const totalStr = String(totalSections).padStart(2, '0');
+
+    const tick = () => {
+      frameId = null;
       const refs = threeRefs.current;
       const heroEl = containerRef.current;
 
@@ -804,41 +853,42 @@ export const Component: React.FC = () => {
         const wh = window.innerHeight;
         const scrollY = window.scrollY;
         const heroScroll = scrollY - heroTop;
-        // hero "completes" when its bottom touches the viewport bottom
         const heroMaxScroll = Math.max(1, heroHeight - wh);
         progress = Math.max(0, Math.min(heroScroll / heroMaxScroll, 1));
       }
 
-      setScrollProgress(progress);
       const newSection = Math.min(
         Math.floor(progress * totalSections),
         totalSections
       );
-      setCurrentSection(newSection);
 
       refs.scrollProgressVal = progress;
 
       const totalProgress = progress * totalSections;
       const sectionProgress = totalProgress % 1;
-
-      // Camera flight path — 5 keyframes, ending tight on Earth so it fills the view
-      const cameraPositions = [
-        { x: 0, y: 30, z: 200 },    // S0 — deep space, anchored
-        { x: 6, y: 28, z: 50 },     // S1 — entering meteor field
-        { x: 12, y: 24, z: -250 },  // S2 — through meteor field
-        { x: 6, y: 16, z: -650 },   // S3 — Earth visible, closing in
-        { x: 0, y: 8, z: -995 },    // S4 — pressed against Earth, fills view
-      ];
       const cur = cameraPositions[newSection] || cameraPositions[0];
       const next = cameraPositions[newSection + 1] || cur;
       refs.targetCameraX = cur.x + (next.x - cur.x) * sectionProgress;
       refs.targetCameraY = cur.y + (next.y - cur.y) * sectionProgress;
       refs.targetCameraZ = cur.z + (next.z - cur.z) * sectionProgress;
+
+      const fill = progressFillRef.current;
+      if (fill) fill.style.transform = `scaleX(${progress})`;
+      const counter = sectionCounterRef.current;
+      if (counter) counter.textContent = `${String(newSection).padStart(2, '0')} / ${totalStr}`;
+    };
+
+    const handleScroll = () => {
+      if (frameId !== null) return;
+      frameId = requestAnimationFrame(tick);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    tick();
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (frameId !== null) cancelAnimationFrame(frameId);
+    };
   }, [totalSections]);
 
   const splitTitle = (text: string) =>
@@ -880,13 +930,13 @@ export const Component: React.FC = () => {
         <div className="scroll-text">SCROLL</div>
         <div className="progress-track">
           <div
+            ref={progressFillRef}
             className="progress-fill"
-            style={{ width: `${scrollProgress * 100}%` }}
+            style={{ transform: 'scaleX(0)' }}
           />
         </div>
-        <div className="section-counter">
-          {String(currentSection).padStart(2, '0')} /{' '}
-          {String(totalSections).padStart(2, '0')}
+        <div ref={sectionCounterRef} className="section-counter">
+          {`00 / ${String(totalSections).padStart(2, '0')}`}
         </div>
       </div>
 

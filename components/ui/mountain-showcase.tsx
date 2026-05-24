@@ -44,21 +44,37 @@ export function MountainShowcase({
   const mouseY = useMotionValue(-9999);
 
   useEffect(() => {
-    const handle = (e: MouseEvent) => {
+    let pendingX = 0;
+    let pendingY = 0;
+    let frameId: number | null = null;
+    const flush = () => {
+      frameId = null;
       const rect = containerRef.current?.getBoundingClientRect();
       if (!rect) return;
-      mouseX.set(e.clientX - rect.left);
-      mouseY.set(e.clientY - rect.top);
+      mouseX.set(pendingX - rect.left);
+      mouseY.set(pendingY - rect.top);
+    };
+    const handle = (e: MouseEvent) => {
+      pendingX = e.clientX;
+      pendingY = e.clientY;
+      if (frameId !== null) return;
+      frameId = requestAnimationFrame(flush);
     };
     const leave = () => {
+      if (frameId !== null) {
+        cancelAnimationFrame(frameId);
+        frameId = null;
+      }
       mouseX.set(-9999);
       mouseY.set(-9999);
     };
+    const container = containerRef.current;
     window.addEventListener('mousemove', handle);
-    containerRef.current?.addEventListener('mouseleave', leave);
+    container?.addEventListener('mouseleave', leave);
     return () => {
+      if (frameId !== null) cancelAnimationFrame(frameId);
       window.removeEventListener('mousemove', handle);
-      containerRef.current?.removeEventListener('mouseleave', leave);
+      container?.removeEventListener('mouseleave', leave);
     };
   }, [mouseX, mouseY]);
 

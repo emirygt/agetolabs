@@ -32,7 +32,7 @@ export function StarField() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let animId: number;
+    let animId: number | null = null;
     let stars: Star[] = [];
     let shootingStars: ShootingStar[] = [];
     let lastShoot = 0;
@@ -146,10 +146,43 @@ export function StarField() {
 
     resize();
     window.addEventListener('resize', resize);
-    animId = requestAnimationFrame(draw);
+
+    // Pause when tab hidden OR canvas off-screen.
+    let tabVisible = !document.hidden;
+    let inView = true;
+    const startLoop = () => {
+      if (animId !== null) return;
+      animId = requestAnimationFrame(draw);
+    };
+    const stopLoop = () => {
+      if (animId !== null) {
+        cancelAnimationFrame(animId);
+        animId = null;
+      }
+    };
+    const syncLoop = () => {
+      if (tabVisible && inView) startLoop();
+      else stopLoop();
+    };
+    const onVisibility = () => {
+      tabVisible = !document.hidden;
+      syncLoop();
+    };
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        inView = entry.isIntersecting;
+        syncLoop();
+      },
+      { threshold: 0 }
+    );
+    observer.observe(canvas);
+    document.addEventListener('visibilitychange', onVisibility);
+    startLoop();
 
     return () => {
-      cancelAnimationFrame(animId);
+      stopLoop();
+      observer.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
       window.removeEventListener('resize', resize);
     };
   }, []);

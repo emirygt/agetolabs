@@ -1,15 +1,41 @@
 'use client';
 
 import { motion } from 'motion/react';
+import dynamic from 'next/dynamic';
 
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { RobotCompanion } from '@/components/RobotCompanion';
 import { Component as HorizonHero } from '@/components/ui/horizon-hero-section';
 import { TrustedBy } from '@/components/sections/TrustedBy';
-import LinearCard, { type LinearCardItem } from '@/components/ui/linear-card';
+import type { LinearCardItem } from '@/components/ui/linear-card';
 import { topCards, bottomCards } from '@/constants/products';
 import { useLanguage } from '@/components/LanguageContext';
+
+const LINEAR_CARD_GRID =
+  'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4';
+
+const LinearCardSkeleton = () => (
+  <div className={LINEAR_CARD_GRID}>
+    {Array.from({ length: 8 }).map((_, i) => (
+      <div
+        key={i}
+        className="overflow-hidden rounded-[14px] border border-white/[0.08] bg-[#0d0e12]"
+      >
+        <div className="h-56 w-full bg-white/[0.04]" />
+        <div className="flex items-end justify-between p-4">
+          <div className="h-5 w-2/3 rounded bg-white/[0.06]" />
+          <div className="h-9 w-9 rounded-full bg-[#8EF0B5]/15" />
+        </div>
+      </div>
+    ))}
+  </div>
+);
+
+const LinearCard = dynamic(() => import('@/components/ui/linear-card'), {
+  ssr: true,
+  loading: () => <LinearCardSkeleton />,
+});
 
 const containerVariants = {
   hidden: { opacity: 0 },

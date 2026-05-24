@@ -144,13 +144,45 @@ export function MountainScene({ className, color = '#8EF0B5' }: Props) {
     pointLight.position.copy(lightPosRef.current);
     scene.add(pointLight);
 
-    let frameId = 0;
+    let frameId: number | null = null;
     const animate = (t: number) => {
       material.uniforms.time.value = t * 0.0003;
       renderer.render(scene, camera);
       frameId = requestAnimationFrame(animate);
     };
-    animate(0);
+
+    // Pause when tab hidden OR scene scrolled out of viewport.
+    let tabVisible = !document.hidden;
+    let inView = true;
+    const startLoop = () => {
+      if (frameId !== null) return;
+      frameId = requestAnimationFrame(animate);
+    };
+    const stopLoop = () => {
+      if (frameId !== null) {
+        cancelAnimationFrame(frameId);
+        frameId = null;
+      }
+    };
+    const syncLoop = () => {
+      if (tabVisible && inView) startLoop();
+      else stopLoop();
+    };
+    const onVisibility = () => {
+      tabVisible = !document.hidden;
+      syncLoop();
+    };
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        inView = entry.isIntersecting;
+        syncLoop();
+      },
+      { threshold: 0 }
+    );
+    observer.observe(currentMount);
+    document.addEventListener('visibilitychange', onVisibility);
+
+    startLoop();
 
     const handleResize = () => {
       if (!currentMount) return;
@@ -177,7 +209,9 @@ export function MountainScene({ className, color = '#8EF0B5' }: Props) {
     window.addEventListener('mousemove', handleMouseMove);
 
     return () => {
-      cancelAnimationFrame(frameId);
+      stopLoop();
+      observer.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
       if (currentMount && renderer.domElement.parentNode === currentMount) {

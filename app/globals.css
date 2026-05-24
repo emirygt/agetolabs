@@ -72,7 +72,7 @@
   width: 26px;
   height: 1.5px;
   background: rgba(255, 255, 255, 0.7);
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease;
 }
 
 .menu-icon:hover span {
@@ -179,13 +179,17 @@
   background: rgba(255, 255, 255, 0.1);
   overflow: hidden;
   border-radius: 999px;
+  /* Glow lives on the static wrapper so it doesn't deform when the inner bar scales. */
+  box-shadow: 0 0 10px rgba(142, 240, 181, 0.7);
 }
 
 .progress-fill {
+  width: 100%;
   height: 100%;
   background: #8EF0B5;
-  box-shadow: 0 0 10px rgba(142, 240, 181, 0.7);
-  transition: width 0.12s linear;
+  transform-origin: left center;
+  will-change: transform;
+  transition: transform 0.12s linear;
 }
 
 .section-counter {
