@@ -13,6 +13,7 @@ import {
 } from '@/components/sections/EcommerceScrollStory';
 import ScrollExpandMedia from '@/components/blocks/scroll-expansion-hero';
 import { useLanguage } from '@/components/LanguageContext';
+import { FlyingIconsButton } from '@/components/ui/flying-icons-button';
 
 export default function EcommercePage() {
   const { t } = useLanguage();
@@ -122,13 +123,9 @@ export default function EcommercePage() {
                 {t('eco_cta_p')}
               </p>
               <div className="mt-8 relative z-10">
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-2.5 bg-[#8EF0B5] hover:bg-white text-black font-semibold text-[15px] py-3.5 px-7 rounded-full transition-all hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(142,240,181,0.4)] shadow-[0_0_24px_rgba(142,240,181,0.25)]"
-                >
+                <FlyingIconsButton href="/contact" paddingY={12} paddingX={26}>
                   {t('eco_cta_button')}
-                  <ArrowRight size={16} strokeWidth={2.4} />
-                </Link>
+                </FlyingIconsButton>
               </div>
             </motion.div>
           </div>

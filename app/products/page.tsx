@@ -18,6 +18,7 @@ import {
   CardStack,
   type CardStackItem,
 } from '@/components/ui/card-stack';
+import { FlyingIconsButton } from '@/components/ui/flying-icons-button';
 
 /* ============================================================
  * Per-product Unsplash imagery (reuses homepage map)
@@ -361,14 +362,11 @@ function ProductCardStack({ items }: { items: CardStackItem[] }) {
               )}
 
               {active && item.href && (
-                <Link
-                  href={item.href}
-                  className="mt-5 inline-flex w-fit items-center gap-2 rounded-full bg-[#8EF0B5] px-5 py-2 text-sm font-semibold text-black hover:bg-white transition-colors shadow-[0_0_24px_rgba(142,240,181,0.4)]"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  {item.ctaLabel ?? t('products_view_details')}
-                  <Icons.ArrowRight size={14} strokeWidth={2.4} />
-                </Link>
+                <div className="mt-5" onClick={(e) => e.stopPropagation()}>
+                  <FlyingIconsButton href={item.href} paddingY={8} paddingX={18}>
+                    {item.ctaLabel ?? t('products_view_details')}
+                  </FlyingIconsButton>
+                </div>
               )}
             </div>
           </div>

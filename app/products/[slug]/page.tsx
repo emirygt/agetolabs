@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { useLanguage } from '@/components/LanguageContext';
 import { use } from 'react';
+import { FlyingIconsButton } from '@/components/ui/flying-icons-button';
 
 export default function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
@@ -100,9 +101,9 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
             )}
 
             <div className="flex gap-4">
-              <button className="h-12 inline-flex items-center justify-center rounded-full bg-[#8EF0B5] px-8 text-base font-semibold text-black hover:bg-[#8EF0B5]/90 transition-all shadow-[0_0_20px_rgba(110,231,183,0.3)]">
+              <FlyingIconsButton href="/contact" paddingY={10} paddingX={24}>
                 {['agento-pharm-ia', 'agento-eczaport', 'agento-wh-sales', 'agento-otonom-agent'].includes(slug) ? 'Demo Talep Et' : t('requestDemo')}
-              </button>
+              </FlyingIconsButton>
               <button className="h-12 inline-flex items-center justify-center rounded-full bg-white/10 px-8 text-base font-semibold text-white hover:bg-white/20 transition-all">
                 {slug === 'agento-pharm-ia' ? 'Ürünü İncele' : slug === 'agento-eczaport' ? 'Platformu İncele' : ['agento-wh-sales', 'agento-otonom-agent'].includes(slug) ? 'Detayları İncele' : t('documentation')}
               </button>
@@ -492,9 +493,9 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
               <p className="text-xl text-gray-400 mb-10">
                 Pharma AI, ilaç ve takviye gıda ürünleri için içerik üretimi, görsel oluşturma ve ürün analizi süreçlerini tek platformda toplayan yapay zeka destekli bir çözümdür. Ürün açıklamalarından görsellere, kullanım bilgilerinden pazar analizine kadar ekiplerin ihtiyaç duyduğu temel akışı sadeleştirir. Böylece daha az manuel iş yüküyle daha hızlı, daha düzenli ve daha güçlü ürün iletişimi kurulur.
               </p>
-              <button className="h-14 inline-flex items-center justify-center rounded-full bg-[#8EF0B5] px-10 text-lg font-bold text-black hover:bg-[#8EF0B5]/90 transition-all shadow-[0_0_30px_rgba(142,240,181,0.3)]">
+              <FlyingIconsButton href="/contact" paddingY={14} paddingX={32}>
                 Demo Talep Et
-              </button>
+              </FlyingIconsButton>
             </div>
             
           </div>
@@ -692,9 +693,9 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
               <p className="text-xl text-gray-400 mb-10">
                 Eczaport; ortak alım, takas, sevkiyat, cari hesap ve güven skorlamasını tek platformda birleştirerek eczaneler arası iş birliğini güçlendiren B2B SaaS çözümüdür.
               </p>
-              <button className="h-14 inline-flex items-center justify-center rounded-full bg-[#8EF0B5] px-10 text-lg font-bold text-black hover:bg-[#8EF0B5]/90 transition-all shadow-[0_0_30px_rgba(142,240,181,0.3)]">
+              <FlyingIconsButton href="/contact" paddingY={14} paddingX={32}>
                 Demo Talep Et
-              </button>
+              </FlyingIconsButton>
             </div>
             
           </div>
@@ -788,9 +789,9 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
               <p className="text-xl text-gray-400 mb-10">
                 Sürekli büyüyen e-ticaret trafiğinizi manuel karşılamayı bırakın. Müşteri memnuniyetini artırın ve siparişleri hatasız olarak sisteminize aktarın.
               </p>
-              <button className="h-14 inline-flex items-center justify-center rounded-full bg-[#8EF0B5] px-10 text-lg font-bold text-black hover:bg-[#8EF0B5]/90 transition-all shadow-[0_0_30px_rgba(142,240,181,0.3)]">
+              <FlyingIconsButton href="/contact" paddingY={14} paddingX={32}>
                 Demo Talep Et
-              </button>
+              </FlyingIconsButton>
             </div>
             
           </div>
@@ -885,9 +886,9 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
               <p className="text-xl text-gray-400 mb-10">
                 Zamanınızı karmaşık veri tablolarında değil, işinizi büyütmeye harcayın. Otonom Ajanı'nı e-ticaret sitenize bağlayın ve otonom pazarlamanın gücüyle dönüşüm oranlarınızı artırmaya bugünden başlayın.
               </p>
-              <button className="h-14 inline-flex items-center justify-center rounded-full bg-[#8EF0B5] px-10 text-lg font-bold text-black hover:bg-[#8EF0B5]/90 transition-all shadow-[0_0_30px_rgba(142,240,181,0.3)]">
+              <FlyingIconsButton href="/contact" paddingY={14} paddingX={32}>
                 Demo Talep Et
-              </button>
+              </FlyingIconsButton>
             </div>
 
           </div>
@@ -956,12 +957,9 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                   ? 'Bir kurumsal sürecinizi seçin — pilot orkestrasyon tasarımını birlikte çıkartalım.'
                   : 'Pick one enterprise process and we will design the pilot orchestration with you.'}
               </p>
-              <Link
-                href="/contact"
-                className="inline-flex h-14 items-center justify-center rounded-full bg-[#8EF0B5] px-10 text-lg font-bold text-black hover:bg-[#8EF0B5]/90 transition-all shadow-[0_0_30px_rgba(142,240,181,0.3)]"
-              >
+              <FlyingIconsButton href="/contact" paddingY={14} paddingX={32}>
                 {lang === 'tr' ? 'Demo Talep Et' : 'Request Demo'}
-              </Link>
+              </FlyingIconsButton>
             </div>
           </div>
         )}
@@ -1029,12 +1027,9 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                   ? 'Bir SKU listesi ile deneme yapın — 7 gün içinde rakip fiyat eğrilerinizi görün.'
                   : 'Bring us a SKU list — see your competitive price curves within 7 days.'}
               </p>
-              <Link
-                href="/contact"
-                className="inline-flex h-14 items-center justify-center rounded-full bg-[#8EF0B5] px-10 text-lg font-bold text-black hover:bg-[#8EF0B5]/90 transition-all shadow-[0_0_30px_rgba(142,240,181,0.3)]"
-              >
+              <FlyingIconsButton href="/contact" paddingY={14} paddingX={32}>
                 {lang === 'tr' ? 'Demo Talep Et' : 'Request Demo'}
-              </Link>
+              </FlyingIconsButton>
             </div>
           </div>
         )}

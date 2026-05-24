@@ -6,6 +6,7 @@ import { RobotCompanion } from '@/components/RobotCompanion';
 import * as Icons from 'lucide-react';
 import Link from 'next/link';
 import { useLanguage } from '@/components/LanguageContext';
+import { FlyingIconsButton } from '@/components/ui/flying-icons-button';
 
 export default function EcosystemPage() {
   const { lang } = useLanguage();
@@ -237,9 +238,9 @@ export default function EcosystemPage() {
             }
           </p>
           <div className="flex justify-center flex-wrap gap-4">
-            <Link href="/products" className="h-14 inline-flex items-center justify-center rounded-full bg-[#8EF0B5] px-10 text-lg font-bold text-black hover:bg-[#8EF0B5]/90 transition-all shadow-[0_0_30px_rgba(142,240,181,0.3)]">
+            <FlyingIconsButton href="/products" paddingY={14} paddingX={32}>
               {lang === 'tr' ? 'Ürünlerimizi Keşfedin' : 'Discover Our Products'}
-            </Link>
+            </FlyingIconsButton>
             <Link href="/contact" className="h-14 inline-flex items-center justify-center rounded-full bg-white/10 px-10 text-lg font-bold text-white hover:bg-white/20 transition-all">
               {lang === 'tr' ? 'Bizimle İletişime Geçin' : 'Contact Us'}
             </Link>

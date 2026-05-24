@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import Link from 'next/link';
 import { AlertTriangle, RefreshCw } from 'lucide-react';
+import { FlyingIconsButton } from '@/components/ui/flying-icons-button';
 
 export default function GlobalError({
   error,
@@ -48,14 +49,9 @@ export default function GlobalError({
         )}
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <button
-            type="button"
-            onClick={reset}
-            className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#8EF0B5] px-7 text-sm font-semibold text-black hover:bg-white transition-colors shadow-[0_0_24px_rgba(142,240,181,0.3)]"
-          >
-            <RefreshCw size={16} strokeWidth={2.4} />
+          <FlyingIconsButton onClick={reset} paddingY={10} paddingX={22}>
             Try again
-          </button>
+          </FlyingIconsButton>
           <Link
             href="/"
             className="inline-flex h-12 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] px-7 text-sm font-semibold text-white hover:border-[#8EF0B5]/50 hover:bg-white/[0.08] transition-colors"

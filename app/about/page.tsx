@@ -6,6 +6,7 @@ import { RobotCompanion } from '@/components/RobotCompanion';
 import * as Icons from 'lucide-react';
 import Link from 'next/link';
 import { useLanguage } from '@/components/LanguageContext';
+import { FlyingIconsButton } from '@/components/ui/flying-icons-button';
 
 export default function AboutPage() {
   const { lang } = useLanguage();
@@ -188,9 +189,9 @@ export default function AboutPage() {
             <Link href="/ecosystem" className="h-14 inline-flex items-center justify-center rounded-full bg-white/10 px-8 text-lg font-bold text-white hover:bg-white/20 transition-all border border-white/10">
               {lang === 'tr' ? 'Ekosistemi Keşfet' : 'Explore the Ecosystem'}
             </Link>
-            <Link href="/contact" className="h-14 inline-flex items-center justify-center rounded-full bg-[#8EF0B5] px-8 text-lg font-bold text-black hover:bg-[#8EF0B5]/90 transition-all shadow-[0_0_30px_rgba(142,240,181,0.3)]">
+            <FlyingIconsButton href="/contact" paddingY={14} paddingX={28}>
               {lang === 'tr' ? 'Bizimle Tanışın' : 'Meet Us'}
-            </Link>
+            </FlyingIconsButton>
           </div>
         </div>
 
