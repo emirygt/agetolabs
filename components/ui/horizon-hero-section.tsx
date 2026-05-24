@@ -80,6 +80,7 @@ export const Component: React.FC = () => {
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const posterRef = useRef<HTMLDivElement | null>(null);
   const titleRef = useRef<HTMLHeadingElement | null>(null);
   const subtitleRef = useRef<HTMLDivElement | null>(null);
   const scrollProgressRef = useRef<HTMLDivElement | null>(null);
@@ -90,7 +91,6 @@ export const Component: React.FC = () => {
 
   const smoothCameraPos = useRef({ x: 0, y: 30, z: 200 });
 
-  const [isReady, setIsReady] = useState<boolean>(false);
   const [brandIntroDone, setBrandIntroDone] = useState<boolean>(false);
   // total transitions between sections = SECTIONS.length - 1
   const totalSections = SECTIONS.length - 1;
@@ -153,7 +153,6 @@ export const Component: React.FC = () => {
       createMeteors();
       createEarth();
       animate();
-      setIsReady(true);
     };
 
     /* ----- STARS ----- */
@@ -508,8 +507,12 @@ export const Component: React.FC = () => {
     const RENDER_INTERVAL_MS = 1000 / 30;
     let lastTime = performance.now();
     let lastRenderTime = lastTime - RENDER_INTERVAL_MS;
+    let firstRendered = false;
     const animate = () => {
       const refs = threeRefs.current;
+      // initThree runs in requestIdleCallback — if it hasn't completed yet,
+      // skip silently (do not reschedule; syncLoop will restart us post-init).
+      if (!refs.composer) return;
       refs.animationId = requestAnimationFrame(animate);
 
       const now = performance.now();
@@ -618,9 +621,28 @@ export const Component: React.FC = () => {
       }
 
       if (refs.composer) refs.composer.render();
+
+      // After the very first composed frame is on the GPU, fade the static
+      // poster out and the canvas in. Single transition, ~600ms.
+      if (!firstRendered) {
+        firstRendered = true;
+        const canvasEl = canvasRef.current;
+        const posterEl = posterRef.current;
+        if (canvasEl) canvasEl.style.opacity = '1';
+        if (posterEl) posterEl.style.opacity = '0';
+      }
     };
 
-    initThree();
+    // Defer Three.js init out of the first paint window. Shader compile +
+    // EffectComposer setup costs 3+ seconds in long tasks — keep them off TBT.
+    let idleHandle: number | null = null;
+    let usedRic = false;
+    if (typeof window.requestIdleCallback === 'function') {
+      usedRic = true;
+      idleHandle = window.requestIdleCallback(() => initThree(), { timeout: 1500 });
+    } else {
+      idleHandle = window.setTimeout(initThree, 200);
+    }
 
     const handleResize = () => {
       const refs = threeRefs.current;
@@ -670,6 +692,13 @@ export const Component: React.FC = () => {
 
     return () => {
       const refs = threeRefs.current;
+      if (idleHandle !== null) {
+        if (usedRic && typeof window.cancelIdleCallback === 'function') {
+          window.cancelIdleCallback(idleHandle);
+        } else {
+          window.clearTimeout(idleHandle);
+        }
+      }
       if (refs.animationId) cancelAnimationFrame(refs.animationId);
       refs.animationId = null;
       observer.disconnect();
@@ -775,7 +804,7 @@ export const Component: React.FC = () => {
     return () => {
       tl.kill();
     };
-  }, [isReady]);
+  }, [brandIntroDone]);
 
   /* ----- LETTER SCATTER ON SCROLL — each char drifts in a random direction ----- */
   useEffect(() => {
@@ -910,7 +939,14 @@ export const Component: React.FC = () => {
 
   return (
     <div ref={containerRef} className="hero-container cosmos-style">
-      <canvas ref={canvasRef} className="hero-canvas" />
+      {/* Static space backdrop shown until Three.js finishes initializing. Fades out
+          on first composed frame so the user sees a stable hero immediately. */}
+      <div ref={posterRef} className="hero-poster" aria-hidden />
+      <canvas
+        ref={canvasRef}
+        className="hero-canvas"
+        style={{ opacity: 0, transition: 'opacity 600ms ease-out' }}
+      />
 
       <div ref={menuRef} className="side-menu" style={{ visibility: 'hidden' }}>
         <div className="menu-icon">
