@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import * as Icons from 'lucide-react';
 import { useLanguage } from '@/components/LanguageContext';
-import { Logo } from '@/components/Logo';
 
 export function Footer() {
   const { t } = useLanguage();
@@ -21,9 +20,11 @@ export function Footer() {
             <Link
               href="/"
               aria-label="agetolabs · footer home link"
-              className="inline-block transition-transform hover:scale-105 h-12 w-auto"
+              className="inline-flex items-center transition-transform hover:scale-105"
             >
-              <Logo />
+              <span className="text-white font-semibold tracking-[0.18em] text-base uppercase">
+                agetolabs
+              </span>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed max-w-sm">
               {t('footerBrandLine')}
