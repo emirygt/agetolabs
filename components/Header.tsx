@@ -6,6 +6,7 @@ import { Bot, Menu, X, Home, Orbit, Boxes, Users, Briefcase, Mail } from 'lucide
 import { useLanguage } from '@/components/LanguageContext';
 import { Logo } from '@/components/Logo';
 import { LimelightNav, type LimelightNavItem } from '@/components/LimelightNav';
+import { FlyingIconsButton } from '@/components/ui/flying-icons-button';
 import { useState, useMemo } from 'react';
 
 export function Header() {
@@ -73,12 +74,12 @@ export function Header() {
               <span className="text-xs font-bold">EN</span>
             </button>
           </div>
-          <Link
+          <FlyingIconsButton
             href="/contact"
-            className="inline-flex h-10 items-center justify-center rounded-full bg-[#8EF0B5] px-6 text-sm font-semibold text-black hover:bg-white transition-colors shadow-[0_0_24px_rgba(142,240,181,0.25)]"
-          >
-            {t('getStarted')}
-          </Link>
+            label={t('getStarted')}
+            paddingY={10}
+            paddingX={22}
+          />
         </div>
 
         <div className="lg:hidden flex items-center gap-3">
@@ -137,13 +138,18 @@ export function Header() {
               );
             })}
             <div className="w-full h-px bg-white/10 my-3" />
-            <Link
+            <div
               onClick={() => setMobileMenuOpen(false)}
-              href="/contact"
-              className="inline-flex h-12 items-center justify-center rounded-full bg-[#8EF0B5] px-8 text-base font-bold text-black hover:bg-white transition-colors mt-1"
+              className="mt-1 self-stretch"
             >
-              {t('getStarted')}
-            </Link>
+              <FlyingIconsButton
+                href="/contact"
+                label={t('getStarted')}
+                paddingY={14}
+                paddingX={28}
+                className="w-full"
+              />
+            </div>
           </nav>
         </div>
       )}
