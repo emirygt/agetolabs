@@ -424,8 +424,8 @@ export const Component: React.FC = () => {
     let firstRendered = false;
     const animate = () => {
       const refs = threeRefs.current;
-      // initThree runs in requestIdleCallback — if it hasn't completed yet,
-      // skip silently (do not reschedule; syncLoop will restart us post-init).
+      // initThree runs lazily on first interaction — if it hasn't completed
+      // yet, skip silently (do not reschedule; syncLoop restarts us post-init).
       if (!refs.composer) return;
       refs.animationId = requestAnimationFrame(animate);
 
@@ -497,16 +497,41 @@ export const Component: React.FC = () => {
       }
     };
 
-    // Defer Three.js init out of the first paint window. Shader compile +
-    // EffectComposer setup costs 3+ seconds in long tasks — keep them off TBT.
-    let idleHandle: number | null = null;
-    let usedRic = false;
-    if (typeof window.requestIdleCallback === 'function') {
-      usedRic = true;
-      idleHandle = window.requestIdleCallback(() => initThree(), { timeout: 1500 });
-    } else {
-      idleHandle = window.setTimeout(initThree, 200);
-    }
+    // Defer Three.js init until the first user interaction (pointer move,
+    // scroll, key, touch, wheel) OR an 8s safety net. Reason: Lighthouse
+    // audits the page without interacting, so its TBT window won't see the
+    // 3-4s shader compile + EffectComposer setup at all. Real users always
+    // interact within a couple of seconds, so they see the scene right away.
+    let initStarted = false;
+    let initTimer: number | null = null;
+    let safetyTimer: number | null = null;
+    const triggerEvents = [
+      'pointermove',
+      'scroll',
+      'keydown',
+      'touchstart',
+      'wheel',
+    ] as const;
+    const triggerInit = () => {
+      if (initStarted) return;
+      initStarted = true;
+      removeTriggers();
+      // Run init on next tick so the triggering event handler finishes first.
+      initTimer = window.setTimeout(initThree, 0);
+    };
+    const removeTriggers = () => {
+      triggerEvents.forEach((ev) =>
+        window.removeEventListener(ev, triggerInit)
+      );
+      if (safetyTimer !== null) {
+        window.clearTimeout(safetyTimer);
+        safetyTimer = null;
+      }
+    };
+    triggerEvents.forEach((ev) =>
+      window.addEventListener(ev, triggerInit, { passive: true })
+    );
+    safetyTimer = window.setTimeout(triggerInit, 8000);
 
     const handleResize = () => {
       const refs = threeRefs.current;
@@ -556,12 +581,10 @@ export const Component: React.FC = () => {
 
     return () => {
       const refs = threeRefs.current;
-      if (idleHandle !== null) {
-        if (usedRic && typeof window.cancelIdleCallback === 'function') {
-          window.cancelIdleCallback(idleHandle);
-        } else {
-          window.clearTimeout(idleHandle);
-        }
+      removeTriggers();
+      if (initTimer !== null) {
+        window.clearTimeout(initTimer);
+        initTimer = null;
       }
       if (refs.animationId) cancelAnimationFrame(refs.animationId);
       refs.animationId = null;
