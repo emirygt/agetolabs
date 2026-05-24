@@ -23,8 +23,6 @@ function isValidEmail(s: string) {
 export async function POST(req: Request) {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    console.log('RESEND_API_KEY present:', !!process.env.RESEND_API_KEY);
-    console.log('CONTACT_TO_EMAIL:', process.env.CONTACT_TO_EMAIL ?? 'MISSING');
     return NextResponse.json(
       { ok: false, error: 'Email service is not configured.' },
       { status: 503 }
