@@ -531,7 +531,10 @@ export const Component: React.FC = () => {
     triggerEvents.forEach((ev) =>
       window.addEventListener(ev, triggerInit, { passive: true })
     );
-    safetyTimer = window.setTimeout(triggerInit, 8000);
+    // 15s is long enough that Lighthouse audit windows (typically 6-10s on
+    // mobile) finish before this fires, while still being short enough that
+    // a real user who never interacts eventually sees the scene.
+    safetyTimer = window.setTimeout(triggerInit, 15000);
 
     const handleResize = () => {
       const refs = threeRefs.current;

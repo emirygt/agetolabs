@@ -345,6 +345,8 @@ function DialogImage({ src, alt, className, style }: DialogImageProps) {
       className={cn(className)}
       layoutId={`dialog-img-${uniqueId}`}
       style={style}
+      loading="lazy"
+      decoding="async"
     />
   );
 }

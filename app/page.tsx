@@ -6,9 +6,16 @@ import dynamic from 'next/dynamic';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { RobotCompanion } from '@/components/RobotCompanion';
-import { Component as HorizonHero } from '@/components/ui/horizon-hero-section';
 import { TrustedBy } from '@/components/sections/TrustedBy';
 import type { LinearCardItem } from '@/components/ui/linear-card';
+
+// Hero pulls in three.js (~1.9MB raw) + EffectComposer + bloom shaders.
+// Splitting it into its own chunk keeps three out of the initial bundle
+// while still SSRing the markup (poster + headings) for SEO and FCP.
+const HorizonHero = dynamic(
+  () => import('@/components/ui/horizon-hero-section'),
+  { ssr: true }
+);
 import { topCards, bottomCards } from '@/constants/products';
 import { useLanguage } from '@/components/LanguageContext';
 
@@ -55,19 +62,21 @@ const itemVariants = {
 };
 
 // Per-product Unsplash imagery — each photo themed to the product's domain.
+// Width 800 covers retina up to ~400px display; quality 75 is visually
+// indistinguishable from 80 on photographic content but saves ~25% bytes.
 const PRODUCT_IMAGES: Record<string, string> = {
   'struct-ia-top':
-    'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200&q=80&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&q=75&auto=format&fit=crop',
   'pharm-ia-top':
-    'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=1200&q=80&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=800&q=75&auto=format&fit=crop',
   'nexus-flow':
-    'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=75&auto=format&fit=crop',
   'price-compare':
-    'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&q=80&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=75&auto=format&fit=crop',
   'otonom-agent':
-    'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&q=80&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=75&auto=format&fit=crop',
   eczatrend:
-    'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&q=80&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=75&auto=format&fit=crop',
   'whatsapp-satis': '/products/whatsapp-sales.jpg',
 };
 

@@ -6,7 +6,7 @@ import './globals.css';
 
 import { LanguageProvider } from '@/components/LanguageContext';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ?? 'https://agetolabs.vercel.app';
