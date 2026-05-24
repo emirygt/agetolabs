@@ -131,7 +131,9 @@ export const Component: React.FC = () => {
         alpha: true,
       });
       refs.renderer.setSize(window.innerWidth, window.innerHeight);
-      refs.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      // 1x pixel ratio for the dim space backdrop — bloom + soft stars hide the diff,
+      // and on retina this cuts GPU pixel work by ~4x. Trace showed 35% GPU util at 2x.
+      refs.renderer.setPixelRatio(1);
       refs.renderer.toneMapping = THREE.ACESFilmicToneMapping;
       refs.renderer.toneMappingExposure = 0.55;
 
@@ -501,12 +503,19 @@ export const Component: React.FC = () => {
     };
 
     /* ----- ANIMATE LOOP ----- */
+    // Render budget: ~30fps. The slowly drifting space scene looks identical to 60fps
+    // but halves CPU/GPU work. rAF still ticks at 60fps; we just skip render frames.
+    const RENDER_INTERVAL_MS = 1000 / 30;
     let lastTime = performance.now();
+    let lastRenderTime = lastTime - RENDER_INTERVAL_MS;
     const animate = () => {
       const refs = threeRefs.current;
       refs.animationId = requestAnimationFrame(animate);
 
       const now = performance.now();
+      if (now - lastRenderTime < RENDER_INTERVAL_MS) return;
+      lastRenderTime = now;
+
       const dt = Math.min((now - lastTime) / 1000, 0.05); // clamp to avoid jumps
       lastTime = now;
       const time = now * 0.001;
@@ -631,6 +640,7 @@ export const Component: React.FC = () => {
       const refs = threeRefs.current;
       if (refs.animationId !== null) return;
       lastTime = performance.now();
+      lastRenderTime = lastTime - RENDER_INTERVAL_MS;
       animate();
     };
     const stopLoop = () => {
