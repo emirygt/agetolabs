@@ -64,6 +64,11 @@ export function RobotCompanion({
   useEffect(() => {
     if (!revealed) return;
     const forward = (e: PointerEvent) => {
+      // Ignore our own synthesized events — without this guard the dispatched
+      // event bubbles back to window and re-enters this handler, causing
+      // "Maximum call stack size exceeded".
+      if (!e.isTrusted) return;
+
       const wrapper = wrapperRef.current;
       const canvas = wrapper?.querySelector('canvas');
       if (!wrapper || !canvas) return;
@@ -95,7 +100,7 @@ export function RobotCompanion({
           new PointerEvent('pointermove', {
             clientX: cx,
             clientY: cy,
-            bubbles: true,
+            bubbles: false,
             cancelable: true,
             pointerType: 'mouse',
             isPrimary: true,
@@ -107,7 +112,7 @@ export function RobotCompanion({
           new MouseEvent('mousemove', {
             clientX: cx,
             clientY: cy,
-            bubbles: true,
+            bubbles: false,
           })
         );
       }
