@@ -4,6 +4,7 @@ import * as React from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { SquareArrowOutUpRight } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { cn } from '@/lib/utils';
 
 export type CardStackItem = {
@@ -324,12 +325,14 @@ function DefaultFanCard({ item }: { item: CardStackItem; active: boolean }) {
     <div className="relative h-full w-full bg-[#13151A]">
       <div className="absolute inset-0">
         {item.imageSrc ? (
-          <img
+          <Image
             src={item.imageSrc}
             alt={item.title}
-            className="h-full w-full object-cover"
+            fill
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            className="object-cover"
             draggable={false}
-            loading="eager"
+            priority
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-[#13151A] text-sm text-gray-500">

@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import * as Icons from 'lucide-react';
 import { motion } from 'motion/react';
 
@@ -323,11 +324,14 @@ function ProductCardStack({ items }: { items: CardStackItem[] }) {
           <div className="relative h-full w-full bg-[#0d0e12]">
             {/* image */}
             {item.imageSrc && (
-              <img
+              <Image
                 src={item.imageSrc}
                 alt={item.title}
-                className="absolute inset-0 h-full w-full object-cover"
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-cover"
                 draggable={false}
+                priority={active}
               />
             )}
             <div
