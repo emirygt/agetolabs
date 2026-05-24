@@ -848,7 +848,7 @@ export const Component: React.FC = () => {
   const splitTitle = (text: string) =>
     text.split('').map((char, i) => (
       <span key={i} className="title-char">
-        {char}
+        {char === ' ' ? ' ' : char}
       </span>
     ));
 
@@ -866,6 +866,7 @@ export const Component: React.FC = () => {
       </div>
 
       <div className="hero-content cosmos-content">
+        <div className="hero-tagline">{t('horizon_tagline')}</div>
         <h1 ref={titleRef} className="hero-title">
           {splitTitle(SECTIONS[0].title)}
         </h1>

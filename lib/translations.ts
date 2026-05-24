@@ -47,6 +47,7 @@ export const translations = {
     brandIntroTag: "TECHNOLOGY",
 
     /* ---------- Horizon Hero Sections ---------- */
+    horizon_tagline: "We're not building the future. We're automating it.",
     horizon_s0_title: "ORCHESTRATE",
     horizon_s0_line1: "Where data becomes decisions,",
     horizon_s0_line2: "we engineer the foundation of autonomous systems.",
@@ -248,6 +249,7 @@ export const translations = {
     brandIntroTag: "TEKNOLOJİ",
 
     /* ---------- Horizon Hero Sections ---------- */
+    horizon_tagline: "Geleceği inşa etmiyoruz. Onu otomatize ediyoruz.",
     horizon_s0_title: "ORKESTRASYON",
     horizon_s0_line1: "Verinin karara dönüştüğü yerde,",
     horizon_s0_line2: "otonom sistemlerin temelini mühendisliyoruz.",
