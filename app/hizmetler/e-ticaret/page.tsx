@@ -14,6 +14,7 @@ import {
 import ScrollExpandMedia from '@/components/blocks/scroll-expansion-hero';
 import { useLanguage } from '@/components/LanguageContext';
 import { FlyingIconsButton } from '@/components/ui/flying-icons-button';
+import { services } from '@/constants/services';
 
 export default function EcommercePage() {
   const { t } = useLanguage();
@@ -60,6 +61,60 @@ export default function EcommercePage() {
             </div>
           </div>
         </ScrollExpandMedia>
+
+        {/* Service selector — kart-grid hero altı */}
+        <section className="relative py-20 md:py-28">
+          <div className="max-w-[1180px] mx-auto px-6 sm:px-8">
+            <div className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.18em] text-[#8EF0B5] mb-6">
+              <span className="block w-8 h-px bg-[#8EF0B5]" />
+              Hizmetlerimiz
+            </div>
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.1] max-w-[22ch]">
+              İhtiyacınıza göre{' '}
+              <span className="text-[#8EF0B5] italic">başlangıç noktası</span>.
+            </h2>
+
+            <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+              {services.map((service) => {
+                const Icon = service.icon;
+                return (
+                  <Link
+                    key={service.href}
+                    href={service.href}
+                    aria-label={`${service.title} hizmetine git`}
+                    className="group relative block rounded-2xl border border-white/[0.08] bg-[#13151A]/80 backdrop-blur-md p-7 md:p-9 hover:border-[#8EF0B5]/40 hover:bg-[#13151A] transition-all duration-300"
+                  >
+                    {service.eyebrow ? (
+                      <span className="absolute top-6 right-6 inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-mono uppercase tracking-[0.18em] text-[#8EF0B5] bg-[#8EF0B5]/10 border border-[#8EF0B5]/30">
+                        {service.eyebrow}
+                      </span>
+                    ) : null}
+
+                    <div className="w-12 h-12 rounded-xl bg-[#8EF0B5]/10 border border-[#8EF0B5]/20 flex items-center justify-center mb-6 transition-colors group-hover:bg-[#8EF0B5]/20">
+                      <Icon size={22} className="text-[#8EF0B5]" />
+                    </div>
+
+                    <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-white leading-tight mb-4 group-hover:text-[#8EF0B5] transition-colors">
+                      {service.title}
+                    </h3>
+
+                    <p className="text-sm md:text-[15px] text-[#9CA3AF] leading-relaxed mb-8">
+                      {service.description}
+                    </p>
+
+                    <div className="inline-flex items-center gap-2 text-sm font-medium text-[#8EF0B5]">
+                      Detayları gör
+                      <ArrowRight
+                        size={16}
+                        className="transition-transform group-hover:translate-x-1"
+                      />
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </section>
 
         {/* Scrollytelling — 17 sahne (Hero + 4 Service + 1 Spread + 7 Project + 4 Process) */}
         <EcommerceScrollStory />

@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, Rocket, Layers, type LucideIcon } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { StarField } from '@/components/StarField';
 import { RobotCompanion } from '@/components/RobotCompanion';
 import { FlyingIconsButton } from '@/components/ui/flying-icons-button';
+import { services } from '@/constants/services';
 
 export const metadata: Metadata = {
   title: 'Hizmetler | E-ticaret Çözümleri ve Danışmanlık — agetolabs',
@@ -27,34 +28,6 @@ export const metadata: Metadata = {
       'E-ticaret sitesi kurma, kurumsal entegrasyon, pazaryeri yönetimi ve dijital dönüşüm.',
   },
 };
-
-type Service = {
-  title: string;
-  description: string;
-  href: string;
-  icon: LucideIcon;
-  eyebrow?: string;
-};
-
-// Sıralama UI'da görünen sırayı belirler. Yeni hizmet eklemek için bu listeye
-// bir obje eklemek yeterli — kart render kodu değişmez.
-const services: Service[] = [
-  {
-    title: 'E-ticaret Sitesi Kurma',
-    description:
-      'İşletmenize özel platform seçimi, tasarım, ERP/pazaryeri entegrasyonu, Trendyol mağaza yönetimi ve dönüşüm optimizasyonuyla uçtan uca e-ticaret kurulumu ve danışmanlığı.',
-    href: '/hizmetler/e-ticaret-sitesi-kurma',
-    icon: Rocket,
-    eyebrow: 'Yeni',
-  },
-  {
-    title: 'E-ticaret & Dijital Dönüşüm',
-    description:
-      'Yüksek trafikli kurumsal e-ticaret operasyonları için ERP, CRM, OMS, WMS entegrasyonu, pazaryeri orkestrasyonu ve uçtan uca proje yönetimi. 100+ kurumsal proje deneyimi.',
-    href: '/hizmetler/e-ticaret',
-    icon: Layers,
-  },
-];
 
 export default function HizmetlerPage() {
   return (
