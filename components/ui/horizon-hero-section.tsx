@@ -627,10 +627,9 @@ export const Component: React.FC = () => {
     const logo = wrap.querySelector('.brand-intro-logo');
     const tag = wrap.querySelector('.brand-intro-tag');
 
-    const tl = gsap.timeline({
-      onComplete: () => setBrandIntroDone(true),
-    });
+    const tl = gsap.timeline();
 
+    // Phase 1 — logo + tag enter
     tl.from(logo, {
         y: 40,
         duration: 0.55,
@@ -641,12 +640,31 @@ export const Component: React.FC = () => {
         { y: 18, duration: 0.4, ease: 'power3.out' },
         '-=0.3'
       )
-      .to({}, { duration: 0.5 })
-      .to(wrap, {
-        autoAlpha: 0,
-        duration: 0.45,
-        ease: 'power2.in',
-      });
+      .to({}, { duration: 0.3 })  // brief hold so the brand registers
+
+      // Phase 2 — hand off to the hero. setBrandIntroDone fires NOW (not on
+      // splash complete) so the hero's GSAP intro starts in parallel with the
+      // splash lift-away. Eliminates the 500ms dead beat that used to sit
+      // between the two timelines. All transform+opacity, no filter — stays
+      // 100% on the GPU compositor, zero paint cost, zero TBT impact.
+      .call(() => setBrandIntroDone(true))
+      .to(logo, {
+        y: -120,
+        scale: 0.6,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power3.in',
+      })
+      .to(
+        tag,
+        { y: -50, opacity: 0, duration: 0.55, ease: 'power2.in' },
+        '<'  // start at the same time as the logo lift
+      )
+      .to(
+        wrap,
+        { autoAlpha: 0, duration: 0.4, ease: 'power2.in' },
+        '-=0.3'  // backdrop fades while the lift is still finishing
+      );
 
     return () => {
       tl.kill();
