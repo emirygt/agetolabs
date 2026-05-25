@@ -828,7 +828,13 @@ export const Component: React.FC = () => {
         ref={brandIntroRef}
         className="brand-intro"
       >
-        <div className="brand-intro-logo">AGETOLABS</div>
+        <img
+          className="brand-intro-logo"
+          src="/sonlogo1.svg"
+          alt="agetolabs"
+          width={2474}
+          height={501}
+        />
         <div className="brand-intro-tag">{t('brandIntroTag')}</div>
       </div>
     </div>
