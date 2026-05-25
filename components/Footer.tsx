@@ -13,7 +13,7 @@ export function Footer() {
       <div className="absolute top-0 left-1/4 w-[50%] h-[30%] bg-[#8EF0B5]/5 blur-[120px] pointer-events-none rounded-full"></div>
 
       <div className="max-w-[1400px] mx-auto px-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12 lg:gap-8 mb-16">
 
           {/* Brand Column */}
           <div className="lg:col-span-2 space-y-6">
@@ -69,6 +69,25 @@ export function Footer() {
               <li>
                 <Link href="/products/agento-eczaport" className="text-gray-400 hover:text-[#8EF0B5] transition-colors text-sm">
                   Eczaport
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Services Column */}
+          <div className="space-y-6">
+            <h3 className="text-white font-bold tracking-wide">
+              {t('services')}
+            </h3>
+            <ul className="space-y-4">
+              <li>
+                <Link href="/hizmetler/e-ticaret-sitesi-kurma" className="text-gray-400 hover:text-[#8EF0B5] transition-colors text-sm">
+                  E-ticaret Sitesi Kurma
+                </Link>
+              </li>
+              <li>
+                <Link href="/hizmetler/e-ticaret" className="text-gray-400 hover:text-[#8EF0B5] transition-colors text-sm">
+                  E-ticaret & Dijital Dönüşüm
                 </Link>
               </li>
             </ul>

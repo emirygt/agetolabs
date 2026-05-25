@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/`, lastModified: now, changeFrequency: 'weekly', priority: 1.0 },
     { url: `${siteUrl}/products`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${siteUrl}/hizmetler/e-ticaret`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${siteUrl}/hizmetler/e-ticaret-sitesi-kurma`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${siteUrl}/ecosystem`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${siteUrl}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${siteUrl}/contact`, lastModified: now, changeFrequency: 'yearly', priority: 0.8 },
