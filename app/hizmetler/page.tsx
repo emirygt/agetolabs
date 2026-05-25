@@ -20,7 +20,6 @@ const CURRENT_PATH = '/hizmetler';
 
 export default function HizmetlerPage() {
   const { t } = useLanguage();
-  const relatedServices = services.filter((s) => s.href !== CURRENT_PATH);
 
   return (
     <div className="min-h-screen bg-[#0B0C10] text-white selection:bg-[#8EF0B5]/30 overflow-x-clip">
@@ -65,48 +64,67 @@ export default function HizmetlerPage() {
           </div>
         </ScrollExpandMedia>
 
-        {/* İlgili hizmetler — diğer servislere kart-grid geçiş */}
-        {relatedServices.length > 0 ? (
-          <section className="relative py-20 md:py-28">
-            <div className="max-w-[1180px] mx-auto px-6 sm:px-8">
-              <div className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.18em] text-[#8EF0B5] mb-6">
-                <span className="block w-8 h-px bg-[#8EF0B5]" />
-                İlgili Hizmetler
-              </div>
-              <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.1] max-w-[22ch]">
-                Farklı bir{' '}
-                <span className="text-[#8EF0B5] italic">başlangıç noktası</span>{' '}
-                mı arıyorsunuz?
-              </h2>
+        {/* Hizmetler kart-grid — mevcut sayfa "Şu an buradasınız" etiketiyle */}
+        <section className="relative py-20 md:py-28">
+          <div className="max-w-[1180px] mx-auto px-6 sm:px-8">
+            <div className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.18em] text-[#8EF0B5] mb-6">
+              <span className="block w-8 h-px bg-[#8EF0B5]" />
+              Hizmetlerimiz
+            </div>
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.1] max-w-[22ch]">
+              Bütünleşik altyapı.{' '}
+              <span className="text-[#8EF0B5] italic">Modüler başlangıç.</span>
+            </h2>
 
-              <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-                {relatedServices.map((service) => {
-                  const Icon = service.icon;
-                  return (
-                    <Link
-                      key={service.href}
-                      href={service.href}
-                      aria-label={`${service.title} hizmetine git`}
-                      className="group relative block rounded-2xl border border-white/[0.08] bg-[#13151A]/80 backdrop-blur-md p-7 md:p-9 hover:border-[#8EF0B5]/40 hover:bg-[#13151A] transition-all duration-300"
+            <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+              {services.map((service) => {
+                const Icon = service.icon;
+                const isCurrentPage = service.href === CURRENT_PATH;
+
+                const cardInner = (
+                  <>
+                    <span
+                      className={`absolute top-6 right-6 inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-mono uppercase tracking-[0.18em] border ${
+                        isCurrentPage
+                          ? 'text-white/70 bg-white/5 border-white/15'
+                          : service.eyebrow
+                          ? 'text-[#8EF0B5] bg-[#8EF0B5]/10 border-[#8EF0B5]/30'
+                          : 'hidden'
+                      }`}
                     >
-                      {service.eyebrow ? (
-                        <span className="absolute top-6 right-6 inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-mono uppercase tracking-[0.18em] text-[#8EF0B5] bg-[#8EF0B5]/10 border border-[#8EF0B5]/30">
-                          {service.eyebrow}
-                        </span>
-                      ) : null}
+                      {isCurrentPage
+                        ? 'Şu an buradasınız'
+                        : service.eyebrow ?? ''}
+                    </span>
 
-                      <div className="w-12 h-12 rounded-xl bg-[#8EF0B5]/10 border border-[#8EF0B5]/20 flex items-center justify-center mb-6 transition-colors group-hover:bg-[#8EF0B5]/20">
-                        <Icon size={22} className="text-[#8EF0B5]" />
-                      </div>
+                    <div
+                      className={`w-12 h-12 rounded-xl border flex items-center justify-center mb-6 transition-colors ${
+                        isCurrentPage
+                          ? 'bg-white/5 border-white/10'
+                          : 'bg-[#8EF0B5]/10 border-[#8EF0B5]/20 group-hover:bg-[#8EF0B5]/20'
+                      }`}
+                    >
+                      <Icon
+                        size={22}
+                        className={isCurrentPage ? 'text-white/60' : 'text-[#8EF0B5]'}
+                      />
+                    </div>
 
-                      <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-white leading-tight mb-4 group-hover:text-[#8EF0B5] transition-colors">
-                        {service.title}
-                      </h3>
+                    <h3
+                      className={`text-2xl md:text-3xl font-bold tracking-tight leading-tight mb-4 transition-colors ${
+                        isCurrentPage
+                          ? 'text-white/80'
+                          : 'text-white group-hover:text-[#8EF0B5]'
+                      }`}
+                    >
+                      {service.title}
+                    </h3>
 
-                      <p className="text-sm md:text-[15px] text-[#9CA3AF] leading-relaxed mb-8">
-                        {service.description}
-                      </p>
+                    <p className="text-sm md:text-[15px] text-[#9CA3AF] leading-relaxed mb-8">
+                      {service.description}
+                    </p>
 
+                    {!isCurrentPage ? (
                       <div className="inline-flex items-center gap-2 text-sm font-medium text-[#8EF0B5]">
                         Detayları gör
                         <ArrowRight
@@ -114,13 +132,32 @@ export default function HizmetlerPage() {
                           className="transition-transform group-hover:translate-x-1"
                         />
                       </div>
-                    </Link>
-                  );
-                })}
-              </div>
+                    ) : null}
+                  </>
+                );
+
+                return isCurrentPage ? (
+                  <div
+                    key={service.href}
+                    aria-current="page"
+                    className="relative block rounded-2xl border border-white/[0.06] bg-[#0F1115]/80 backdrop-blur-md p-7 md:p-9"
+                  >
+                    {cardInner}
+                  </div>
+                ) : (
+                  <Link
+                    key={service.href}
+                    href={service.href}
+                    aria-label={`${service.title} hizmetine git`}
+                    className="group relative block rounded-2xl border border-white/[0.08] bg-[#13151A]/80 backdrop-blur-md p-7 md:p-9 hover:border-[#8EF0B5]/40 hover:bg-[#13151A] transition-all duration-300"
+                  >
+                    {cardInner}
+                  </Link>
+                );
+              })}
             </div>
-          </section>
-        ) : null}
+          </div>
+        </section>
 
         {/* Scrollytelling — 17 sahne (Hero + 4 Service + 1 Spread + 7 Project + 4 Process) */}
         <EcommerceScrollStory />
