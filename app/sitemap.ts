@@ -4,7 +4,7 @@ import { caseStudies } from '@/constants/case-studies';
 import { blogPosts } from '@/constants/blog-posts';
 
 const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://agetolabs.vercel.app';
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://agetolabs.com';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();

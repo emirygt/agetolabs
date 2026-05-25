@@ -10,7 +10,7 @@ import { CookieConsent } from '@/components/CookieConsent';
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
 const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://agetolabs.vercel.app';
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://agetolabs.com';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
