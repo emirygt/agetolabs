@@ -5,6 +5,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 
 import { LanguageProvider } from '@/components/LanguageContext';
+import { CookieConsent } from '@/components/CookieConsent';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
@@ -67,6 +68,27 @@ export const metadata: Metadata = {
   },
 };
 
+// Schema.org Organization — surfaces in Google rich results / knowledge panel.
+// Pure SEO win; renders nothing visible, no runtime cost.
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'agetolabs',
+  alternateName: 'Agetolabs Technology',
+  url: siteUrl,
+  logo: `${siteUrl}/sonlogo1.svg`,
+  description:
+    'Autonomous AI ecosystems for enterprise operations — sales agents, content studios, e-commerce orchestration.',
+  email: 'info@agetolabs.com',
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'sales',
+    email: 'info@agetolabs.com',
+    availableLanguage: ['English', 'Turkish'],
+  },
+  areaServed: 'Worldwide',
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="dark">
@@ -74,7 +96,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         className={`${inter.className} bg-[#0A0A0B] text-white antialiased`}
         suppressHydrationWarning
       >
-        <LanguageProvider>{children}</LanguageProvider>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+        <LanguageProvider>
+          {children}
+          <CookieConsent />
+        </LanguageProvider>
         <Analytics />
         <SpeedInsights />
       </body>
