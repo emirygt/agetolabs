@@ -43,9 +43,13 @@ export function Header() {
           aria-label="agetolabs · go to homepage"
           className="flex items-center h-10 md:h-12 shrink-0"
         >
-          <span className="text-white font-semibold tracking-[0.18em] text-sm md:text-base uppercase">
-            agetolabs
-          </span>
+          <img
+            src="/sonlogo1.svg"
+            alt="agetolabs"
+            width={2474}
+            height={501}
+            className="h-5 md:h-6 w-auto"
+          />
         </Link>
 
         <nav className="hidden lg:flex flex-1 items-center justify-center">
