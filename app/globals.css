@@ -244,6 +244,17 @@
   filter: brightness(0) invert(1) drop-shadow(0 0 36px rgba(142, 240, 181, 0.6));
 }
 
+/* Same color treatment as the splash logo but without the bold glow —
+   the header logo lives in the chrome, not in a hero moment, so it
+   stays quiet. Mint glow only on hover for a subtle brand cue. */
+.header-logo {
+  filter: brightness(0) invert(1);
+  transition: filter 0.3s ease;
+}
+.header-logo:hover {
+  filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(142, 240, 181, 0.5));
+}
+
 .brand-intro-tag {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   font-size: clamp(11px, 1.1vw, 14px);

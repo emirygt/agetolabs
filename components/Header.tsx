@@ -48,7 +48,7 @@ export function Header() {
             alt="agetolabs"
             width={2474}
             height={501}
-            className="h-5 md:h-6 w-auto"
+            className="header-logo h-5 md:h-6 w-auto"
           />
         </Link>
 
