@@ -629,41 +629,42 @@ export const Component: React.FC = () => {
 
     const tl = gsap.timeline();
 
-    // Phase 1 — logo + tag enter
+    // Phase 1 — entry: logo zooms in from slightly smaller and below,
+    // tag follows in the same rhythm. "Approaching from depth" feel.
     tl.from(logo, {
-        y: 40,
-        duration: 0.55,
-        ease: 'power3.out',
+        y: 28,
+        scale: 0.82,
+        opacity: 0,
+        duration: 0.85,
+        ease: 'power4.out',
       })
       .from(
         tag,
-        { y: 18, duration: 0.4, ease: 'power3.out' },
-        '-=0.3'
+        { y: 14, opacity: 0, duration: 0.55, ease: 'power3.out' },
+        '-=0.5'
       )
-      .to({}, { duration: 0.3 })  // brief hold so the brand registers
+      .to({}, { duration: 0.35 })  // brief hold so the brand registers
 
-      // Phase 2 — hand off to the hero. setBrandIntroDone fires NOW (not on
-      // splash complete) so the hero's GSAP intro starts in parallel with the
-      // splash lift-away. Eliminates the 500ms dead beat that used to sit
-      // between the two timelines. All transform+opacity, no filter — stays
-      // 100% on the GPU compositor, zero paint cost, zero TBT impact.
+      // Phase 2 — camera-through exit. Logo grows slightly in place and
+      // dissolves (no reverse motion — eliminates the "going back" feel).
+      // setBrandIntroDone fires here so the hero's GSAP intro starts in
+      // parallel with the dissolve. All transform + opacity, GPU-only.
       .call(() => setBrandIntroDone(true))
       .to(logo, {
-        y: -120,
-        scale: 0.6,
+        scale: 1.12,
         opacity: 0,
-        duration: 0.8,
-        ease: 'power3.in',
+        duration: 0.75,
+        ease: 'power2.in',
       })
       .to(
         tag,
-        { y: -50, opacity: 0, duration: 0.55, ease: 'power2.in' },
-        '<'  // start at the same time as the logo lift
+        { y: 18, opacity: 0, duration: 0.5, ease: 'power2.in' },
+        '<'
       )
       .to(
         wrap,
         { autoAlpha: 0, duration: 0.4, ease: 'power2.in' },
-        '-=0.3'  // backdrop fades while the lift is still finishing
+        '-=0.3'
       );
 
     return () => {
