@@ -248,7 +248,7 @@ export default function EticaretSitesiKurmaPage() {
                 Ücretsiz Keşif Görüşmesi
               </FlyingIconsButton>
               <Link
-                href="/hizmetler/e-ticaret"
+                href="/hizmetler"
                 className="inline-flex items-center gap-2 text-sm text-[#9CA3AF] hover:text-[#8EF0B5] transition-colors"
               >
                 Kurumsal e-ticaret operasyonu hizmetimize bakın

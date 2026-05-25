@@ -86,7 +86,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/hizmetler/e-ticaret" className="text-gray-400 hover:text-[#8EF0B5] transition-colors text-sm">
+                <Link href="/hizmetler" className="text-gray-400 hover:text-[#8EF0B5] transition-colors text-sm">
                   E-ticaret & Dijital Dönüşüm
                 </Link>
               </li>

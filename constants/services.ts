@@ -24,7 +24,7 @@ export const services: Service[] = [
     title: 'E-ticaret & Dijital Dönüşüm',
     description:
       'Yüksek trafikli kurumsal e-ticaret operasyonları için ERP, CRM, OMS, WMS entegrasyonu, pazaryeri orkestrasyonu ve uçtan uca proje yönetimi. 100+ kurumsal proje deneyimi.',
-    href: '/hizmetler/e-ticaret',
+    href: '/hizmetler',
     icon: Layers,
   },
 ];
