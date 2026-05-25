@@ -18,7 +18,7 @@ export function Header() {
       { key: 'home',      label: lang === 'tr' ? 'Anasayfa' : 'Home', icon: <Home size={14} strokeWidth={1.8} />,  href: '/' },
       { key: 'ecosystem', label: t('ecosystem'), icon: <Orbit size={14} strokeWidth={1.8} />, href: '/ecosystem' },
       { key: 'products',  label: t('solutions'), icon: <Boxes size={14} strokeWidth={1.8} />, href: '/products' },
-      { key: 'services',  label: t('services'),  icon: <Briefcase size={14} strokeWidth={1.8} />, href: '/hizmetler' },
+      { key: 'services',  label: t('services'),  icon: <Briefcase size={14} strokeWidth={1.8} />, href: '/hizmetler/e-ticaret' },
       { key: 'contact',   label: t('contact'),   icon: <Mail size={14} strokeWidth={1.8} />,    href: '/contact' },
       { key: 'about',     label: t('aboutUs'),   icon: <Users size={14} strokeWidth={1.8} />, href: '/about' },
     ],

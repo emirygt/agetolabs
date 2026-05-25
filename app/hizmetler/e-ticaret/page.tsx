@@ -130,6 +130,20 @@ export default function EcommercePage() {
             </motion.div>
           </div>
         </section>
+
+        {/* Other services link */}
+        <section className="relative pb-24">
+          <div className="max-w-[1180px] mx-auto px-6 sm:px-8 flex justify-center">
+            <Link
+              href="/hizmetler"
+              className="group inline-flex items-center gap-3 text-sm text-[#9CA3AF] hover:text-[#8EF0B5] transition-colors font-mono uppercase tracking-[0.18em]"
+            >
+              <span className="block w-8 h-px bg-current transition-all group-hover:w-12" />
+              Tüm hizmetlerimize göz at
+              <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>
+        </section>
       </main>
 
       <Footer />
