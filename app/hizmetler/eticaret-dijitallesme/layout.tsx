@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://agetolabs.com';
+
 export const metadata: Metadata = {
   title: 'Hizmetler | E-ticaret Çözümleri ve Danışmanlık — agetolabs',
   description:
@@ -21,10 +24,52 @@ export const metadata: Metadata = {
   },
 };
 
+const serviceJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'E-ticaret ve Dijital Dönüşüm',
+  name: 'E-ticaret Çözümleri ve Dijital Dönüşüm Danışmanlığı',
+  description:
+    'Kurumsal e-ticaret entegrasyonu, ERP/CRM/OMS bağlantıları, pazaryeri orkestrasyonu ve uçtan uca dijital dönüşüm danışmanlığı.',
+  url: `${siteUrl}/hizmetler/eticaret-dijitallesme`,
+  provider: {
+    '@type': 'Organization',
+    name: 'agetolabs',
+    url: siteUrl,
+  },
+  areaServed: {
+    '@type': 'Country',
+    name: 'Turkey',
+  },
+  inLanguage: 'tr',
+};
+
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Anasayfa', item: `${siteUrl}/` },
+    { '@type': 'ListItem', position: 2, name: 'Hizmetler', item: `${siteUrl}/hizmetler` },
+    { '@type': 'ListItem', position: 3, name: 'E-ticaret ve Dijitalleşme', item: `${siteUrl}/hizmetler/eticaret-dijitallesme` },
+  ],
+};
+
 export default function EticaretDijitallesmeLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      {children}
+    </>
+  );
 }

@@ -89,6 +89,19 @@ const organizationJsonLd = {
   areaServed: 'Worldwide',
 };
 
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'agetolabs',
+  url: siteUrl,
+  inLanguage: ['en', 'tr'],
+  publisher: {
+    '@type': 'Organization',
+    name: 'agetolabs',
+    url: siteUrl,
+  },
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="dark">
@@ -99,6 +112,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
         <LanguageProvider>
           {children}
