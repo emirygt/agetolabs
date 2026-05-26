@@ -5,7 +5,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 
 import { LanguageProvider } from '@/components/LanguageContext';
-import { CookieConsent } from '@/components/CookieConsent';
+import { CookieConsentLoader } from '@/components/CookieConsentLoader';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
@@ -102,7 +102,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <LanguageProvider>
           {children}
-          <CookieConsent />
+          <CookieConsentLoader />
         </LanguageProvider>
         <Analytics />
         <SpeedInsights />
