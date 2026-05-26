@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     template: '%s · agetolabs',
   },
   description:
-    'agetolabs builds autonomous AI ecosystems that orchestrate enterprise operations end to end — from e-commerce integrations to sales agents and content studios.',
+    'agetolabs builds autonomous AI ecosystems for enterprise operations — e-commerce integrations, sales agents, content studios.',
   applicationName: 'agetolabs',
   keywords: [
     'agetolabs',

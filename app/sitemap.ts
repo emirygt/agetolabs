@@ -21,10 +21,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/case-studies`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${siteUrl}/blog`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
     { url: `${siteUrl}/faq`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
-    { url: `${siteUrl}/legal/privacy`, lastModified: now, changeFrequency: 'yearly', priority: 0.2 },
-    { url: `${siteUrl}/legal/terms`, lastModified: now, changeFrequency: 'yearly', priority: 0.2 },
-    { url: `${siteUrl}/legal/cookies`, lastModified: now, changeFrequency: 'yearly', priority: 0.2 },
-    { url: `${siteUrl}/legal/kvkk`, lastModified: now, changeFrequency: 'yearly', priority: 0.2 },
   ];
 
   const productRoutes: MetadataRoute.Sitemap = [...topCards, ...bottomCards].map(
