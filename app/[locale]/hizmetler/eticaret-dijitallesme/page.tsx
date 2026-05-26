@@ -14,6 +14,7 @@ export default async function HizmetlerPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const isTr = locale !== 'en';
   return (
     <div className="min-h-screen bg-[#0B0C10] text-white selection:bg-[#8EF0B5]/30 overflow-x-clip">
       <StarField />
@@ -35,23 +36,22 @@ export default async function HizmetlerPage({
           <div className="max-w-[1180px] mx-auto px-6 sm:px-8">
             <Breadcrumbs
               items={[
-                { label: 'Anasayfa', href: `/${locale}` },
-                { label: 'Hizmetler', href: `/${locale}/hizmetler` },
-                { label: 'E-ticaret ve Dijitalleşme' },
+                { label: isTr ? 'Anasayfa' : 'Home', href: `/${locale}` },
+                { label: isTr ? 'Hizmetler' : 'Services', href: `/${locale}/hizmetler` },
+                { label: isTr ? 'E-ticaret ve Dijitalleşme' : 'E-commerce & Digitalization' },
               ]}
             />
             <div className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.18em] text-[#8EF0B5] mb-6">
               <span className="block w-8 h-px bg-[#8EF0B5]" />
-              Hizmetler
+              {isTr ? 'Hizmetler' : 'Services'}
             </div>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] max-w-[18ch]">
-              Hizmetler
+              {isTr ? 'Hizmetler' : 'Services'}
             </h1>
             <p className="text-[#9CA3AF] text-base md:text-lg leading-relaxed mt-8 max-w-[68ch]">
-              E-ticarete başlayan girişimlerden çok kanallı operasyon yöneten
-              kurumsal markalara kadar her ölçekte iş için uçtan uca çözümler
-              sunuyoruz. Aşağıdaki hizmetlerden işinize en uygun olanı seçin —
-              tüm projelerimiz ücretsiz keşif görüşmesiyle başlar.
+              {isTr
+                ? 'E-ticarete başlayan girişimlerden çok kanallı operasyon yöneten kurumsal markalara kadar her ölçekte iş için uçtan uca çözümler sunuyoruz. Aşağıdaki hizmetlerden işinize en uygun olanı seçin — tüm projelerimiz ücretsiz keşif görüşmesiyle başlar.'
+                : 'From early-stage startups to enterprise brands running multi-channel operations, we deliver end-to-end solutions at every scale. Pick the service that fits your business below — every engagement starts with a free discovery call.'}
             </p>
           </div>
         </section>
@@ -62,16 +62,17 @@ export default async function HizmetlerPage({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {services.map((service) => {
                 const Icon = service.icon;
+                const lang: 'tr' | 'en' = locale === 'en' ? 'en' : 'tr';
                 return (
                   <Link
                     key={service.href}
-                    href={service.href}
-                    aria-label={`${service.title} hizmetine git`}
+                    href={`/${locale}${service.href}`}
+                    aria-label={`${service.title[lang]} ${lang === 'tr' ? 'hizmetine git' : 'service'}`}
                     className="group relative block rounded-2xl border border-white/[0.08] bg-[#13151A]/80 backdrop-blur-md p-7 md:p-9 hover:border-[#8EF0B5]/40 hover:bg-[#13151A] transition-all duration-300"
                   >
                     {service.eyebrow ? (
                       <span className="absolute top-6 right-6 inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-mono uppercase tracking-[0.18em] text-[#8EF0B5] bg-[#8EF0B5]/10 border border-[#8EF0B5]/30">
-                        {service.eyebrow}
+                        {service.eyebrow[lang]}
                       </span>
                     ) : null}
 
@@ -80,15 +81,15 @@ export default async function HizmetlerPage({
                     </div>
 
                     <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-white leading-tight mb-4 group-hover:text-[#8EF0B5] transition-colors">
-                      {service.title}
+                      {service.title[lang]}
                     </h2>
 
                     <p className="text-sm md:text-[15px] text-[#9CA3AF] leading-relaxed mb-8">
-                      {service.description}
+                      {service.description[lang]}
                     </p>
 
                     <div className="inline-flex items-center gap-2 text-sm font-medium text-[#8EF0B5]">
-                      Detayları gör
+                      {lang === 'tr' ? 'Detayları gör' : 'See details'}
                       <ArrowRight
                         size={16}
                         className="transition-transform group-hover:translate-x-1"
@@ -112,16 +113,26 @@ export default async function HizmetlerPage({
               }}
             >
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight max-w-[22ch] leading-[1.1] relative z-10">
-                Hangi hizmete ihtiyacınız olduğundan{' '}
-                <span className="text-[#8EF0B5] italic">emin değil misiniz?</span>
+                {isTr ? (
+                  <>
+                    Hangi hizmete ihtiyacınız olduğundan{' '}
+                    <span className="text-[#8EF0B5] italic">emin değil misiniz?</span>
+                  </>
+                ) : (
+                  <>
+                    Not sure which service you{' '}
+                    <span className="text-[#8EF0B5] italic">actually need?</span>
+                  </>
+                )}
               </h2>
               <p className="text-[#9CA3AF] mt-4 max-w-[52ch] text-base md:text-[16.5px] relative z-10">
-                30 dakikalık ücretsiz keşif görüşmesinde işinizi dinleyip
-                ihtiyacınıza en uygun çözüm yolunu birlikte planlıyoruz.
+                {isTr
+                  ? '30 dakikalık ücretsiz keşif görüşmesinde işinizi dinleyip ihtiyacınıza en uygun çözüm yolunu birlikte planlıyoruz.'
+                  : 'On a 30-minute free discovery call we listen to your business and map out the path that fits your needs.'}
               </p>
               <div className="mt-8 relative z-10">
                 <FlyingIconsButton href={`/${locale}/contact`} paddingY={12} paddingX={26}>
-                  Ücretsiz Keşif Görüşmesi
+                  {isTr ? 'Ücretsiz Keşif Görüşmesi' : 'Book a Free Discovery Call'}
                 </FlyingIconsButton>
               </div>
             </div>

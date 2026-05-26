@@ -80,13 +80,13 @@ export default function EcommercePage() {
                 return (
                   <Link
                     key={service.href}
-                    href={service.href}
-                    aria-label={`${service.title} hizmetine git`}
+                    href={`/${lang}${service.href}`}
+                    aria-label={`${service.title[lang]} ${lang === 'tr' ? 'hizmetine git' : 'service'}`}
                     className="group relative block rounded-2xl border border-white/[0.08] bg-[#13151A]/80 backdrop-blur-md p-7 md:p-9 hover:border-[#8EF0B5]/40 hover:bg-[#13151A] transition-all duration-300"
                   >
                     {service.eyebrow ? (
                       <span className="absolute top-6 right-6 inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-mono uppercase tracking-[0.18em] text-[#8EF0B5] bg-[#8EF0B5]/10 border border-[#8EF0B5]/30">
-                        {service.eyebrow}
+                        {service.eyebrow[lang]}
                       </span>
                     ) : null}
 
@@ -95,15 +95,15 @@ export default function EcommercePage() {
                     </div>
 
                     <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-white leading-tight mb-4 group-hover:text-[#8EF0B5] transition-colors">
-                      {service.title}
+                      {service.title[lang]}
                     </h3>
 
                     <p className="text-sm md:text-[15px] text-[#9CA3AF] leading-relaxed mb-8">
-                      {service.description}
+                      {service.description[lang]}
                     </p>
 
                     <div className="inline-flex items-center gap-2 text-sm font-medium text-[#8EF0B5]">
-                      Detayları gör
+                      {lang === 'tr' ? 'Detayları gör' : 'See details'}
                       <ArrowRight
                         size={16}
                         className="transition-transform group-hover:translate-x-1"
@@ -194,7 +194,7 @@ export default function EcommercePage() {
               className="group inline-flex items-center gap-3 text-sm text-[#9CA3AF] hover:text-[#8EF0B5] transition-colors font-mono uppercase tracking-[0.18em]"
             >
               <span className="block w-8 h-px bg-current transition-all group-hover:w-12" />
-              Tüm hizmetlerimize göz at
+              {lang === 'tr' ? 'Tüm hizmetlerimize göz at' : 'Browse all services'}
               <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
