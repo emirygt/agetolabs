@@ -18,7 +18,7 @@ export function ProductCard({ product }: { product: Product }) {
   };
 
   return (
-    <Link href={`/products/${product.slug}`} className="block h-full">
+    <Link href={`/${lang}/products/${product.slug}`} className="block h-full">
       <motion.div
         whileHover={{ y: -2 }}
         transition={{ duration: 0.2 }}

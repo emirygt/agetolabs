@@ -15,7 +15,7 @@ const BRANDS = [
 ];
 
 export function TrustedBy() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
   const stats = [
     { value: t('trusted_stat_projects_value'), label: t('trusted_stat_projects_label') },
@@ -111,7 +111,7 @@ export function TrustedBy() {
 
         <div className="mt-12">
           <Link
-            href="/case-studies"
+            href={`/${lang}/case-studies`}
             className="inline-flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.22em] text-[#8EF0B5] hover:text-white transition-colors"
           >
             {t('trusted_view_work')}

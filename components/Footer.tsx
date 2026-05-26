@@ -5,7 +5,7 @@ import * as Icons from 'lucide-react';
 import { useLanguage } from '@/components/LanguageContext';
 
 export function Footer() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
   return (
     <footer className="bg-[#050508] border-t border-white/10 pt-20 pb-10 relative overflow-hidden">
@@ -18,7 +18,7 @@ export function Footer() {
           {/* Brand Column */}
           <div className="lg:col-span-2 space-y-6">
             <Link
-              href="/"
+              href={`/${lang}`}
               aria-label="agetolabs · footer home link"
               className="inline-flex items-center transition-transform hover:scale-105"
             >
@@ -47,27 +47,27 @@ export function Footer() {
             </h3>
             <ul className="space-y-4">
               <li>
-                <Link href="/products/agento-otonom-agent" className="text-gray-400 hover:text-[#8EF0B5] transition-colors text-sm">
+                <Link href={`/${lang}/products/agento-otonom-agent`} className="text-gray-400 hover:text-[#8EF0B5] transition-colors text-sm">
                   Autonomous Agent
                 </Link>
               </li>
               <li>
-                <Link href="/products/agento-wh-sales" className="text-gray-400 hover:text-[#8EF0B5] transition-colors text-sm">
+                <Link href={`/${lang}/products/agento-wh-sales`} className="text-gray-400 hover:text-[#8EF0B5] transition-colors text-sm">
                   WhatsApp Sales Automation
                 </Link>
               </li>
               <li>
-                <Link href="/products/agento-struct-editor" className="text-gray-400 hover:text-[#8EF0B5] transition-colors text-sm">
+                <Link href={`/${lang}/products/agento-struct-editor`} className="text-gray-400 hover:text-[#8EF0B5] transition-colors text-sm">
                   Structa AI
                 </Link>
               </li>
               <li>
-                <Link href="/products/agento-pharm-ia" className="text-gray-400 hover:text-[#8EF0B5] transition-colors text-sm">
+                <Link href={`/${lang}/products/agento-pharm-ia`} className="text-gray-400 hover:text-[#8EF0B5] transition-colors text-sm">
                   Pharma AI
                 </Link>
               </li>
               <li>
-                <Link href="/products/agento-eczaport" className="text-gray-400 hover:text-[#8EF0B5] transition-colors text-sm">
+                <Link href={`/${lang}/products/agento-eczaport`} className="text-gray-400 hover:text-[#8EF0B5] transition-colors text-sm">
                   Eczaport
                 </Link>
               </li>
@@ -81,12 +81,12 @@ export function Footer() {
             </h3>
             <ul className="space-y-4">
               <li>
-                <Link href="/hizmetler/e-ticaret-sitesi-kurma" className="text-gray-400 hover:text-[#8EF0B5] transition-colors text-sm">
+                <Link href={`/${lang}/hizmetler/e-ticaret-sitesi-kurma`} className="text-gray-400 hover:text-[#8EF0B5] transition-colors text-sm">
                   E-ticaret Sitesi Kurma
                 </Link>
               </li>
               <li>
-                <Link href="/hizmetler" className="text-gray-400 hover:text-[#8EF0B5] transition-colors text-sm">
+                <Link href={`/${lang}/hizmetler`} className="text-gray-400 hover:text-[#8EF0B5] transition-colors text-sm">
                   E-ticaret & Dijital Dönüşüm
                 </Link>
               </li>
@@ -99,12 +99,12 @@ export function Footer() {
               {t('company')}
             </h3>
             <ul className="space-y-4">
-              <li><Link href="/about" className="text-gray-400 hover:text-white transition-colors text-sm">{t('aboutUs')}</Link></li>
-              <li><Link href="/ecosystem" className="text-gray-400 hover:text-white transition-colors text-sm">{t('ecosystemArchitecture')}</Link></li>
-              <li><Link href="/case-studies" className="text-gray-400 hover:text-white transition-colors text-sm">Case Studies</Link></li>
-              <li><Link href="/blog" className="text-gray-400 hover:text-white transition-colors text-sm">Blog</Link></li>
-              <li><Link href="/faq" className="text-gray-400 hover:text-white transition-colors text-sm">FAQ</Link></li>
-              <li><Link href="/contact" className="text-gray-400 hover:text-white transition-colors text-sm">{t('contactUs')}</Link></li>
+              <li><Link href={`/${lang}/about`} className="text-gray-400 hover:text-white transition-colors text-sm">{t('aboutUs')}</Link></li>
+              <li><Link href={`/${lang}/ecosystem`} className="text-gray-400 hover:text-white transition-colors text-sm">{t('ecosystemArchitecture')}</Link></li>
+              <li><Link href={`/${lang}/case-studies`} className="text-gray-400 hover:text-white transition-colors text-sm">Case Studies</Link></li>
+              <li><Link href={`/${lang}/blog`} className="text-gray-400 hover:text-white transition-colors text-sm">Blog</Link></li>
+              <li><Link href={`/${lang}/faq`} className="text-gray-400 hover:text-white transition-colors text-sm">FAQ</Link></li>
+              <li><Link href={`/${lang}/contact`} className="text-gray-400 hover:text-white transition-colors text-sm">{t('contactUs')}</Link></li>
             </ul>
           </div>
 
@@ -114,10 +114,10 @@ export function Footer() {
               {t('legal')}
             </h3>
             <ul className="space-y-4">
-              <li><Link href="/legal/privacy" className="text-gray-400 hover:text-white transition-colors text-sm">{t('privacyPolicy')}</Link></li>
-              <li><Link href="/legal/terms" className="text-gray-400 hover:text-white transition-colors text-sm">{t('termsOfService')}</Link></li>
-              <li><Link href="/legal/cookies" className="text-gray-400 hover:text-white transition-colors text-sm">{t('cookiePolicy')}</Link></li>
-              <li><Link href="/legal/kvkk" className="text-gray-400 hover:text-white transition-colors text-sm">{t('dataProtection')}</Link></li>
+              <li><Link href={`/${lang}/legal/privacy`} className="text-gray-400 hover:text-white transition-colors text-sm">{t('privacyPolicy')}</Link></li>
+              <li><Link href={`/${lang}/legal/terms`} className="text-gray-400 hover:text-white transition-colors text-sm">{t('termsOfService')}</Link></li>
+              <li><Link href={`/${lang}/legal/cookies`} className="text-gray-400 hover:text-white transition-colors text-sm">{t('cookiePolicy')}</Link></li>
+              <li><Link href={`/${lang}/legal/kvkk`} className="text-gray-400 hover:text-white transition-colors text-sm">{t('dataProtection')}</Link></li>
             </ul>
           </div>
 

@@ -15,23 +15,24 @@ export function Header() {
 
   const navItems: LimelightNavItem[] = useMemo(
     () => [
-      { key: 'home',      label: lang === 'tr' ? 'Anasayfa' : 'Home', icon: <Home size={14} strokeWidth={1.8} />,  href: '/' },
-      { key: 'ecosystem', label: t('ecosystem'), icon: <Orbit size={14} strokeWidth={1.8} />, href: '/ecosystem' },
-      { key: 'products',  label: t('solutions'), icon: <Boxes size={14} strokeWidth={1.8} />, href: '/products' },
-      { key: 'services',  label: t('services'),  icon: <Briefcase size={14} strokeWidth={1.8} />, href: '/hizmetler' },
-      { key: 'contact',   label: t('contact'),   icon: <Mail size={14} strokeWidth={1.8} />,    href: '/contact' },
-      { key: 'about',     label: t('aboutUs'),   icon: <Users size={14} strokeWidth={1.8} />, href: '/about' },
+      { key: 'home',      label: lang === 'tr' ? 'Anasayfa' : 'Home', icon: <Home size={14} strokeWidth={1.8} />,  href: `/${lang}` },
+      { key: 'ecosystem', label: t('ecosystem'), icon: <Orbit size={14} strokeWidth={1.8} />, href: `/${lang}/ecosystem` },
+      { key: 'products',  label: t('solutions'), icon: <Boxes size={14} strokeWidth={1.8} />, href: `/${lang}/products` },
+      { key: 'services',  label: t('services'),  icon: <Briefcase size={14} strokeWidth={1.8} />, href: `/${lang}/hizmetler` },
+      { key: 'contact',   label: t('contact'),   icon: <Mail size={14} strokeWidth={1.8} />,    href: `/${lang}/contact` },
+      { key: 'about',     label: t('aboutUs'),   icon: <Users size={14} strokeWidth={1.8} />, href: `/${lang}/about` },
     ],
     [t, lang]
   );
 
+  const localePath = pathname?.replace(/^\/(tr|en)/, '') || '/';
   const activeKey =
-    pathname === '/' || pathname === '/v2'  ? 'home'      :
-    pathname?.startsWith('/ecosystem')      ? 'ecosystem' :
-    pathname?.startsWith('/products')       ? 'products'  :
-    pathname?.startsWith('/hizmetler')      ? 'services'  :
-    pathname?.startsWith('/contact')        ? 'contact'   :
-    pathname?.startsWith('/about')          ? 'about'     :
+    localePath === '/' || localePath === ''  ? 'home'      :
+    localePath.startsWith('/ecosystem')      ? 'ecosystem' :
+    localePath.startsWith('/products')       ? 'products'  :
+    localePath.startsWith('/hizmetler')      ? 'services'  :
+    localePath.startsWith('/contact')        ? 'contact'   :
+    localePath.startsWith('/about')          ? 'about'     :
     undefined;
 
   return (
@@ -39,7 +40,7 @@ export function Header() {
       <div className="max-w-[1600px] mx-auto px-4 md:px-8 h-20 md:h-24 flex items-center justify-between gap-6">
 
         <Link
-          href="/"
+          href={`/${lang}`}
           aria-label="agetolabs · go to homepage"
           className="flex items-center h-10 md:h-12 shrink-0"
         >
@@ -84,7 +85,7 @@ export function Header() {
             </button>
           </div>
           <FlyingIconsButton
-            href="/contact"
+            href={`/${lang}/contact`}
             paddingY={10}
             paddingX={22}
           >
@@ -153,7 +154,7 @@ export function Header() {
               className="mt-1"
             >
               <FlyingIconsButton
-                href="/contact"
+                href={`/${lang}/contact`}
                 paddingY={14}
                 paddingX={28}
                 fullWidth

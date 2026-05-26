@@ -78,7 +78,7 @@ export function CookieConsent() {
         <p className="text-[12.5px] md:text-[13px] leading-relaxed text-gray-300">
           {t.text}{' '}
           <Link
-            href="/legal/privacy"
+            href={`/${lang}/legal/privacy`}
             className="text-[#8EF0B5] hover:text-white underline-offset-2 hover:underline transition-colors"
           >
             {t.privacy}
