@@ -5,6 +5,7 @@ import { Footer } from '@/components/Footer';
 import { StarField } from '@/components/StarField';
 import { RobotCompanion } from '@/components/RobotCompanion';
 import { FlyingIconsButton } from '@/components/ui/flying-icons-button';
+import { Breadcrumbs } from '@/components/ui/breadcrumbs';
 import { services } from '@/constants/services';
 
 export default function HizmetlerPage() {
@@ -27,6 +28,13 @@ export default function HizmetlerPage() {
         {/* Hero */}
         <section className="relative pt-40 md:pt-48 pb-12 md:pb-16">
           <div className="max-w-[1180px] mx-auto px-6 sm:px-8">
+            <Breadcrumbs
+              items={[
+                { label: 'Anasayfa', href: '/' },
+                { label: 'Hizmetler', href: '/hizmetler' },
+                { label: 'E-ticaret ve Dijitalleşme' },
+              ]}
+            />
             <div className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.18em] text-[#8EF0B5] mb-6">
               <span className="block w-8 h-px bg-[#8EF0B5]" />
               Hizmetler

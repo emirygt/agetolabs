@@ -9,6 +9,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { RobotCompanion } from '@/components/RobotCompanion';
 import { FlyingIconsButton } from '@/components/ui/flying-icons-button';
+import { Breadcrumbs } from '@/components/ui/breadcrumbs';
 import { caseStudies, getCaseStudy } from '@/constants/case-studies';
 import { useLanguage } from '@/components/LanguageContext';
 
@@ -36,13 +37,13 @@ export default function CaseStudyDetailPage({
       <RobotCompanion />
 
       <main className="flex-1 pt-32 pb-20 max-w-[1100px] mx-auto px-4 sm:px-8 w-full">
-        <Link
-          href="/case-studies"
-          className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm"
-        >
-          <ArrowLeft size={16} />
-          {lang === 'tr' ? 'Tüm vaka çalışmaları' : 'All case studies'}
-        </Link>
+        <Breadcrumbs
+          items={[
+            { label: lang === 'tr' ? 'Anasayfa' : 'Home', href: '/' },
+            { label: lang === 'tr' ? 'Vaka Çalışmaları' : 'Case Studies', href: '/case-studies' },
+            { label: study.brand },
+          ]}
+        />
 
         <motion.div
           initial={{ opacity: 0, y: 16 }}

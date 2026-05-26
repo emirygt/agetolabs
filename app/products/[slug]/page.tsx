@@ -10,6 +10,7 @@ import { notFound } from 'next/navigation';
 import { useLanguage } from '@/components/LanguageContext';
 import { use } from 'react';
 import { FlyingIconsButton } from '@/components/ui/flying-icons-button';
+import { Breadcrumbs } from '@/components/ui/breadcrumbs';
 
 export default function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
@@ -31,10 +32,13 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
       <RobotCompanion />
 
       <main className="flex-1 pt-32 pb-16 relative z-10 max-w-[1200px] mx-auto px-8 w-full">
-        <Link href="/" className="inline-flex items-center text-gray-400 hover:text-white mb-12 transition-colors">
-          <Icons.ArrowLeft size={16} className="mr-2" />
-          {t('backToHome')}
-        </Link>
+        <Breadcrumbs
+          items={[
+            { label: lang === 'tr' ? 'Anasayfa' : 'Home', href: '/' },
+            { label: lang === 'tr' ? 'Ürünler' : 'Products', href: '/products' },
+            { label: name },
+          ]}
+        />
 
         <div className="grid grid-cols-2 gap-16 items-center">
           <div>

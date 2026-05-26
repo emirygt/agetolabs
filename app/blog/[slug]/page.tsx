@@ -9,6 +9,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { RobotCompanion } from '@/components/RobotCompanion';
 import { FlyingIconsButton } from '@/components/ui/flying-icons-button';
+import { Breadcrumbs } from '@/components/ui/breadcrumbs';
 import {
   blogPosts,
   getBlogPost,
@@ -90,13 +91,13 @@ export default function BlogPostPage({
       <RobotCompanion />
 
       <main className="flex-1 pt-32 pb-24 max-w-[820px] mx-auto px-4 sm:px-8 w-full">
-        <Link
-          href="/blog"
-          className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm"
-        >
-          <ArrowLeft size={16} />
-          {lang === 'tr' ? 'Tüm yazılar' : 'All writing'}
-        </Link>
+        <Breadcrumbs
+          items={[
+            { label: lang === 'tr' ? 'Anasayfa' : 'Home', href: '/' },
+            { label: 'Blog', href: '/blog' },
+            { label: content.title },
+          ]}
+        />
 
         <motion.div
           initial={{ opacity: 0, y: 16 }}
