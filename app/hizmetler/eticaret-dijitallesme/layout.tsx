@@ -1,18 +1,30 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'E-commerce & Digital Transformation',
+  title: 'Hizmetler | E-ticaret Çözümleri ve Danışmanlık — agetolabs',
   description:
-    'Enterprise-grade e-commerce architecture: ERP / CRM / OMS / WMS integration, marketplace orchestration, end-to-end project management. 100+ enterprise projects across 9+ years.',
+    'agetolabs hizmetleri: e-ticaret sitesi kurma, kurumsal e-ticaret entegrasyonu, ERP/pazaryeri yönetimi ve dijital dönüşüm danışmanlığı. Ücretsiz keşif görüşmesi.',
   alternates: { canonical: '/hizmetler/eticaret-dijitallesme' },
   openGraph: {
-    title: 'E-commerce & Digital Transformation — agetolabs',
+    title: 'Hizmetler — agetolabs',
     description:
-      'Integration, marketplaces, project management and process audits for high-traffic e-commerce operations.',
+      'E-ticaret sitesi kurma, kurumsal entegrasyon, pazaryeri yönetimi ve dijital dönüşüm hizmetleri.',
     url: '/hizmetler/eticaret-dijitallesme',
+    locale: 'tr_TR',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Hizmetler — agetolabs',
+    description:
+      'E-ticaret sitesi kurma, kurumsal entegrasyon, pazaryeri yönetimi ve dijital dönüşüm.',
   },
 };
 
-export default function EticaretLayout({ children }: { children: React.ReactNode }) {
+export default function EticaretDijitallesmeLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return <>{children}</>;
 }

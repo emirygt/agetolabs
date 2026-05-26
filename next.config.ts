@@ -21,7 +21,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/hizmetler/e-ticaret',
-        destination: '/hizmetler/eticaret-dijitallesme',
+        destination: '/hizmetler',
         permanent: true,
       },
     ];

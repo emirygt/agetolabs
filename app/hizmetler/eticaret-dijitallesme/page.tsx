@@ -1,24 +1,13 @@
-'use client';
-
 import Link from 'next/link';
-import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { StarField } from '@/components/StarField';
 import { RobotCompanion } from '@/components/RobotCompanion';
-import {
-  EcommerceScrollStory,
-  EcommerceScrollStoryMobile,
-} from '@/components/sections/EcommerceScrollStory';
-import ScrollExpandMedia from '@/components/blocks/scroll-expansion-hero';
-import { useLanguage } from '@/components/LanguageContext';
 import { FlyingIconsButton } from '@/components/ui/flying-icons-button';
 import { services } from '@/constants/services';
 
-export default function EcommercePage() {
-  const { t } = useLanguage();
-
+export default function HizmetlerPage() {
   return (
     <div className="min-h-screen bg-[#0B0C10] text-white selection:bg-[#8EF0B5]/30 overflow-x-clip">
       <StarField />
@@ -35,46 +24,29 @@ export default function EcommercePage() {
       <RobotCompanion />
 
       <main className="relative z-10">
-        {/* Scroll Expansion Hero — title → disperse → card description */}
-        <ScrollExpandMedia
-          mediaType="image"
-          mediaSrc="/ecommerce/hero/card.png"
-          bgImageSrc="/ecommerce/hero/bg.png"
-          title={t('eco_hero_title')}
-          date={t('eco_hero_eyebrow')}
-          scrollToExpand={t('eco_hero_scroll')}
-          textBlend
-        >
-          <div className="max-w-[920px] mx-auto text-center">
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white leading-[1.1]">
-              {t('eco_hero_h2_a')}{' '}
-              <span className="text-[#8EF0B5] italic">{t('eco_hero_h2_em')}</span>
-              {t('eco_hero_h2_b')}
-            </h2>
-            <p className="text-[#9CA3AF] text-base md:text-lg leading-relaxed mt-6 max-w-[64ch] mx-auto">
-              {t('eco_hero_p')}
-            </p>
-            <div className="mt-10 flex items-center justify-center gap-3 font-mono text-xs uppercase tracking-[0.18em] text-[#8EF0B5]">
-              <span className="block w-8 h-px bg-[#8EF0B5]" />
-              {t('eco_hero_explore')}
-              <span className="block w-8 h-px bg-[#8EF0B5]" />
-            </div>
-          </div>
-        </ScrollExpandMedia>
-
-        {/* Service selector — kart-grid hero altı */}
-        <section className="relative py-20 md:py-28">
+        {/* Hero */}
+        <section className="relative pt-40 md:pt-48 pb-12 md:pb-16">
           <div className="max-w-[1180px] mx-auto px-6 sm:px-8">
             <div className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.18em] text-[#8EF0B5] mb-6">
               <span className="block w-8 h-px bg-[#8EF0B5]" />
-              Hizmetlerimiz
+              Hizmetler
             </div>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.1] max-w-[22ch]">
-              İhtiyacınıza göre{' '}
-              <span className="text-[#8EF0B5] italic">başlangıç noktası</span>.
-            </h2>
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] max-w-[18ch]">
+              Hizmetler
+            </h1>
+            <p className="text-[#9CA3AF] text-base md:text-lg leading-relaxed mt-8 max-w-[68ch]">
+              E-ticarete başlayan girişimlerden çok kanallı operasyon yöneten
+              kurumsal markalara kadar her ölçekte iş için uçtan uca çözümler
+              sunuyoruz. Aşağıdaki hizmetlerden işinize en uygun olanı seçin —
+              tüm projelerimiz ücretsiz keşif görüşmesiyle başlar.
+            </p>
+          </div>
+        </section>
 
-            <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Services Grid */}
+        <section className="relative py-12 md:py-16">
+          <div className="max-w-[1180px] mx-auto px-6 sm:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {services.map((service) => {
                 const Icon = service.icon;
                 return (
@@ -94,9 +66,9 @@ export default function EcommercePage() {
                       <Icon size={22} className="text-[#8EF0B5]" />
                     </div>
 
-                    <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-white leading-tight mb-4 group-hover:text-[#8EF0B5] transition-colors">
+                    <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-white leading-tight mb-4 group-hover:text-[#8EF0B5] transition-colors">
                       {service.title}
-                    </h3>
+                    </h2>
 
                     <p className="text-sm md:text-[15px] text-[#9CA3AF] leading-relaxed mb-8">
                       {service.description}
@@ -116,87 +88,30 @@ export default function EcommercePage() {
           </div>
         </section>
 
-        {/* Scrollytelling — 17 sahne (Hero + 4 Service + 1 Spread + 7 Project + 4 Process) */}
-        <EcommerceScrollStory />
-        <EcommerceScrollStoryMobile />
-
-        {/* Final CTA — static */}
+        {/* CTA */}
         <section className="relative">
           <div className="max-w-[1180px] mx-auto px-6 sm:px-8 py-20">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] as any }}
+            <div
               className="relative overflow-hidden border border-white/[0.1] rounded-3xl px-8 md:px-12 py-14 md:py-16"
               style={{
                 background:
                   'radial-gradient(120% 140% at 80% 0%, rgba(168,85,247,0.14), transparent 55%), radial-gradient(120% 140% at 10% 100%, rgba(142,240,181,0.14), transparent 55%), #13151A',
               }}
             >
-              <svg
-                aria-hidden
-                className="absolute right-[-80px] bottom-[-80px] w-[300px] h-[300px] opacity-35 pointer-events-none"
-                viewBox="0 0 300 300"
-                fill="none"
-              >
-                <g
-                  className="animate-[spin_9s_linear_infinite]"
-                  style={{ transformOrigin: '50% 50%' }}
-                >
-                  <ellipse
-                    cx="150"
-                    cy="150"
-                    rx="120"
-                    ry="48"
-                    stroke="#8EF0B5"
-                    strokeWidth="1"
-                  />
-                  <circle cx="270" cy="150" r="4" fill="#8EF0B5" />
-                </g>
-                <g
-                  className="animate-[spin_14s_linear_infinite_reverse]"
-                  style={{ transformOrigin: '50% 50%' }}
-                >
-                  <ellipse
-                    cx="150"
-                    cy="150"
-                    rx="48"
-                    ry="120"
-                    stroke="#a855f7"
-                    strokeWidth="1"
-                  />
-                </g>
-              </svg>
-
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight max-w-[18ch] leading-[1.1] relative z-10">
-                {t('eco_cta_h2_a')}{' '}
-                <span className="text-[#8EF0B5] italic">{t('eco_cta_em')}</span>
-                {t('eco_cta_h2_b')}
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight max-w-[22ch] leading-[1.1] relative z-10">
+                Hangi hizmete ihtiyacınız olduğundan{' '}
+                <span className="text-[#8EF0B5] italic">emin değil misiniz?</span>
               </h2>
-              <p className="text-[#9CA3AF] mt-4 max-w-[48ch] text-base md:text-[16.5px] relative z-10">
-                {t('eco_cta_p')}
+              <p className="text-[#9CA3AF] mt-4 max-w-[52ch] text-base md:text-[16.5px] relative z-10">
+                30 dakikalık ücretsiz keşif görüşmesinde işinizi dinleyip
+                ihtiyacınıza en uygun çözüm yolunu birlikte planlıyoruz.
               </p>
               <div className="mt-8 relative z-10">
                 <FlyingIconsButton href="/contact" paddingY={12} paddingX={26}>
-                  {t('eco_cta_button')}
+                  Ücretsiz Keşif Görüşmesi
                 </FlyingIconsButton>
               </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Other services link */}
-        <section className="relative pb-24">
-          <div className="max-w-[1180px] mx-auto px-6 sm:px-8 flex justify-center">
-            <Link
-              href="/hizmetler"
-              className="group inline-flex items-center gap-3 text-sm text-[#9CA3AF] hover:text-[#8EF0B5] transition-colors font-mono uppercase tracking-[0.18em]"
-            >
-              <span className="block w-8 h-px bg-current transition-all group-hover:w-12" />
-              Tüm hizmetlerimize göz at
-              <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-            </Link>
+            </div>
           </div>
         </section>
       </main>
