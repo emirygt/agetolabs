@@ -77,6 +77,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang={locale} className="dark">
+      <head>
+        <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="" />
+        <link rel="dns-prefetch" href="https://images.unsplash.com" />
+        <link rel="preconnect" href="https://va.vercel-scripts.com" crossOrigin="" />
+        <link rel="dns-prefetch" href="https://prod.spline.design" />
+      </head>
       <body
         className={`${inter.className} bg-[#0A0A0B] text-white antialiased`}
         suppressHydrationWarning
