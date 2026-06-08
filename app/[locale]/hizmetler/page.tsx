@@ -116,9 +116,8 @@ export default function EcommercePage() {
           </div>
         </section>
 
-        {/* Scrollytelling — 17 sahne (Hero + 4 Service + 1 Spread + 7 Project + 4 Process) */}
-        <EcommerceScrollStory />
-        <EcommerceScrollStoryMobile />
+        {/* <EcommerceScrollStory /> */}
+        {/* <EcommerceScrollStoryMobile /> */}
 
         {/* Final CTA — static */}
         <section className="relative">
