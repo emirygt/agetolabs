@@ -101,7 +101,7 @@ export default function Home() {
 
       <HorizonHero />
 
-      <TrustedBy />
+      {/* <TrustedBy /> */}
 
       <main className="relative z-10 bg-black">
         <section className="max-w-[1600px] mx-auto px-4 sm:px-8 py-16">

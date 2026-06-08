@@ -101,7 +101,6 @@ export function Footer() {
             <ul className="space-y-4">
               <li><Link href={`/${lang}/about`} className="text-gray-400 hover:text-white transition-colors text-sm">{t('aboutUs')}</Link></li>
               <li><Link href={`/${lang}/ecosystem`} className="text-gray-400 hover:text-white transition-colors text-sm">{t('ecosystemArchitecture')}</Link></li>
-              <li><Link href={`/${lang}/case-studies`} className="text-gray-400 hover:text-white transition-colors text-sm">Case Studies</Link></li>
               <li><Link href={`/${lang}/blog`} className="text-gray-400 hover:text-white transition-colors text-sm">Blog</Link></li>
               <li><Link href={`/${lang}/faq`} className="text-gray-400 hover:text-white transition-colors text-sm">FAQ</Link></li>
               <li><Link href={`/${lang}/contact`} className="text-gray-400 hover:text-white transition-colors text-sm">{t('contactUs')}</Link></li>

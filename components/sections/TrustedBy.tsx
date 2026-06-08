@@ -109,15 +109,6 @@ export function TrustedBy() {
           ))}
         </motion.div>
 
-        <div className="mt-12">
-          <Link
-            href={`/${lang}/case-studies`}
-            className="inline-flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.22em] text-[#8EF0B5] hover:text-white transition-colors"
-          >
-            {t('trusted_view_work')}
-            <span aria-hidden>→</span>
-          </Link>
-        </div>
       </div>
     </section>
   );
