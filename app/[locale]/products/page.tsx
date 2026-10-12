@@ -19,6 +19,7 @@ import {
   type CardStackItem,
 } from '@/components/ui/card-stack';
 import { FlyingIconsButton } from '@/components/ui/flying-icons-button';
+import { AgetoBIShowcase } from '@/components/sections/AgetoBIShowcase';
 
 /* ============================================================
  * Per-product Unsplash imagery (reuses homepage map)
@@ -37,6 +38,8 @@ const PRODUCT_IMAGES: Record<string, string> = {
   eczatrend:
     'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&q=80&auto=format&fit=crop',
   'whatsapp-satis': '/products/whatsapp-sales.jpg',
+  agetobi:
+    'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80&auto=format&fit=crop',
 };
 
 export default function ProductsPage() {
@@ -260,6 +263,8 @@ export default function ProductsPage() {
             {t('products_page_subtitle')}
           </motion.p>
         </div>
+
+        <AgetoBIShowcase />
 
         {/* =====================================================
             SHOWCASE — Mountain spotlight with scattered chips

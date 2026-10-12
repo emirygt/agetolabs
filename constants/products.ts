@@ -99,4 +99,17 @@ export const bottomCards: Product[] = [
     iconColor: 'text-[#8EF0B5]',
     glow: 'green',
   },
+  {
+    id: 'agetobi',
+    name: 'AgetoBI',
+    nameTr: 'AgetoBI',
+    slug: 'agento-bi',
+    description: 'Internal operations platform unifying orders, dynamic reports, dashboards, alerts, shipping and GA4 traffic analytics for e-commerce teams.',
+    descriptionTr: 'E-ticaret ekipleri için sipariş, dinamik rapor, dashboard, alarm, kargo ve GA4 trafik analitiğini tek platformda birleştiren iç operasyon platformu.',
+    icon: 'LayoutDashboard',
+    iconColor: 'text-blue-400',
+    glow: 'none',
+    secondaryIcon: 'BarChart3',
+    secondaryIconColor: 'text-[#8EF0B5]',
+  },
 ];

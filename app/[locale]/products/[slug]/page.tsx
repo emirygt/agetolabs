@@ -57,6 +57,8 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                 ? <span className="text-4xl md:text-5xl lg:text-5xl leading-tight">WhatsApp'ı Akıllı Sipariş ve Satış Dönüşüm Motoruna Çevirin</span>
                 : slug === 'agento-otonom-agent'
                 ? <span className="text-4xl md:text-5xl lg:text-5xl leading-tight">E-Ticaretiniz İçin 7/24 Çalışan Otonom Yapay Zeka Dijital Pazarlama Uzmanı</span>
+                : slug === 'agento-bi'
+                ? <span className="text-4xl md:text-5xl lg:text-5xl leading-tight">Sipariş, Rapor ve GA4 Trafik Verinizi Tek Platformda Birleştirin</span>
                 : name}
             </h1>
             
@@ -71,6 +73,8 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                 ? "WhatsApp kanalınızı uçtan uca yöneten, müşteri iletişimini otomatikleştiren ve sipariş süreçlerini hızlandıran yapay zeka destekli satış asistanınızla tanışın. Sadece yanıt vermez, satışa dönüştürür."
                 : slug === 'agento-otonom-agent'
                 ? "Otonom Ajanı, Türkiye'deki e-ticaret KOBİ'leri için özel olarak geliştirilmiş otonom bir yapay zeka pazarlama ajanıdır. Google Analytics 4 ve Google Ads hesaplarınıza saniyeler içinde bağlanır, kampanya performansınızı gerçek zamanlı izler ve siz uyurken bile verileri analiz ederek aksiyona döner."
+                : slug === 'agento-bi'
+                ? "AgetoBI; sipariş, ürün, müşteri, dinamik rapor, dashboard, alarm, kargo ve GA4 trafik verilerini tek çatı altında toplayan iç operasyon platformudur. Dağınık tabloları ve manuel takibi ortadan kaldırarak ekiplerin karar alma sürecini hızlandırır."
                 : `${description}. ${t('productDescSuffix')}`}
             </p>
 
@@ -104,12 +108,18 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
               </p>
             )}
 
+            {slug === 'agento-bi' && (
+              <p className="text-[#8EF0B5] font-semibold text-lg tracking-wide mb-8">
+                Dağınık tablolar değil, tek panelde net karar.
+              </p>
+            )}
+
             <div className="flex gap-4">
               <FlyingIconsButton href={`/${lang}/contact`} paddingY={10} paddingX={24}>
-                {['agento-pharm-ia', 'agento-eczaport', 'agento-wh-sales', 'agento-otonom-agent'].includes(slug) ? 'Demo Talep Et' : t('requestDemo')}
+                {['agento-pharm-ia', 'agento-eczaport', 'agento-wh-sales', 'agento-otonom-agent', 'agento-bi'].includes(slug) ? 'Demo Talep Et' : t('requestDemo')}
               </FlyingIconsButton>
               <button className="h-12 inline-flex items-center justify-center rounded-full bg-white/10 px-8 text-base font-semibold text-white hover:bg-white/20 transition-all">
-                {slug === 'agento-pharm-ia' ? 'Ürünü İncele' : slug === 'agento-eczaport' ? 'Platformu İncele' : ['agento-wh-sales', 'agento-otonom-agent'].includes(slug) ? 'Detayları İncele' : t('documentation')}
+                {slug === 'agento-pharm-ia' ? 'Ürünü İncele' : slug === 'agento-eczaport' ? 'Platformu İncele' : ['agento-wh-sales', 'agento-otonom-agent', 'agento-bi'].includes(slug) ? 'Detayları İncele' : t('documentation')}
               </button>
             </div>
 
@@ -1030,6 +1040,76 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                 {lang === 'tr'
                   ? 'Bir SKU listesi ile deneme yapın — 7 gün içinde rakip fiyat eğrilerinizi görün.'
                   : 'Bring us a SKU list — see your competitive price curves within 7 days.'}
+              </p>
+              <FlyingIconsButton href={`/${lang}/contact`} paddingY={14} paddingX={32}>
+                {lang === 'tr' ? 'Demo Talep Et' : 'Request Demo'}
+              </FlyingIconsButton>
+            </div>
+          </div>
+        )}
+
+        {/* --- RAPORLAMA EXTENDED SECTION --- */}
+        {slug === 'agento-bi' && (
+          <div className="mt-24 space-y-24 animate-in fade-in slide-in-from-bottom-8 duration-700">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+              <div>
+                <h2 className="text-3xl md:text-4xl font-bold text-white">
+                  {lang === 'tr' ? 'Tüm Operasyon Verisi Tek Panelde' : 'All Operational Data, One Panel'}
+                </h2>
+                <p className="mt-5 text-lg text-gray-400 leading-relaxed">
+                  {lang === 'tr'
+                    ? 'AgetoBI, sipariş, ürün, müşteri, dinamik rapor, dashboard, alarm, kargo ve GA4 trafik verilerini tek platformda birleştiren iç operasyon sistemidir. Dağınık tablolar ve manuel takip yerine, ekiplerin güvenebileceği canlı bir görünüm sunar.'
+                    : 'Reporting Platform unifies orders, products, customers, dynamic reports, dashboards, alerts, shipping and GA4 traffic data in one system. No more scattered spreadsheets — just a live view teams can trust.'}
+                </p>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                {[
+                  { v: '7/24', l: lang === 'tr' ? 'Canlı veri akışı' : 'Live data pipeline', c: 'text-[#8EF0B5]' },
+                  { v: 'GA4', l: lang === 'tr' ? 'Trafik entegrasyonu' : 'Traffic integration', c: 'text-purple-400' },
+                  { v: '1', l: lang === 'tr' ? 'Birleşik panel' : 'Unified panel', c: 'text-blue-400' },
+                  { v: 'Alert', l: lang === 'tr' ? 'Otomatik alarm' : 'Automated alerts', c: 'text-orange-400' },
+                ].map((s) => (
+                  <div key={s.l} className="bg-gradient-to-b from-white/[0.05] to-transparent p-5 rounded-2xl border border-white/10 text-center">
+                    <div className={`text-3xl font-bold ${s.c} mb-1`}>{s.v}</div>
+                    <div className="text-xs text-gray-400 font-medium">{s.l}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h2 className="text-3xl font-bold text-white mb-10 text-center">
+                {lang === 'tr' ? 'Platform Yetenekleri' : 'Platform Capabilities'}
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {[
+                  { icon: 'ShoppingCart', color: '[#8EF0B5]', titleEn: 'Order & customer operations', titleTr: 'Sipariş ve müşteri operasyonu', descEn: 'Centralized order, product and customer data with full visibility across the sales pipeline.', descTr: 'Satış sürecinin tamamında eksiksiz görünürlük sağlayan merkezi sipariş, ürün ve müşteri verisi.' },
+                  { icon: 'LayoutDashboard', color: 'purple-400', titleEn: 'Dynamic dashboards & reports', titleTr: 'Dinamik dashboard ve raporlar', descEn: 'Build custom dashboards and reports tailored to each team, without waiting on engineering.', descTr: 'Mühendislik ekibini beklemeden her ekibe özel dashboard ve rapor oluşturun.' },
+                  { icon: 'BarChart3', color: 'blue-400', titleEn: 'GA4 traffic analytics', titleTr: 'GA4 trafik analitiği', descEn: 'Live GA4 traffic snapshots alongside order data for a complete picture of demand and conversion.', descTr: 'Talep ve dönüşümün tam resmini görmek için sipariş verisiyle birlikte canlı GA4 trafik anlık görüntüleri.' },
+                  { icon: 'BellRing', color: 'orange-400', titleEn: 'Alerts & shipping tracking', titleTr: 'Alarm ve kargo takibi', descEn: 'Automated alerts for anomalies plus end-to-end shipping status tracking across carriers.', descTr: 'Anormallikler için otomatik alarm ve taşıyıcılar bazında uçtan uca kargo durumu takibi.' },
+                ].map((f) => {
+                  const Icon = (Icons as any)[f.icon];
+                  return (
+                    <div key={f.titleEn} className="bg-white/[0.03] p-8 rounded-3xl border border-white/10 hover:border-white/30 transition-all">
+                      <div className={`w-14 h-14 rounded-2xl bg-${f.color}/20 flex items-center justify-center mb-6`}>
+                        <Icon className={`text-${f.color}`} size={28} />
+                      </div>
+                      <h3 className="text-2xl font-bold text-white mb-3">{lang === 'tr' ? f.titleTr : f.titleEn}</h3>
+                      <p className="text-gray-400 leading-relaxed">{lang === 'tr' ? f.descTr : f.descEn}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="text-center max-w-3xl mx-auto pb-12 pt-12 border-t border-white/10">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-5">
+                {lang === 'tr' ? 'Operasyon verinizi birleştirelim' : "Let's unify your operations data"}
+              </h2>
+              <p className="text-lg text-gray-400 mb-8">
+                {lang === 'tr'
+                  ? 'Mevcut veri kaynaklarınızı inceleyelim ve pilot bir dashboard tasarımı çıkartalım.'
+                  : 'Walk us through your current data sources and we will design a pilot dashboard with you.'}
               </p>
               <FlyingIconsButton href={`/${lang}/contact`} paddingY={14} paddingX={32}>
                 {lang === 'tr' ? 'Demo Talep Et' : 'Request Demo'}
