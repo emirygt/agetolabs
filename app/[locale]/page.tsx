@@ -8,6 +8,7 @@ import { Footer } from '@/components/Footer';
 import { RobotCompanion } from '@/components/RobotCompanion';
 import { TrustedBy } from '@/components/sections/TrustedBy';
 import { AgetoBIShowcase } from '@/components/sections/AgetoBIShowcase';
+import { DomainLookup } from '@/components/sections/DomainLookup';
 import type { LinearCardItem } from '@/components/ui/linear-card';
 
 // Hero pulls in three.js (~1.9MB raw) + EffectComposer + bloom shaders.
@@ -131,6 +132,8 @@ export default function Home() {
             />
           </motion.div>
         </section>
+
+        <DomainLookup />
       </main>
 
       <Footer />
