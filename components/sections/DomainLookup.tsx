@@ -1,7 +1,6 @@
 'use client';
 
 import { useRef, useState, type FormEvent, type ReactNode } from 'react';
-import { motion } from 'motion/react';
 import { AlertTriangle, CheckCircle2, Globe, Loader2, Search, ShieldAlert } from 'lucide-react';
 
 import { useLanguage } from '@/components/LanguageContext';
@@ -20,7 +19,6 @@ const COPY = {
         Alan adınız <span className="text-[#8EF0B5]">kayıtlı mı?</span>
       </>
     ),
-    desc: '.com ve .net alan adlarının kayıt durumunu Verisign RDAP kayıtlarından anlık olarak sorgulayın.',
     inputLabel: 'Alan adı',
     placeholder: 'ornek.com',
     submit: 'Sorgula',
@@ -51,7 +49,6 @@ const COPY = {
         Is your domain <span className="text-[#8EF0B5]">registered?</span>
       </>
     ),
-    desc: 'Check the registration status of .com and .net domains live against Verisign RDAP records.',
     inputLabel: 'Domain name',
     placeholder: 'example.com',
     submit: 'Check',
@@ -130,39 +127,30 @@ export function DomainLookup() {
   const loading = view.kind === 'loading';
 
   return (
-    <section className="max-w-[1600px] mx-auto px-4 sm:px-8 pb-16">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-80px' }}
-        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-        className="relative overflow-hidden rounded-[32px] border border-white/10 bg-gradient-to-br from-white/[0.04] to-transparent"
-      >
-        <div className="absolute -bottom-32 -right-20 w-[420px] h-[420px] bg-[#8EF0B5]/10 blur-[120px] rounded-full pointer-events-none" />
+    <section className="relative z-20 pt-24 md:pt-28">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
+        <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.01] backdrop-blur-md">
+          <div className="absolute -top-24 -right-16 w-[280px] h-[280px] bg-[#8EF0B5]/10 blur-[100px] rounded-full pointer-events-none" />
 
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 p-6 sm:p-10 md:p-14 items-start">
-          <div>
-            <div className="mb-6 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.32em] text-[#8EF0B5]/70">
-              <span className="block w-8 h-px bg-[#8EF0B5]/60" />
-              {copy.label}
+          <div className="relative flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-8 p-4 md:px-6 md:py-5">
+            <div className="shrink-0">
+              <div className="flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.3em] text-[#8EF0B5]/70">
+                <span className="block w-6 h-px bg-[#8EF0B5]/60" />
+                {copy.label}
+              </div>
+              <h2 className="mt-1.5 text-lg md:text-xl font-bold tracking-tight text-white">
+                {copy.title}
+              </h2>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white leading-tight mb-4">
-              {copy.title}
-            </h2>
-            <p className="text-base md:text-lg text-gray-400 leading-relaxed max-w-[52ch]">
-              {copy.desc}
-            </p>
-          </div>
 
-          <div className="w-full">
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3" noValidate>
+            <form onSubmit={handleSubmit} className="flex flex-1 gap-2" noValidate>
               <label htmlFor="domain-lookup-input" className="sr-only">
                 {copy.inputLabel}
               </label>
-              <div className="relative flex-1">
+              <div className="relative flex-1 min-w-0">
                 <Globe
-                  size={18}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"
+                  size={16}
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"
                   aria-hidden
                 />
                 <input
@@ -177,38 +165,31 @@ export function DomainLookup() {
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder={copy.placeholder}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl pl-11 pr-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:border-[#8EF0B5]/50 focus:ring-1 focus:ring-[#8EF0B5]/50 transition-all font-mono text-[15px]"
+                  className="w-full bg-black/30 border border-white/10 rounded-xl pl-10 pr-3 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-[#8EF0B5]/50 focus:ring-1 focus:ring-[#8EF0B5]/50 transition-all font-mono text-sm"
                 />
               </div>
               <button
                 type="submit"
                 disabled={loading || !query.trim()}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#8EF0B5] px-7 py-3.5 text-[15px] font-semibold text-black hover:bg-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#8EF0B5]"
+                aria-label={loading ? copy.loading : copy.submit}
+                className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-[#8EF0B5] px-4 sm:px-5 py-2.5 text-sm font-semibold text-black hover:bg-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#8EF0B5]"
               >
-                {loading ? <Loader2 size={18} className="animate-spin" /> : <Search size={18} />}
-                {loading ? copy.loading : copy.submit}
+                {loading ? <Loader2 size={16} className="animate-spin" /> : <Search size={16} />}
+                <span className="hidden sm:inline">{loading ? copy.loading : copy.submit}</span>
               </button>
             </form>
+          </div>
 
-            <div aria-live="polite" className="mt-5 min-h-[1px]">
-              {view.kind === 'loading' && (
-                <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-4 text-sm text-gray-300">
-                  <Loader2 size={16} className="animate-spin text-[#8EF0B5]" />
-                  <span className="font-mono break-all">{view.domain}</span>
-                  <span className="text-gray-500">· {copy.loading}</span>
-                </div>
-              )}
-              {view.kind === 'result' && (
+          <div aria-live="polite">
+            {view.kind === 'result' && (
+              <div className="relative px-4 pb-4 md:px-6 md:pb-5">
                 <ResultCard data={view.data} copy={copy} formatDate={formatDate} />
-              )}
-            </div>
-
-            <p className="mt-4 font-mono text-[11px] tracking-wide text-gray-500">
-              {copy.source}
-            </p>
+                <p className="mt-2 font-mono text-[10px] tracking-wide text-gray-500">{copy.source}</p>
+              </div>
+            )}
           </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

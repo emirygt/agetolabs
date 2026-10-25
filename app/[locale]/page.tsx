@@ -101,6 +101,8 @@ export default function Home() {
       <Header />
       <RobotCompanion />
 
+      <DomainLookup />
+
       <HorizonHero />
 
       {/* <TrustedBy /> */}
@@ -132,8 +134,6 @@ export default function Home() {
             />
           </motion.div>
         </section>
-
-        <DomainLookup />
       </main>
 
       <Footer />
